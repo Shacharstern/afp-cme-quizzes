@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: shachar.github.io/quartz-site
+  baseUrl: shacharstern.github.io/afp-cme-quizzes
   ignorePatterns:
     - private
     - templates
