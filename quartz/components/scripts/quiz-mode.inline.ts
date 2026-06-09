@@ -70,7 +70,11 @@ function setupQuizMode() {
     questions.forEach((q, i) => {
       const isVisible = i === index;
       q.allNodes.forEach((n: Element) => {
-        (n as HTMLElement).style.display = isVisible ? '' : 'none';
+        if (isVisible) {
+          n.classList.remove('quiz-question-hidden');
+        } else {
+          n.classList.add('quiz-question-hidden');
+        }
       });
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -118,14 +122,29 @@ function setupQuizMode() {
         });
       });
 
+      const btnContainer = document.createElement('div');
+      btnContainer.className = 'quiz-btn-container';
+
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'quiz-prev-btn';
+      prevBtn.innerText = '⬅️ Prev';
+      if (index === 0) prevBtn.style.visibility = 'hidden';
+      
       const submitBtn = document.createElement('button');
       submitBtn.className = 'quiz-submit-btn';
       submitBtn.innerText = 'Submit';
       
       const nextBtn = document.createElement('button');
       nextBtn.className = 'quiz-next-btn';
-      nextBtn.innerText = 'Next Question ➡️';
-      nextBtn.style.display = 'none';
+      nextBtn.innerText = 'Next ➡️';
+      if (index === questions.length - 1) nextBtn.style.visibility = 'hidden';
+
+      prevBtn.addEventListener('click', () => {
+        if (currentQuestionIndex > 0) {
+          currentQuestionIndex--;
+          showQuestion(currentQuestionIndex);
+        }
+      });
 
       submitBtn.addEventListener('click', () => {
         if (!selectedLi) {
@@ -133,7 +152,8 @@ function setupQuizMode() {
           return;
         }
         q.ul.dataset.submitted = 'true';
-        submitBtn.style.display = 'none';
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitted';
         q.callout.classList.add('revealed');
         
         const topicSpan = q.h2.querySelector('.quiz-topic');
@@ -145,19 +165,16 @@ function setupQuizMode() {
         if (content) {
           (content as HTMLElement).style.display = 'block';
         }
-
-        if (index < questions.length - 1) {
-          nextBtn.style.display = 'inline-block';
-        }
       });
 
       nextBtn.addEventListener('click', () => {
-        currentQuestionIndex++;
-        showQuestion(currentQuestionIndex);
+        if (currentQuestionIndex < questions.length - 1) {
+          currentQuestionIndex++;
+          showQuestion(currentQuestionIndex);
+        }
       });
 
-      const btnContainer = document.createElement('div');
-      btnContainer.className = 'quiz-btn-container';
+      btnContainer.appendChild(prevBtn);
       btnContainer.appendChild(submitBtn);
       btnContainer.appendChild(nextBtn);
 
