@@ -197,6 +197,45 @@ function setupQuizMode() {
       submitBtn.className = 'quiz-submit-btn';
       submitBtn.innerText = 'Submit';
 
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'quiz-copy-btn';
+      copyBtn.innerText = '📋 Copy';
+      copyBtn.title = 'Copy question to clipboard for AI verification';
+
+      copyBtn.addEventListener('click', () => {
+        // Title: full H2 text (topic unblurred for copying)
+        const titleText = q.h2.innerText.trim();
+
+        // Question body: all text between h2 and the UL (paragraphs)
+        const bodyParts: string[] = [];
+        let node = q.h2.nextElementSibling as HTMLElement | null;
+        while (node && node !== q.ul) {
+          const text = node.innerText?.trim();
+          if (text) bodyParts.push(text);
+          node = node.nextElementSibling as HTMLElement | null;
+        }
+        const bodyText = bodyParts.join('\n');
+
+        // Options: li text without the ❌ button character
+        const optionLines = lis.map(li => {
+          const ruleout = li.querySelector('.quiz-ruleout-btn');
+          const optText = ruleout
+            ? li.innerText.replace(ruleout.textContent || '', '').trim()
+            : li.innerText.trim();
+          return optText;
+        }).join('\n');
+
+        const fullText = `${titleText}\n\n${bodyText}\n\n${optionLines}`;
+
+        navigator.clipboard.writeText(fullText).then(() => {
+          copyBtn.innerText = '✅ Copied!';
+          setTimeout(() => { copyBtn.innerText = '📋 Copy'; }, 2000);
+        }).catch(() => {
+          copyBtn.innerText = '❌ Failed';
+          setTimeout(() => { copyBtn.innerText = '📋 Copy'; }, 2000);
+        });
+      });
+
       const nextBtn = document.createElement('button');
       nextBtn.className = 'quiz-nav-btn quiz-next-btn';
       nextBtn.innerText = 'Next ➡️';
@@ -236,6 +275,7 @@ function setupQuizMode() {
 
       btnContainer.appendChild(prevBtn);
       btnContainer.appendChild(submitBtn);
+      btnContainer.appendChild(copyBtn);
       btnContainer.appendChild(nextBtn);
 
       q.ul.parentNode?.insertBefore(btnContainer, q.ul.nextSibling);

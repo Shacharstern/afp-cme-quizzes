@@ -171,6 +171,23 @@ body.quiz-mode-active button.quiz-prev-btn {
   background: var(--secondary);
 }
 
+body.quiz-mode-active button.quiz-copy-btn {
+  background: transparent;
+  border: 2px solid var(--gray);
+  color: var(--darkgray);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+body.quiz-mode-active button.quiz-copy-btn:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+
 body.quiz-mode-active .quiz-answer-callout {
   display: none;
 }
