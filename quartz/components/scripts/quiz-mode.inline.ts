@@ -12,6 +12,77 @@ function setReaderMode(on: boolean) {
   document.dispatchEvent(new CustomEvent('readermodechange', { detail: { mode } }));
 }
 
+function normalizeText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"']/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function cleanOptionText(li: HTMLElement): string {
+  const ruleout = li.querySelector('.quiz-ruleout-btn');
+  let text = ruleout
+    ? li.innerText.replace(ruleout.textContent || '', '')
+    : li.innerText;
+  text = text.trim();
+  text = text.replace(/^[A-Z]\s*[\.\)]\s*/i, '');
+  return text.trim();
+}
+
+function getBestMatchingOption(strongText: string, options: HTMLElement[]): HTMLElement {
+  const normStrong = normalizeText(strongText);
+  const strongWords = normStrong.split(' ').filter(w => w.length > 0);
+  
+  let bestOption = options[0];
+  let bestScore = -1;
+  
+  options.forEach(li => {
+    const normOpt = normalizeText(cleanOptionText(li));
+    const optWords = normOpt.split(' ').filter(w => w.length > 0);
+    
+    let matches = 0;
+    strongWords.forEach(w => {
+      if (optWords.includes(w)) {
+        matches += 1;
+      } else {
+        if (optWords.some(ow => ow.includes(w) || w.includes(ow))) {
+          matches += 0.7;
+        }
+      }
+    });
+    
+    const score = matches / Math.max(strongWords.length, 1);
+    if (score > bestScore) {
+      bestScore = score;
+      bestOption = li;
+    }
+  });
+  
+  return bestOption;
+}
+
+function findCorrectOption(q: any, lis: HTMLElement[]): HTMLElement | null {
+  const strongElement = q.callout.querySelector('strong');
+  if (!strongElement) return null;
+  
+  const strongText = strongElement.innerText.trim();
+  
+  const letterMatch = strongText.match(/^([A-D])\s*(?:—|-|\.)\s*/i);
+  if (letterMatch) {
+    const letter = letterMatch[1].toUpperCase();
+    for (const li of lis) {
+      const ruleout = li.querySelector('.quiz-ruleout-btn');
+      const text = (ruleout ? li.innerText.replace(ruleout.textContent || '', '') : li.innerText).trim();
+      if (text.toUpperCase().startsWith(letter)) {
+        return li;
+      }
+    }
+  }
+  
+  return getBestMatchingOption(strongText, lis);
+}
+
 function setupQuizMode() {
   const headers = Array.from(document.querySelectorAll('h2'));
   const questions: any[] = [];
@@ -53,6 +124,44 @@ function setupQuizMode() {
     document.documentElement.style.setProperty('--quiz-font-scale', String(scale));
   }
 
+  function updateScoreAndProgressBar() {
+    const progressContainer = document.getElementById('quiz-progress-container');
+    if (!progressContainer) return;
+    
+    let total = questions.length;
+    let submitted = 0;
+    let correct = 0;
+    
+    questions.forEach(q => {
+      if (q.ul.dataset.submitted === 'true') {
+        submitted++;
+        const lis = Array.from(q.ul.querySelectorAll('li')) as HTMLElement[];
+        const selectedLi = lis.find(li => li.classList.contains('selected'));
+        const correctLi = findCorrectOption(q, lis);
+        if (selectedLi && correctLi && selectedLi === correctLi) {
+          correct++;
+        }
+      }
+    });
+    
+    const percentage = submitted > 0 ? Math.round((correct / submitted) * 100) : 0;
+    const progressPercent = total > 0 ? Math.round((submitted / total) * 100) : 0;
+    
+    const textEl = document.getElementById('quiz-progress-text');
+    if (textEl) {
+      if (submitted === 0) {
+        textEl.innerText = `Score: 0/0 (0%)`;
+      } else {
+        textEl.innerText = `Score: ${correct}/${submitted} (${percentage}%)`;
+      }
+    }
+    
+    const fillEl = document.getElementById('quiz-progress-bar-fill');
+    if (fillEl) {
+      fillEl.style.width = `${progressPercent}%`;
+    }
+  }
+
   function hideAllQuestions() {
     questions.forEach(q => {
       q.allNodes.forEach((n: Element) => n.classList.add('quiz-question-hidden'));
@@ -84,6 +193,12 @@ function setupQuizMode() {
       <div id="quiz-mode-toggle">
         <label for="quiz-mode-checkbox">Test Mode 📝</label>
         <input type="checkbox" id="quiz-mode-checkbox">
+      </div>
+      <div id="quiz-progress-container">
+        <div id="quiz-progress-text">Score: 0/0 (0%)</div>
+        <div id="quiz-progress-bar-bg">
+          <div id="quiz-progress-bar-fill"></div>
+        </div>
       </div>
     `;
     document.body.appendChild(toggleContainer);
@@ -127,6 +242,7 @@ function setupQuizMode() {
       setReaderMode(true);
       applyFontScale(true);
       showQuestion(currentQuestionIndex);
+      updateScoreAndProgressBar();
     } else {
       document.body.classList.remove('quiz-mode-active');
       const savedTheme = (localStorage.getItem('quiz-saved-theme') as 'light' | 'dark') || 'light';
@@ -264,6 +380,18 @@ function setupQuizMode() {
         submitBtn.disabled = true;
         submitBtn.innerText = 'Submitted ✓';
 
+        const correctLi = findCorrectOption(q, lis);
+        if (correctLi) {
+          correctLi.classList.add('correct-answer');
+          if (selectedLi === correctLi) {
+            selectedLi.classList.add('user-correct');
+          } else {
+            selectedLi.classList.add('user-incorrect');
+          }
+        } else {
+          selectedLi.classList.add('user-correct');
+        }
+
         const topicSpan = q.h2.querySelector('.quiz-topic');
         if (topicSpan) topicSpan.classList.add('revealed');
 
@@ -271,6 +399,8 @@ function setupQuizMode() {
         q.callout.classList.remove('is-collapsed');
         const content = q.callout.querySelector('.callout-content') as HTMLElement | null;
         if (content) content.style.display = '';
+
+        updateScoreAndProgressBar();
       });
 
       nextBtn.addEventListener('click', () => {
@@ -293,6 +423,7 @@ function setupQuizMode() {
   if (document.body.classList.contains('quiz-mode-active')) {
     showQuestion(currentQuestionIndex);
   }
+  updateScoreAndProgressBar();
 }
 
 document.addEventListener("nav", setupQuizMode);

@@ -195,6 +195,64 @@ body.quiz-mode-active .quiz-answer-callout.revealed {
   display: flex;
 }
 
+/* Option correctness color feedback */
+body.quiz-mode-active ul.quiz-options-list li.correct-answer {
+  border-color: #2e7d32 !important;
+  background: #e8f5e9 !important;
+  color: #1b5e20 !important;
+}
+body.quiz-mode-active ul.quiz-options-list li.user-correct {
+  background: #2e7d32 !important;
+  color: #ffffff !important;
+  border-color: #1b5e20 !important;
+}
+body.quiz-mode-active ul.quiz-options-list li.user-incorrect {
+  background: #c62828 !important;
+  color: #ffffff !important;
+  border-color: #b71c1c !important;
+}
+
+/* Floating Toggle Progress Bar */
+#quiz-progress-container {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 5px;
+  border-top: 1px solid var(--gray);
+  padding-top: 8px;
+}
+
+body.quiz-mode-active #quiz-progress-container {
+  display: flex;
+}
+
+#quiz-progress-text {
+  font-size: 0.8rem;
+  color: var(--darkgray);
+}
+
+#quiz-progress-bar-bg {
+  width: 120px;
+  height: 8px;
+  background: var(--gray);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#quiz-progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--secondary);
+  transition: width 0.3s ease;
+}
+
+/* Hide first h1 header inside article (redundant title) in test mode */
+body.quiz-mode-active article > h1:first-of-type {
+  display: none;
+}
+
 /* Master hide class — JS adds/removes this. Must beat everything else. */
 .quiz-question-hidden {
   display: none !important;
