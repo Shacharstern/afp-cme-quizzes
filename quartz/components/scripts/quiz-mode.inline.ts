@@ -1,3 +1,11 @@
+function setQuartzTheme(theme: 'light' | 'dark') {
+  document.documentElement.setAttribute('saved-theme', theme);
+  document.body?.classList.remove('theme-dark', 'theme-light');
+  document.body?.classList.add(`theme-${theme}`);
+  localStorage.setItem('theme', theme);
+  document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+}
+
 function setupQuizMode() {
   const headers = Array.from(document.querySelectorAll('h2'));
   const questions: any[] = [];
@@ -16,20 +24,28 @@ function setupQuizMode() {
       nodesInBetween.push(nextNode);
       nextNode = nextNode.nextElementSibling;
     }
-    
     if (ul && callout) {
-      questions.push({
-        h2,
-        ul,
-        callout,
-        allNodes: [h2, ...nodesInBetween]
-      });
+      questions.push({ h2, ul, callout, allNodes: [h2, ...nodesInBetween] });
     }
   });
 
-  if (questions.length === 0) return; // Not a quiz page
+  if (questions.length === 0) return;
 
   let currentQuestionIndex = 0;
+
+  // Base font size (saved independently of test mode)
+  const BASE_FONT_KEY = 'quiz-base-font-size';
+  const TEST_FONT_BOOST = 0.3; // +3 steps of 0.1 each
+
+  function getBaseScale(): number {
+    return parseFloat(localStorage.getItem(BASE_FONT_KEY) || '1');
+  }
+
+  function applyFontScale(inTestMode: boolean) {
+    const base = getBaseScale();
+    const scale = inTestMode ? base + TEST_FONT_BOOST : base;
+    document.documentElement.style.setProperty('--quiz-font-scale', String(scale));
+  }
 
   function hideAllQuestions() {
     questions.forEach(q => {
@@ -54,11 +70,6 @@ function setupQuizMode() {
   if (!toggleContainer) {
     toggleContainer = document.createElement('div');
     toggleContainer.id = 'quiz-mode-toggle-container';
-
-    // Font size controls
-    const savedFontSize = parseFloat(localStorage.getItem('quiz-font-size') || '1');
-    document.documentElement.style.setProperty('--quiz-font-scale', String(savedFontSize));
-
     toggleContainer.innerHTML = `
       <div id="quiz-font-controls">
         <button id="quiz-font-decrease" title="Decrease font size">A−</button>
@@ -71,26 +82,34 @@ function setupQuizMode() {
     `;
     document.body.appendChild(toggleContainer);
 
-    // Font size logic
-    let currentScale = savedFontSize;
     const decreaseBtn = toggleContainer.querySelector('#quiz-font-decrease') as HTMLButtonElement;
     const increaseBtn = toggleContainer.querySelector('#quiz-font-increase') as HTMLButtonElement;
+    const isTestModeNow = () => document.body.classList.contains('quiz-mode-active');
 
-    function applyFontScale(scale: number) {
-      currentScale = Math.min(2, Math.max(0.6, scale));
-      document.documentElement.style.setProperty('--quiz-font-scale', String(currentScale));
-      localStorage.setItem('quiz-font-size', String(currentScale));
-    }
+    decreaseBtn.addEventListener('click', () => {
+      const newBase = Math.max(0.6, getBaseScale() - 0.1);
+      localStorage.setItem(BASE_FONT_KEY, String(newBase));
+      applyFontScale(isTestModeNow());
+    });
 
-    decreaseBtn.addEventListener('click', () => applyFontScale(currentScale - 0.1));
-    increaseBtn.addEventListener('click', () => applyFontScale(currentScale + 0.1));
+    increaseBtn.addEventListener('click', () => {
+      const newBase = Math.min(1.7, getBaseScale() + 0.1);
+      localStorage.setItem(BASE_FONT_KEY, String(newBase));
+      applyFontScale(isTestModeNow());
+    });
   }
 
-  const checkbox = toggleContainer.querySelector('#quiz-mode-checkbox') as HTMLInputElement;
+  // Apply initial font scale
   const isTestMode = localStorage.getItem('quiz-mode') === 'true';
+  applyFontScale(isTestMode);
+
+  const checkbox = toggleContainer.querySelector('#quiz-mode-checkbox') as HTMLInputElement;
   checkbox.checked = isTestMode;
+
   if (isTestMode) {
     document.body.classList.add('quiz-mode-active');
+    // Force light mode in test mode
+    setQuartzTheme('light');
   }
 
   checkbox.addEventListener('change', (e) => {
@@ -98,16 +117,35 @@ function setupQuizMode() {
     localStorage.setItem('quiz-mode', checked ? 'true' : 'false');
     if (checked) {
       document.body.classList.add('quiz-mode-active');
+      setQuartzTheme('light');
+      applyFontScale(true);
       showQuestion(currentQuestionIndex);
     } else {
       document.body.classList.remove('quiz-mode-active');
+      // Restore the user's saved theme preference
+      const savedTheme = (localStorage.getItem('quiz-saved-theme') as 'light' | 'dark') || 'light';
+      setQuartzTheme(savedTheme);
+      applyFontScale(false);
       showAllQuestions();
     }
   });
 
+  // Save user's current theme before test mode can override it
+  // Only save if we're NOT already in test mode (to avoid saving 'light' that we forced)
+  if (!isTestMode) {
+    const currentTheme = (document.documentElement.getAttribute('saved-theme') as 'light' | 'dark') || 'light';
+    localStorage.setItem('quiz-saved-theme', currentTheme);
+    // Listen for theme changes by user and keep the saved copy in sync
+    document.addEventListener('themechange', (e: Event) => {
+      if (!document.body.classList.contains('quiz-mode-active')) {
+        const theme = (e as CustomEvent).detail?.theme;
+        if (theme) localStorage.setItem('quiz-saved-theme', theme);
+      }
+    });
+  }
+
   // Build each question's interactive elements (only once)
   questions.forEach((q, index) => {
-    // Wrap topic in blurrable span
     if (!q.h2.dataset.quizProcessed) {
       q.h2.dataset.quizProcessed = 'true';
       const text = q.h2.innerHTML;
@@ -147,7 +185,6 @@ function setupQuizMode() {
         });
       });
 
-      // Build button container
       const btnContainer = document.createElement('div');
       btnContainer.className = 'quiz-btn-container';
 
@@ -206,7 +243,6 @@ function setupQuizMode() {
     }
   });
 
-  // Apply initial state
   if (document.body.classList.contains('quiz-mode-active')) {
     showQuestion(currentQuestionIndex);
   }
