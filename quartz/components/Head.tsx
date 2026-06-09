@@ -5,6 +5,10 @@ import { googleFontHref, googleFontSubsetHref } from "../util/theme"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { unescapeHTML } from "../util/escape"
 import { CustomOgImagesEmitterName } from "../../.quartz/plugins"
+
+// @ts-ignore
+import quizScript from "./scripts/quiz-mode.inline"
+
 export default (() => {
   const Head: QuartzComponent = ({
     cfg,
@@ -110,5 +114,6 @@ export default (() => {
     )
   }
 
+  Head.afterDOMLoaded = quizScript
   return Head
 }) satisfies QuartzComponentConstructor

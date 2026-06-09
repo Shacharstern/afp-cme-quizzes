@@ -1,3 +1,121 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+/* Quiz Mode Toggle Container */
+#quiz-mode-toggle-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--lightgray);
+  padding: 10px 15px;
+  border-radius: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border: 1px solid var(--gray);
+}
+
+/* Base styles for active quiz mode */
+body.quiz-mode-active .quiz-topic {
+  filter: blur(6px);
+  transition: filter 0.3s ease;
+  user-select: none;
+}
+body.quiz-mode-active .quiz-topic.revealed {
+  filter: none;
+}
+
+body.quiz-mode-active ul.quiz-options-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+body.quiz-mode-active ul.quiz-options-list li {
+  position: relative;
+  padding: 12px 40px 12px 15px;
+  border: 2px solid var(--lightgray);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--light);
+}
+
+body.quiz-mode-active ul.quiz-options-list li:hover {
+  border-color: var(--secondary);
+  background: var(--highlight);
+}
+
+body.quiz-mode-active ul.quiz-options-list li.selected {
+  background: var(--secondary);
+  color: var(--light);
+  border-color: var(--secondary);
+}
+
+body.quiz-mode-active ul.quiz-options-list li.ruled-out {
+  text-decoration: line-through;
+  opacity: 0.5;
+  background: var(--lightgray);
+  border-color: transparent;
+}
+
+body.quiz-mode-active .quiz-ruleout-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  opacity: 0.3;
+  transition: opacity 0.2s;
+}
+
+body.quiz-mode-active .quiz-ruleout-btn:hover {
+  opacity: 1;
+}
+
+body.quiz-mode-active ul.quiz-options-list li.ruled-out .quiz-ruleout-btn {
+  opacity: 1;
+}
+
+body.quiz-mode-active .quiz-btn-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+body.quiz-mode-active button.quiz-submit-btn,
+body.quiz-mode-active button.quiz-next-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background: var(--tertiary);
+  color: white;
+  transition: opacity 0.2s;
+}
+
+body.quiz-mode-active button.quiz-submit-btn:hover,
+body.quiz-mode-active button.quiz-next-btn:hover {
+  opacity: 0.8;
+}
+
+body.quiz-mode-active button.quiz-next-btn {
+  background: var(--secondary);
+}
+
+body.quiz-mode-active .quiz-answer-callout {
+  display: none !important; /* Force hide initially */
+}
+body.quiz-mode-active .quiz-answer-callout.revealed {
+  display: flex !important; /* Quartz callouts typically use flex */
+}
