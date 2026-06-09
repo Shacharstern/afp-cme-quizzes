@@ -6,6 +6,12 @@ function setQuartzTheme(theme: 'light' | 'dark') {
   document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
 }
 
+function setReaderMode(on: boolean) {
+  const mode = on ? 'on' : 'off';
+  document.documentElement.setAttribute('reader-mode', mode);
+  document.dispatchEvent(new CustomEvent('readermodechange', { detail: { mode } }));
+}
+
 function setupQuizMode() {
   const headers = Array.from(document.querySelectorAll('h2'));
   const questions: any[] = [];
@@ -62,7 +68,7 @@ function setupQuizMode() {
   function showQuestion(index: number) {
     hideAllQuestions();
     questions[index].allNodes.forEach((n: Element) => n.classList.remove('quiz-question-hidden'));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // No scroll: keep the user's reading position
   }
 
   // Create Toggle UI if not exists
@@ -108,8 +114,8 @@ function setupQuizMode() {
 
   if (isTestMode) {
     document.body.classList.add('quiz-mode-active');
-    // Force light mode in test mode
     setQuartzTheme('light');
+    setReaderMode(true);
   }
 
   checkbox.addEventListener('change', (e) => {
@@ -118,13 +124,14 @@ function setupQuizMode() {
     if (checked) {
       document.body.classList.add('quiz-mode-active');
       setQuartzTheme('light');
+      setReaderMode(true);
       applyFontScale(true);
       showQuestion(currentQuestionIndex);
     } else {
       document.body.classList.remove('quiz-mode-active');
-      // Restore the user's saved theme preference
       const savedTheme = (localStorage.getItem('quiz-saved-theme') as 'light' | 'dark') || 'light';
       setQuartzTheme(savedTheme);
+      setReaderMode(false);
       applyFontScale(false);
       showAllQuestions();
     }
