@@ -49,16 +49,41 @@ function setupQuizMode() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Create Toggle if not exists
+  // Create Toggle UI if not exists
   let toggleContainer = document.getElementById('quiz-mode-toggle-container');
   if (!toggleContainer) {
     toggleContainer = document.createElement('div');
     toggleContainer.id = 'quiz-mode-toggle-container';
+
+    // Font size controls
+    const savedFontSize = parseFloat(localStorage.getItem('quiz-font-size') || '1');
+    document.documentElement.style.setProperty('--quiz-font-scale', String(savedFontSize));
+
     toggleContainer.innerHTML = `
-      <label for="quiz-mode-checkbox">Test Mode 📝</label>
-      <input type="checkbox" id="quiz-mode-checkbox">
+      <div id="quiz-font-controls">
+        <button id="quiz-font-decrease" title="Decrease font size">A−</button>
+        <button id="quiz-font-increase" title="Increase font size">A+</button>
+      </div>
+      <div id="quiz-mode-toggle">
+        <label for="quiz-mode-checkbox">Test Mode 📝</label>
+        <input type="checkbox" id="quiz-mode-checkbox">
+      </div>
     `;
     document.body.appendChild(toggleContainer);
+
+    // Font size logic
+    let currentScale = savedFontSize;
+    const decreaseBtn = toggleContainer.querySelector('#quiz-font-decrease') as HTMLButtonElement;
+    const increaseBtn = toggleContainer.querySelector('#quiz-font-increase') as HTMLButtonElement;
+
+    function applyFontScale(scale: number) {
+      currentScale = Math.min(2, Math.max(0.6, scale));
+      document.documentElement.style.setProperty('--quiz-font-scale', String(currentScale));
+      localStorage.setItem('quiz-font-size', String(currentScale));
+    }
+
+    decreaseBtn.addEventListener('click', () => applyFontScale(currentScale - 0.1));
+    increaseBtn.addEventListener('click', () => applyFontScale(currentScale + 0.1));
   }
 
   const checkbox = toggleContainer.querySelector('#quiz-mode-checkbox') as HTMLInputElement;
@@ -76,7 +101,7 @@ function setupQuizMode() {
       showQuestion(currentQuestionIndex);
     } else {
       document.body.classList.remove('quiz-mode-active');
-      showAllQuestions(); // Remove all quiz-question-hidden classes
+      showAllQuestions();
     }
   });
 
@@ -156,11 +181,9 @@ function setupQuizMode() {
         submitBtn.disabled = true;
         submitBtn.innerText = 'Submitted ✓';
 
-        // Reveal topic
         const topicSpan = q.h2.querySelector('.quiz-topic');
         if (topicSpan) topicSpan.classList.add('revealed');
 
-        // Reveal callout and expand it
         q.callout.classList.add('revealed');
         q.callout.classList.remove('is-collapsed');
         const content = q.callout.querySelector('.callout-content') as HTMLElement | null;
@@ -178,7 +201,6 @@ function setupQuizMode() {
       btnContainer.appendChild(submitBtn);
       btnContainer.appendChild(nextBtn);
 
-      // Insert after the UL and register with allNodes
       q.ul.parentNode?.insertBefore(btnContainer, q.ul.nextSibling);
       q.allNodes.push(btnContainer);
     }

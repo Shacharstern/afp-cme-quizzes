@@ -12,11 +12,49 @@
   border-radius: 20px;
   z-index: 1000;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   border: 1px solid var(--gray);
+}
+
+#quiz-font-controls {
+  display: flex;
+  gap: 6px;
+}
+
+#quiz-font-controls button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+#quiz-font-controls button:hover {
+  opacity: 0.8;
+}
+
+#quiz-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Font size scaling — applied to article content */
+article {
+  font-size: calc(1rem * var(--quiz-font-scale, 1));
+}
+
+/* Hide provenance/info callout in test mode */
+body.quiz-mode-active .callout[data-callout="info"] {
+  display: none;
 }
 
 /* Base styles for active quiz mode */
