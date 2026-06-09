@@ -4,16 +4,15 @@ function setupQuizMode() {
   
   headers.forEach(h2 => {
     let nextNode = h2.nextElementSibling;
-    let ul = null;
-    let callout = null;
-    let nodesInBetween = [];
+    let ul: Element | null = null;
+    let callout: Element | null = null;
+    const nodesInBetween: Element[] = [];
     while (nextNode && nextNode.tagName !== 'H2' && nextNode.tagName !== 'HR') {
       if (nextNode.tagName === 'UL' && !ul) {
         ul = nextNode;
       } else if (nextNode.classList?.contains('callout') && !callout) {
         callout = nextNode;
       }
-      
       nodesInBetween.push(nextNode);
       nextNode = nextNode.nextElementSibling;
     }
@@ -30,6 +29,26 @@ function setupQuizMode() {
 
   if (questions.length === 0) return; // Not a quiz page
 
+  let currentQuestionIndex = 0;
+
+  function hideAllQuestions() {
+    questions.forEach(q => {
+      q.allNodes.forEach((n: Element) => n.classList.add('quiz-question-hidden'));
+    });
+  }
+
+  function showAllQuestions() {
+    questions.forEach(q => {
+      q.allNodes.forEach((n: Element) => n.classList.remove('quiz-question-hidden'));
+    });
+  }
+
+  function showQuestion(index: number) {
+    hideAllQuestions();
+    questions[index].allNodes.forEach((n: Element) => n.classList.remove('quiz-question-hidden'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // Create Toggle if not exists
   let toggleContainer = document.getElementById('quiz-mode-toggle-container');
   if (!toggleContainer) {
@@ -40,47 +59,30 @@ function setupQuizMode() {
       <input type="checkbox" id="quiz-mode-checkbox">
     `;
     document.body.appendChild(toggleContainer);
-    
-    const checkbox = toggleContainer.querySelector('#quiz-mode-checkbox') as HTMLInputElement;
-    const isTestMode = localStorage.getItem('quiz-mode') === 'true';
-    checkbox.checked = isTestMode;
-    if (isTestMode) document.body.classList.add('quiz-mode-active');
-    
-    checkbox.addEventListener('change', (e) => {
-      const checked = (e.target as HTMLInputElement).checked;
-      localStorage.setItem('quiz-mode', checked ? 'true' : 'false');
-      if (checked) {
-        document.body.classList.add('quiz-mode-active');
-        showQuestion(currentQuestionIndex);
-      } else {
-        document.body.classList.remove('quiz-mode-active');
-        // Unhide everything
-        questions.forEach(q => {
-          q.allNodes.forEach((n: Element) => (n as HTMLElement).style.display = '');
-        });
-      }
-    });
   }
 
-  // Setup Questions
-  let currentQuestionIndex = 0;
-
-  function showQuestion(index: number) {
-    if (!document.body.classList.contains('quiz-mode-active')) return;
-    questions.forEach((q, i) => {
-      const isVisible = i === index;
-      q.allNodes.forEach((n: Element) => {
-        if (isVisible) {
-          n.classList.remove('quiz-question-hidden');
-        } else {
-          n.classList.add('quiz-question-hidden');
-        }
-      });
-    });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const checkbox = toggleContainer.querySelector('#quiz-mode-checkbox') as HTMLInputElement;
+  const isTestMode = localStorage.getItem('quiz-mode') === 'true';
+  checkbox.checked = isTestMode;
+  if (isTestMode) {
+    document.body.classList.add('quiz-mode-active');
   }
 
+  checkbox.addEventListener('change', (e) => {
+    const checked = (e.target as HTMLInputElement).checked;
+    localStorage.setItem('quiz-mode', checked ? 'true' : 'false');
+    if (checked) {
+      document.body.classList.add('quiz-mode-active');
+      showQuestion(currentQuestionIndex);
+    } else {
+      document.body.classList.remove('quiz-mode-active');
+      showAllQuestions(); // Remove all quiz-question-hidden classes
+    }
+  });
+
+  // Build each question's interactive elements (only once)
   questions.forEach((q, index) => {
+    // Wrap topic in blurrable span
     if (!q.h2.dataset.quizProcessed) {
       q.h2.dataset.quizProcessed = 'true';
       const text = q.h2.innerHTML;
@@ -97,7 +99,7 @@ function setupQuizMode() {
       q.ul.classList.add('quiz-options-list');
       q.callout.classList.add('quiz-answer-callout');
 
-      const lis = Array.from(q.ul.querySelectorAll('li'));
+      const lis = Array.from(q.ul.querySelectorAll('li')) as HTMLElement[];
       let selectedLi: HTMLElement | null = null;
 
       lis.forEach(li => {
@@ -105,39 +107,38 @@ function setupQuizMode() {
         ruleOutBtn.className = 'quiz-ruleout-btn';
         ruleOutBtn.innerHTML = '❌';
         ruleOutBtn.title = 'Rule out this option';
-        
         ruleOutBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           li.classList.toggle('ruled-out');
         });
-        
         li.appendChild(ruleOutBtn);
 
         li.addEventListener('click', () => {
           if (q.ul.dataset.submitted === 'true') return;
-          if (li.classList.contains('ruled-out')) return; // Don't allow selecting ruled out option
+          if (li.classList.contains('ruled-out')) return;
           lis.forEach(l => l.classList.remove('selected'));
           li.classList.add('selected');
           selectedLi = li;
         });
       });
 
+      // Build button container
       const btnContainer = document.createElement('div');
       btnContainer.className = 'quiz-btn-container';
 
       const prevBtn = document.createElement('button');
-      prevBtn.className = 'quiz-prev-btn';
+      prevBtn.className = 'quiz-nav-btn quiz-prev-btn';
       prevBtn.innerText = '⬅️ Prev';
-      if (index === 0) prevBtn.style.visibility = 'hidden';
-      
+      prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+
       const submitBtn = document.createElement('button');
       submitBtn.className = 'quiz-submit-btn';
       submitBtn.innerText = 'Submit';
-      
+
       const nextBtn = document.createElement('button');
-      nextBtn.className = 'quiz-next-btn';
+      nextBtn.className = 'quiz-nav-btn quiz-next-btn';
       nextBtn.innerText = 'Next ➡️';
-      if (index === questions.length - 1) nextBtn.style.visibility = 'hidden';
+      nextBtn.style.visibility = index === questions.length - 1 ? 'hidden' : 'visible';
 
       prevBtn.addEventListener('click', () => {
         if (currentQuestionIndex > 0) {
@@ -153,18 +154,17 @@ function setupQuizMode() {
         }
         q.ul.dataset.submitted = 'true';
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Submitted';
-        q.callout.classList.add('revealed');
-        
+        submitBtn.innerText = 'Submitted ✓';
+
+        // Reveal topic
         const topicSpan = q.h2.querySelector('.quiz-topic');
         if (topicSpan) topicSpan.classList.add('revealed');
 
-        // Programmatically expand the Quartz callout
+        // Reveal callout and expand it
+        q.callout.classList.add('revealed');
         q.callout.classList.remove('is-collapsed');
-        const content = q.callout.querySelector('.callout-content');
-        if (content) {
-          (content as HTMLElement).style.display = 'block';
-        }
+        const content = q.callout.querySelector('.callout-content') as HTMLElement | null;
+        if (content) content.style.display = '';
       });
 
       nextBtn.addEventListener('click', () => {
@@ -178,13 +178,15 @@ function setupQuizMode() {
       btnContainer.appendChild(submitBtn);
       btnContainer.appendChild(nextBtn);
 
+      // Insert after the UL and register with allNodes
       q.ul.parentNode?.insertBefore(btnContainer, q.ul.nextSibling);
-      q.allNodes.push(btnContainer); // Ensure it gets hidden/shown with the question
+      q.allNodes.push(btnContainer);
     }
   });
 
+  // Apply initial state
   if (document.body.classList.contains('quiz-mode-active')) {
-    showQuestion(0);
+    showQuestion(currentQuestionIndex);
   }
 }
 
