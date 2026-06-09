@@ -139,6 +139,13 @@ function setupQuizMode() {
         const topicSpan = q.h2.querySelector('.quiz-topic');
         if (topicSpan) topicSpan.classList.add('revealed');
 
+        // Programmatically expand the Quartz callout
+        q.callout.classList.remove('is-collapsed');
+        const content = q.callout.querySelector('.callout-content');
+        if (content) {
+          (content as HTMLElement).style.display = 'block';
+        }
+
         if (index < questions.length - 1) {
           nextBtn.style.display = 'inline-block';
         }
@@ -155,6 +162,7 @@ function setupQuizMode() {
       btnContainer.appendChild(nextBtn);
 
       q.ul.parentNode?.insertBefore(btnContainer, q.ul.nextSibling);
+      q.allNodes.push(btnContainer); // Ensure it gets hidden/shown with the question
     }
   });
 

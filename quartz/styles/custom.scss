@@ -64,7 +64,12 @@ body.quiz-mode-active ul.quiz-options-list li.ruled-out {
   border-color: transparent;
 }
 
+.quiz-ruleout-btn {
+  display: none !important;
+}
+
 body.quiz-mode-active .quiz-ruleout-btn {
+  display: block !important;
   position: absolute;
   right: 10px;
   top: 50%;
@@ -85,8 +90,12 @@ body.quiz-mode-active ul.quiz-options-list li.ruled-out .quiz-ruleout-btn {
   opacity: 1;
 }
 
+.quiz-btn-container {
+  display: none !important;
+}
+
 body.quiz-mode-active .quiz-btn-container {
-  display: flex;
+  display: flex !important;
   gap: 10px;
   margin-top: 1rem;
   margin-bottom: 2rem;
