@@ -248,9 +248,10 @@ body.quiz-mode-active #quiz-progress-container {
   transition: width 0.3s ease;
 }
 
-/* Hide first h1 header inside article (redundant title) in test mode */
-body.quiz-mode-active article > h1:first-of-type {
-  display: none;
+/* Hide the main page heading (redundant title) in test mode */
+body.quiz-mode-active .article-title,
+body.quiz-mode-active article > h1 {
+  display: none !important;
 }
 
 /* Master hide class — JS adds/removes this. Must beat everything else. */
