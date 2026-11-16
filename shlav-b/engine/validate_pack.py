@@ -18,7 +18,7 @@ def check(p):
     for s in p.get('sources', []):
         if not {'label', 'kind', 'year'} <= set(s): E(f'source needs label, kind, year: {s}')
     if not HEB.search(p.get('title', '')): E('title must be Hebrew')
-    modes = [m for m in ('summary', 'drills', 'pathway', 'oral') if p.get(m)]
+    modes = [m for m in ('reel', 'summary', 'drills', 'pathway', 'oral') if p.get(m)]
     if not modes: E('pack has no study modes')
 
     sm = p.get('summary')
@@ -66,6 +66,30 @@ def check(p):
             for j, s in enumerate(c.get('steps', [])):
                 if s.get('st') not in st: E(f'case {c.get("id")} step {j}: station "{s.get("st")}" unknown')
                 if not isinstance(s.get('a'), int) or not 0 <= s['a'] < len(s.get('o', [])): E(f'case {c.get("id")} step {j}: a out of range')
+
+    SCENES = {'stats','cycle','map','tiles','bins','sort','threshold','flow','regimen','ladder','timeline','bars','flags','recap'}
+    rl = p.get('reel')
+    if rl:
+        chs = rl.get('chapters', [])
+        if not 6 <= len(chs) <= 16: warn.append(f'reel has {len(chs)} chapters; aim for 8-14')
+        for c in chs:
+            tag = f"reel {c.get('id')}"
+            for k in ('id', 'label', 'title', 'scene'):
+                if not c.get(k): E(f'{tag}: missing {k}')
+            sc = c.get('scene') or {}
+            if sc.get('type') not in SCENES: E(f'{tag}: scene.type must be one of {sorted(SCENES)}')
+            for pt in c.get('points', []):
+                if not (isinstance(pt, list) and len(pt) == 3 and 0 <= float(pt[0]) <= 1): E(f'{tag}: points are [at 0..1, key, text]')
+            if c.get('pearl') and not (isinstance(c['pearl'], list) and len(c['pearl']) == 2): E(f'{tag}: pearl is [at, text]')
+            need = {'stats': ['pct'], 'cycle': ['items'], 'map': ['rows'], 'tiles': ['tiles'], 'bins': ['bins'], 'sort': ['cols', 'cards'],
+                    'threshold': ['rulers'], 'flow': ['nodes'], 'regimen': ['chips'], 'ladder': ['steps'], 'timeline': ['rows'],
+                    'bars': ['rows', 'max'], 'flags': ['flags'], 'recap': ['cards']}.get(sc.get('type'), [])
+            for k in need:
+                if k not in sc: E(f'{tag}: scene {sc.get("type")} needs "{k}"')
+            for r in sc.get('rulers', []):
+                if not all(k in r for k in ('min', 'max', 'target', 'zones')): E(f'{tag}: ruler needs min, max, target, zones')
+    elif not rl:
+        warn.append('no reel: the pack will open without the interactive walkthrough')
 
     qids = set()
     for s in p.get('oral', []):

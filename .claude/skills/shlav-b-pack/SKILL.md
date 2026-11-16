@@ -1,6 +1,6 @@
 ---
 name: shlav-b-pack
-description: Turn one Shlav B topic (family medicine board, Israel) into a Hebrew study pack for the Shlav B prep app — summary, fact drills, a patient pathway with cases, and oral-exam questions with examiner follow-ups — built only from the topic's anchor sources in the user's Google Drive folder "שלב א", validated, saved to shlav-b/packs/, and uploaded to the app. Use when the user types /shlav-b-pack <topic-id> or asks to build, rebuild or update a study pack (חבילת לימוד) for a Shlav B topic.
+description: Turn one Shlav B topic (family medicine board, Israel) into a Hebrew study pack for the Shlav B prep app — an interactive animated walkthrough (reel), and the game (fact-drill shifts, patient-pathway case rounds, oral boards with examiner follow-ups) plus a summary sheet — built only from the topic's anchor sources in the user's Google Drive folder "שלב א", validated, saved to shlav-b/packs/, and uploaded to the app. Use when the user types /shlav-b-pack <topic-id> or asks to build, rebuild or update a study pack (חבילת לימוד) for a Shlav B topic.
 ---
 
 # Shlav B pack engine
@@ -29,7 +29,9 @@ Follow `shlav-b/engine/pack-format.md`. Content rules:
 - **Follow-ups** (`fu`) are the examiner's twist: a new finding, a special population (pregnancy, child, frail elderly, CKD), a side effect, or a patient objection. They test reasoning, not recall.
 - **Consult questions** (`k: "ייעוץ · …"`): plain Hebrew a patient understands; key points include acknowledgment, explanation, options and follow-up.
 - **Pathway** = the topic's own algorithm (the article's figure or the guideline's flow), 5–7 stations, each with a one-line `rule`. Cases are short vignettes written by you; say so nowhere in the pack as if they came from the article.
-- **Sizes:** summary 8–12 sections; drills 25–60 with mixed `pick`/`swipe`/`num`, every one with a `w` (why); 3–6 cases; oral 2–4 stations × 2–4 questions, each with a follow-up. Keep the pack under 240 KB.
+- **Reel (the interactive walkthrough) comes first and matters most.** 8–14 chapters that walk the topic in clinical order (why it matters → classification → history/red flags → exam → workup → algorithm → treatment steps → special populations → referral → SORT recap). Each chapter: a headline that states the point, 3–6 `points` that reveal as the user scrubs (`at` rising from 0.02 to about 0.86, each with a short `key` such as a number or term), a pearl at 0.9, and one `scene` from the catalog in `pack-format.md` chosen because it shows the idea (numbers that decide management → `threshold`; algorithm → `flow`; escalation → `ladder`; do/don't → `sort`; mnemonic → `tiles`; drug classes → `bins`). Use at least six different scene types per pack. Scene labels are short; the visual does not wrap Hebrew.
+- **Game.** Drills feed timed-optional shifts with hearts and streaks, so mix `pick`, `swipe` (with 2-label `decks`) and `num`; give `num` drills a visual `v` (`gauge`, `angle`, `waffle`) where the quantity suits it. 2–4 `drillSections` become the shifts.
+- **Sizes:** reel 8–14 chapters; summary 8–12 sections; drills 25–60 with mixed `pick`/`swipe`/`num`, every one with a `w` (why); 3–6 cases; oral 2–4 stations × 2–4 questions, each with a follow-up. Keep the pack under 240 KB.
 - **Hebrew style:** short sentences, no filler, the way a senior family physician would explain it. Quote-like marks inside strings: use ״ and ׳, not ASCII double quotes.
 
 ## 4. Validate

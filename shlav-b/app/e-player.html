@@ -1,281 +1,55 @@
 <style>
-.modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.mode{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:12px;text-align:start;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
-.mode:hover{border-color:var(--amber)}
-.mode b{font-size:1.05rem}
-.mode .note{line-height:1.35}
-.meter{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.meter i{display:block;height:100%;background:var(--teal)}
-.play{display:flex;flex-direction:column;gap:14px}
-.ptop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.pcard{background:var(--panel);border:2px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:14px}
-.pcard.shake{animation:shake .45s}
-.q{font-weight:700;font-size:clamp(1.15rem,3.4vw,1.45rem);line-height:1.3;margin:0;text-wrap:balance}
-.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.opt{display:flex;gap:10px;align-items:center;text-align:start;border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:11px 13px;cursor:pointer;font-weight:500;min-height:52px}
-.opt:hover:not([disabled]){border-color:var(--amber)}
-.opt kbd{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 5px;flex:none}
-.opt.right{border-color:var(--ok);background:var(--ok-soft)} .opt.wrong{border-color:var(--rose);background:var(--rose-soft)}
-.opt[disabled]{cursor:default}
-.stmt{border:2px dashed var(--line);border-radius:14px;padding:18px;text-align:center;font-weight:600;font-size:1.1rem;background:var(--bg)}
-.numbox{display:flex;flex-direction:column;align-items:center;gap:10px}
-.numbox .val{font-size:2.2rem;font-weight:800}
-.numrow{display:flex;gap:10px;align-items:center;width:100%;max-width:440px}.numrow input{flex:1}
-.step{width:46px;height:46px;border-radius:12px;border:2px solid var(--line);background:var(--bg);font-size:1.3rem;cursor:pointer}
-.fb{border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
-.fb.good{background:var(--ok-soft)} .fb.bad{background:var(--rose-soft)} .fb.close{background:var(--amber-soft)}
-.fb .h{font-weight:800;font-size:1.1rem}
-.hud{display:flex;gap:10px;align-items:center}
-.pill{font-family:var(--f-mono);font-size:.82rem;padding:4px 10px;border-radius:999px;background:var(--line)}
-.pill.hot{background:var(--amber);color:var(--bg)}
-.dots{display:flex;gap:3px;flex:1;min-width:120px}.dots i{flex:1;height:6px;border-radius:3px;background:var(--line)}.dots i.d{background:var(--teal)}.dots i.m{background:var(--rose)}.dots i.c{background:var(--amber)}
-.rail{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:2px}
-.rail .s{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;position:relative;min-width:0}
-.rail .s::before{content:"";position:absolute;top:16px;left:50%;width:100%;height:3px;background:var(--line)}
-.rail .s:first-child::before{display:none}
-.rail .dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--panel);border:2px solid var(--line);font:500 .8rem var(--f-mono);position:relative;z-index:1}
-.rail .nm{font-size:.72rem;font-weight:600;line-height:1.1}
-.rail .s.ok .dot{background:var(--ok);border-color:var(--ok);color:var(--bg)} .rail .s.bad .dot{background:var(--rose);border-color:var(--rose);color:var(--bg)}
-.rail .s.now .dot{border-color:var(--amber);box-shadow:0 0 0 5px var(--amber-soft)} .rail .s.skip{opacity:.35}
-.rail .s.empty .dot{border-style:dashed} .rail .s.empty .nm{visibility:hidden}
-.rule{border-inline-start:3px solid var(--teal);background:var(--teal-soft);border-radius:10px;padding:8px 12px;font-size:.88rem}
-.rule b{display:block;font-size:.75rem;color:var(--teal)}
-.week{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
-.day{width:26px;height:26px;border-radius:7px;background:var(--rose-soft);font:500 .7rem var(--f);display:grid;place-items:center}
-.day.dry{background:var(--teal);color:var(--bg)}
-.bubble{background:var(--bg);border:2px solid var(--line);border-radius:18px 4px 18px 18px;padding:12px 14px;font-weight:600;font-size:clamp(1.05rem,3.2vw,1.3rem);line-height:1.3;flex:1;min-width:0}
-.bubble .kind{display:block;font-size:.75rem;color:var(--rose);margin-bottom:4px;font-weight:600}
-.press{display:inline-block;background:var(--rose);color:var(--bg);font-weight:700;font-size:.78rem;padding:2px 10px;border-radius:999px;margin-bottom:6px}
-.exr{display:flex;gap:12px;align-items:flex-start}.exr svg{width:56px;height:56px;flex:none}
-.kp{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:9px 12px;background:var(--bg);min-height:48px}
-.kp .n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:500 .8rem var(--f-mono);background:var(--line)}
-.kp.hid .tx{color:var(--muted);letter-spacing:.2em}
-.kp.cur{border-color:var(--amber)} .kp.ctx{opacity:.55;border-style:dashed}
-.kp.said{border-color:var(--ok);background:var(--ok-soft)} .kp.said .n{background:var(--ok);color:var(--bg)}
-.kp.part{border-color:var(--amber);background:var(--amber-soft)} .kp.part .n{background:var(--amber);color:var(--bg)}
-.kp.miss{border-color:var(--rose);background:var(--rose-soft)} .kp.miss .n{background:var(--rose);color:var(--bg)}
-.judge{display:flex;gap:6px;flex-wrap:wrap}
-.judge button{border:2px solid var(--line);background:var(--panel);border-radius:10px;padding:5px 10px;cursor:pointer;font-weight:600;font-size:.85rem;white-space:nowrap}
-.judge .y{border-color:var(--ok)} .judge .p{border-color:var(--amber)} .judge .x{border-color:var(--rose)}
-.frame{border-inline-start:3px solid var(--amber);background:var(--amber-soft);border-radius:10px;padding:8px 12px;font-size:.92rem}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mode{border:2px solid var(--line);background:var(--bg);border-radius:16px;padding:16px;text-align:start;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-width:0;transition:transform .15s,border-color .15s}
+.mode:hover{border-color:var(--amber);transform:translateY(-2px)}
+.mode b{font-size:1.25rem;font-weight:800}
+.mode.reel{background:linear-gradient(135deg,var(--panel),var(--teal-soft));border-color:var(--teal)}
+.mode.game{background:linear-gradient(135deg,var(--panel),var(--amber-soft));border-color:var(--amber)}
+.mode .note{line-height:1.4}
+.meter{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.meter i{display:block;height:100%;background:var(--amber)}
+.sum{display:flex;flex-direction:column;gap:12px}
 .sum h3{font-size:1.05rem}
 .sum ul{margin:0;padding-inline-start:1.2em;display:flex;flex-direction:column;gap:4px}
-.pearl{border-inline-start:3px solid var(--teal);background:var(--teal-soft);border-radius:10px;padding:8px 12px;font-size:.9rem}
-.clock{font-weight:800;font-size:2rem}
-@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-10px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
-@media (max-width:760px){.modes{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.opts{grid-template-columns:minmax(0,1fr)}.kp{grid-template-columns:28px 1fr}.kp .judge{grid-column:1/-1;justify-content:flex-end}.rail .nm{font-size:.6rem}}
+.pearl2{border-inline-start:3px solid var(--teal);background:var(--teal-soft);border-radius:10px;padding:8px 12px;font-size:.9rem}
+@media (max-width:620px){.modes{grid-template-columns:minmax(0,1fr)}}
 </style>
 <script>
-/* ---------- pack player ---------- */
+/* ---------- pack player: the reel and the game ---------- */
 const PLAYER={active:false,id:null,keys:null};
-function exitPlayer(){PLAYER.active=false;PLAYER.keys=null;speechCancel();location.hash='t-'+PLAYER.id;}
-function stage(title){PLAYER.active=true;if(location.hash!=='#p-'+PLAYER.id)history.replaceState(null,'','#p-'+PLAYER.id);
-  const v=$('#view');v.innerHTML='';const box=h('section',{class:'play'});
-  box.append(h('div',{class:'ptop'},h('button',{class:'btn small ghost',onclick:exitPlayer},'→ חזרה לנושא'),h('b',{},title)));v.append(box);window.scrollTo(0,0);return box;}
-addEventListener('keydown',e=>{if(!PLAYER.active||!PLAYER.keys)return;if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;if(e.target.tagName==='BUTTON'&&(e.key==='Enter'||e.key===' ')&&!e.target.classList.contains('nx'))return;if(PLAYER.keys(e))e.preventDefault();});
+function exitPlayer(){try{GAME.stop();}catch(e){}PLAYER.active=false;PLAYER.keys=null;location.hash='t-'+PLAYER.id;}
+function stage(){PLAYER.active=true;if(location.hash!=='#p-'+PLAYER.id)history.replaceState(null,'','#p-'+PLAYER.id);const v=$('#view');v.innerHTML='';const box=h('section');v.append(box);window.scrollTo(0,0);return box;}
+addEventListener('keydown',e=>{if(!PLAYER.active||!PLAYER.keys)return;const tg=e.target.tagName;if(tg==='INPUT'&&e.key.startsWith('Arrow'))return;if(tg==='TEXTAREA'||tg==='SELECT')return;if(tg==='BUTTON'&&(e.key==='Enter'||e.key===' ')&&!e.target.classList.contains('nx'))return;if(PLAYER.keys(e))e.preventDefault();});
 function recordRecall(id,pct){T(id).rc={d:today(),pct:Math.round(pct)};}
 const srKeyCount=id=>{const sr=(S.packs[id]||{}).sr||{},now=Date.now();let d=0,a=0;for(const k in sr){a++;if(sr[k].due<=now)d++;}return [d,a];};
 
 function packCard(id){
   const p=PACKS[id];
   if(!p)return h('div',{class:'card'},h('h3',{},'חבילת לימוד'),h('div',{class:'empty'},'לנושא הזה עוד אין חבילה.'),
-    h('div',{class:'note'},'כדי ליצור חבילה, פתחו סשן של Claude Code במאגר afp-cme-quizzes והקלידו ',h('span',{class:'num'},'/shlav-b-pack '+id),'. המנוע קורא את מקורות העוגן מתיקיית ״שלב א״ ב-Drive, כותב חבילה בעברית ומעלה אותה לכאן. היא תופיע בדף הזה בלי לרענן.'));
-  const pk=PK(id),drills=p.drills||[],mast=drills.filter(d=>(pk.box[d.id]||0)>=3).length;
-  const cases=(p.pathway&&p.pathway.cases)||[],seen=cases.filter(c=>pk.cases[c.id]).length;
-  const oq=(p.oral||[]).flatMap(s=>s.q),ocov=oq.length?oq.reduce((a,q)=>a+(pk.oral[q.id]||0),0)/oq.length:0;
-  const [due,all]=srKeyCount(id);
-  const m=(title,desc,pct,fn,dis)=>h('button',{class:'mode',onclick:fn,disabled:dis},h('b',{},title),h('span',{class:'note'},desc),pct!=null?h('div',{class:'meter'},h('i',{style:'width:'+Math.round(pct*100)+'%'})):null);
+    h('div',{class:'note'},'כדי ליצור חבילה, פתחו סשן של Claude Code במאגר afp-cme-quizzes והקלידו ',h('span',{class:'num'},'/shlav-b-pack '+id),'. המנוע קורא את מקורות העוגן מתיקיית ״שלב א״ ב-Drive, כותב סרטון ומשחק בעברית ומעלה אותם לכאן. החבילה תופיע בדף הזה בלי לרענן.'));
+  const pk=PK(id),drills=p.drills||[],mast=drills.filter(d=>((pk.box||{})[d.id]||0)>=3).length,stars=Object.values(pk.stars||{}).reduce((a,b)=>a+b,0);
+  const [due,all]=srKeyCount(id),ch=(p.reel&&p.reel.chapters)||[];
   return h('div',{class:'card'},h('div',{class:'row'},h('h3',{},'חבילת לימוד'),h('span',{class:'sp'}),h('span',{class:'note'},p.sources.map(s=>s.kind+' '+s.year).join(' · '))),
-    h('div',{class:'note'},p.summary&&p.summary.oneLiner),
+    p.summary?h('div',{class:'note'},p.summary.oneLiner):null,
     h('div',{class:'modes'},
-      p.summary?m('סיכום',p.summary.sections.length+' נושאים, מהמקור',null,()=>runSummary(id)):null,
-      drills.length?m('תרגול עובדות',mast+'/'+drills.length+' ננעלו · בלי טיימר',drills.length?mast/drills.length:0,()=>runDrills(id)):null,
-      cases.length?m('מסלול מקרים',seen+'/'+cases.length+' מטופלות · '+p.pathway.stations.length+' תחנות',seen/cases.length,()=>runCases(id)):null,
-      oq.length?m('בחינה בעל פה',oq.length+' שאלות + שאלות המשך · כיסוי '+Math.round(ocov*100)+'%',ocov,()=>runOralMenu(id)):null),
-    all?h('div',{class:'row'},h('span',{class:'note'},'חזרה מרווחת: '+due+' לחזרה עכשיו, '+(all-due)+' ממתינות, '+(pk.srDone||0)+' ננעלו'),h('span',{class:'sp'}),due?h('button',{class:'btn rose small',onclick:()=>runReview(id)},'סבב חזרה'):null):null);
+      ch.length?h('button',{class:'mode reel',onclick:()=>runReel(id)},h('span',{class:'lbl',style:'color:var(--teal)'},'▶ לצפות ולגלול'),h('b',{},'סרטון אינטראקטיבי'),h('span',{class:'note'},ch.length+' פרקים עם אנימציות: '+ch.slice(0,4).map(c=>c.label).join(' · ')+(ch.length>4?' …':''))):null,
+      h('button',{class:'mode game',onclick:()=>runGame(id)},h('span',{class:'lbl',style:'color:var(--amber)'},'לשחק ולהיבחן'),h('b',{},'המשחק'),
+        h('span',{class:'note'},[drills.length?'משמרות עם לבבות וקומבו':null,p.pathway?'מסלול מקרים':null,p.oral?'בחינה בעל פה עם שאלות המשך':null].filter(Boolean).join(' · ')),
+        drills.length?h('div',{class:'meter'},h('i',{style:'width:'+Math.round(mast/drills.length*100)+'%'})):null,
+        h('span',{class:'note'},mast+'/'+drills.length+' עובדות ננעלו · '+stars+' כוכבים'))),
+    h('div',{class:'row'},p.summary?h('button',{class:'btn small ghost',onclick:()=>runSummary(id)},'דף סיכום'):null,h('span',{class:'sp'}),
+      all?h('span',{class:'note'},'חזרה מרווחת: '+due+' עכשיו · '+(all-due)+' ממתינות · '+(pk.srDone||0)+' ננעלו'):null,
+      due?h('button',{class:'btn rose small',onclick:()=>runGame(id,'review')},'סבב חזרה'):null));
 }
-
-/* --- summary --- */
+function runReel(id){PLAYER.id=id;const box=stage();REEL.mount(box,PACKS[id],exitPlayer);}
+function runGame(id,start){PLAYER.id=id;const box=stage();GAME.open(box,id,exitPlayer,start);}
 function runSummary(id){
-  PLAYER.id=id;const p=PACKS[id],box=stage('סיכום · '+TOPIC[id].name);
-  box.append(h('div',{class:'card'},h('div',{style:'font-weight:600'},p.summary.oneLiner),h('div',{class:'note'},'מקורות: '+p.sources.map(s=>s.label).join(' · '))));
-  p.summary.sections.forEach(s=>box.append(h('div',{class:'card sum'},h('h3',{},s.h),h('ul',{},s.points.map(x=>h('li',{},x))),s.pearl?h('div',{class:'pearl'},h('b',{},'פנינה: '),s.pearl):null)));
-  const x=T(id);
-  box.append(h('div',{class:'row'},x.s===0?h('button',{class:'btn',onclick:()=>{x.s=1;x.next=addDays(today(),3);save();toast('סומן ״קראתי״. חזרה ב-'+fmtD(x.next));exitPlayer();}},'סיימתי לקרוא · סמן ״קראתי״'):null,PACKS[id].drills?h('button',{class:'btn ghost',onclick:()=>runDrills(id)},'לתרגול ←'):null));
+  PLAYER.id=id;const p=PACKS[id],box=stage();PLAYER.keys=null;const s=h('div',{class:'sum'});box.append(s);
+  s.append(h('div',{class:'row'},h('button',{class:'btn small ghost',onclick:exitPlayer},'→ חזרה לנושא'),h('b',{},'דף סיכום · '+TOPIC[id].name)));
+  s.append(h('div',{class:'card'},h('div',{style:'font-weight:600'},p.summary.oneLiner),h('div',{class:'note'},'מקורות: '+p.sources.map(x=>x.label).join(' · '))));
+  p.summary.sections.forEach(x=>s.append(h('div',{class:'card'},h('h3',{},x.h),h('ul',{},x.points.map(y=>h('li',{},y))),x.pearl?h('div',{class:'pearl2'},h('b',{},'פנינה: '),x.pearl):null)));
+  const t=T(id);if(t.s===0)s.append(h('div',{class:'row'},h('button',{class:'btn',onclick:()=>{t.s=1;t.next=addDays(today(),3);save();toast('סומן ״קראתי״. חזרה ב-'+fmtD(t.next));exitPlayer();}},'סיימתי לקרוא · סמן ״קראתי״')));
 }
-
-/* --- drills (no timer) --- */
-function runDrills(id){
-  PLAYER.id=id;ac();
-  const p=PACKS[id],pk=PK(id);
-  const pick=shuffle(p.drills.slice()).sort((a,b)=>(pk.box[a.id]||0)-(pk.box[b.id]||0)).slice(0,12);
-  const G={deck:shuffle(pick).map(it=>({it,retry:false})),i:0,streak:0,best:0,score:0,first:0,uniq:pick.length,missed:[]};
-  const box=stage('תרגול · '+TOPIC[id].name);
-  const hud=h('div',{class:'hud'}),body=h('div');box.append(hud,body);
-  const paintHud=()=>{const mult=Math.min(5,1+Math.floor(G.streak/3));hud.replaceChildren(h('span',{class:'pill'+(mult>1?' hot':'')},'×'+mult+(G.streak>1?' · רצף '+G.streak:'')),h('div',{class:'dots'},G.deck.map((d,i)=>h('i',{class:i<G.i?(d.res==='wrong'?'m':'d'):i===G.i?'c':''}))),h('b',{class:'num'},G.score));};
-  const next=()=>{if(G.i>=G.deck.length)return end();const d=G.deck[G.i],it=d.it;paintHud();
-    const card=h('div',{class:'pcard'});
-    const decks=p.decks||{};
-    card.append(h('p',{class:'q'},it.k==='swipe'?({mf:'מיתוס או עובדה?',os:'להזמין או לא?',rf:'דגל אדום?'}[it.d]||'נכון או לא?'):it.q));
-    let done=false;
-    const resolve=(res,label,at)=>{if(done)return;done=true;d.res=res;
-      const mult=Math.min(5,1+Math.floor(G.streak/3));let pts=0;
-      if(res==='right'){G.streak++;G.best=Math.max(G.best,G.streak);pts=100*Math.min(5,1+Math.floor(G.streak/3));SFX.right(G.streak);const [x,y]=centerOf(at);burst(x,y);if(!d.retry){G.first++;pk.box[it.id]=Math.min(3,(pk.box[it.id]||0)+1);}if([5,10,15].includes(G.streak)){banner(G.streak+' ברצף!');SFX.fanfare();}}
-      else if(res==='close'){pts=50*mult;SFX.close();}
-      else{G.streak=0;SFX.wrong();card.classList.add('shake');pk.box[it.id]=0;if(!G.missed.includes(it))G.missed.push(it);if(!d.retry)G.deck.splice(Math.min(G.deck.length,G.i+4),0,{it,retry:true});}
-      G.score+=pts;save();paintHud();
-      const ans=it.k==='pick'?it.o[it.a]:it.k==='swipe'?(decks[it.d]||['לא','כן'])[it.a]:(it.lo===it.hi?it.lo:it.lo+'–'+it.hi)+(it.u||'');
-      const nb=h('button',{class:'btn nx',onclick:go},'הבא ←');
-      card.append(h('div',{class:'fb '+(res==='right'?'good':res==='close'?'close':'bad')},h('div',{class:'row'},h('span',{class:'h'},res==='right'?'נכון!':res==='close'?'קרוב':'לא הפעם'),res!=='right'?h('span',{class:'note'},'ענית: '+label+' · התשובה: '+ans):null,h('span',{class:'sp'}),nb),h('div',{},it.w)));
-      let went=false;function go(){if(went)return;went=true;G.i++;next();}
-      PLAYER.keys=e=>{if(e.key==='Enter'||e.key===' '){go();return true;}};setTimeout(()=>nb.focus({preventScroll:true}),50);
-    };
-    if(it.k==='pick'){
-      const order=it.fixed?it.o.map((_,i)=>i):shuffle(it.o.map((_,i)=>i));
-      const btns=order.map((oi,pos)=>h('button',{class:'opt',onclick:()=>choose(pos)},h('kbd',{},pos+1),h('span',{},it.o[oi])));
-      function choose(pos){if(done)return;btns.forEach((b,q)=>{b.disabled=true;if(order[q]===it.a)b.classList.add('right');});if(order[pos]!==it.a)btns[pos].classList.add('wrong');resolve(order[pos]===it.a?'right':'wrong',it.o[order[pos]],btns[pos]);}
-      card.append(h('div',{class:'opts'},btns));
-      PLAYER.keys=e=>{const n=+e.key;if(n>=1&&n<=btns.length){choose(n-1);return true;}};
-    }else if(it.k==='swipe'){
-      const L=decks[it.d]||['לא','כן'];
-      const b0=h('button',{class:'opt',onclick:()=>dec(0)},h('kbd',{},'1'),L[0]),b1=h('button',{class:'opt',onclick:()=>dec(1)},h('kbd',{},'2'),L[1]);
-      function dec(c){if(done)return;b0.disabled=b1.disabled=true;(it.a?b1:b0).classList.add('right');if(c!==it.a)(c?b1:b0).classList.add('wrong');resolve(c===it.a?'right':'wrong',L[c],c?b1:b0);}
-      card.append(h('div',{class:'stmt'},it.q),h('div',{class:'opts'},b0,b1));
-      PLAYER.keys=e=>{if(e.key==='1'){dec(0);return true;}if(e.key==='2'){dec(1);return true;}};
-    }else{
-      let v=it.start!=null?it.start:it.min;const val=h('div',{class:'val num'});const inp=h('input',{type:'range',id:'numIn',min:it.min,max:it.max,step:it.step||1,value:v,'aria-label':'התשובה שלך'});
-      const setV=n=>{if(done)return;v=cl(Math.round(n/(it.step||1))*(it.step||1),it.min,it.max);inp.value=v;val.textContent=v+(it.u||'');};
-      inp.addEventListener('input',()=>setV(+inp.value));setV(v);
-      const lock=h('button',{class:'btn',onclick:sub},'נעל תשובה');
-      function sub(){if(done)return;lock.disabled=true;inp.disabled=true;const dd=v<it.lo?it.lo-v:v>it.hi?v-it.hi:0;resolve(dd===0?'right':dd<=(it.near||0)?'close':'wrong',v+(it.u||''),val);}
-      card.append(h('div',{class:'numbox'},val,h('div',{class:'numrow'},h('button',{class:'step',onclick:()=>setV(v+(it.step||1)),'aria-label':'הוסף'},'+'),inp,h('button',{class:'step',onclick:()=>setV(v-(it.step||1)),'aria-label':'הפחת'},'−')),lock));
-      PLAYER.keys=e=>{if(e.key==='ArrowUp'||e.key==='ArrowLeft'){setV(v+(it.step||1));return true;}if(e.key==='ArrowDown'||e.key==='ArrowRight'){setV(v-(it.step||1));return true;}if(e.key==='Enter'){sub();return true;}};
-    }
-    body.replaceChildren(card);
-  };
-  const end=()=>{PLAYER.keys=null;const acc=G.uniq?G.first/G.uniq:0;recordRecall(id,acc*100);S.xp=(S.xp||0)+G.score;save();
-    body.replaceChildren(h('div',{class:'pcard',style:'align-items:center;text-align:center'},h('h2',{},acc>=.9?'סבב מושלם':'סבב הושלם'),h('div',{class:'num',style:'font-size:3rem;font-weight:800'},Math.round(acc*100)+'%'),h('div',{class:'note'},'דיוק בניסיון ראשון · רצף שיא '+G.best+' · '+G.score+' נקודות'),
-      G.missed.length?h('div',{class:'card',style:'text-align:start;width:100%;box-sizing:border-box'},h('b',{},'לחזור על אלה'),h('ul',{class:'ol',style:'list-style:disc'},G.missed.map(it=>h('li',{},it.q,h('div',{class:'note'},it.w))))):null,
-      h('div',{class:'row'},h('button',{class:'btn',onclick:()=>runDrills(id)},'סבב נוסף'),h('button',{class:'btn ghost',onclick:exitPlayer},'חזרה לנושא'))));
-    if(acc>=.9){rain();SFX.fanfare();}};
-  next();
-}
-
-/* --- pathway cases --- */
-function railEl(stations,states){const r=h('div',{class:'rail',style:'--n:'+stations.length});stations.forEach((s,i)=>{const st=states[i]||'';r.append(h('div',{class:'s '+st},h('span',{class:'dot'},st==='ok'?'✓':st==='bad'?'✗':i+1),h('span',{class:'nm'},s.t)));});return r;}
-function runCases(id){
-  PLAYER.id=id;ac();const p=PACKS[id],pk=PK(id),W=p.pathway,SN=W.stations;
-  const order=shuffle(W.cases.slice()).sort((a,b)=>(pk.cases[a.id]||0)-(pk.cases[b.id]||0)).slice(0,3);
-  const C={ci:0,right:0,total:0};
-  const box=stage(W.name+' · '+TOPIC[id].name);const body=h('div',{class:'play'});box.append(body);
-  const DAYS=['א','ב','ג','ד','ה','ו','ש'];
-  const week=n=>h('div',{class:'week'},h('span',{class:'lbl'},'ימים יבשים / טובים בשבוע'),DAYS.map((d,i)=>h('span',{class:'day'+(i<n?' dry':'')},d)));
-  function playCase(){
-    const c=order[C.ci];let si=0,good=1;const res=[];
-    const step=()=>{const s=c.steps[si],k=SN.findIndex(x=>x.k===s.st),S0=SN[k];
-      const states=SN.map((x,i)=>{const r=[...res].reverse().find(r=>r.st===x.k);return r?(r.ok?'ok':'bad'):(c.steps.some(y=>y.st===x.k)?'':'skip');});if(!states[k])states[k]='now';
-      const order2=shuffle(s.o.map((_,i)=>i));let done=false;
-      const card=h('div',{class:'pcard'});
-      const btns=order2.map((oi,pos)=>h('button',{class:'opt',onclick:()=>ch(pos)},h('kbd',{},pos+1),h('span',{},s.o[oi])));
-      card.append(h('div',{},h('b',{},c.name+', '+c.age),h('div',{},c.story)),week(good),h('div',{class:'row'},h('span',{class:'lbl',style:'color:var(--teal)'},'תחנה '+(k+1)),h('b',{},S0.t)),h('p',{class:'q'},s.q),h('div',{class:'opts'},btns));
-      body.replaceChildren(h('div',{class:'note'},'מטופלת '+(C.ci+1)+' מתוך '+order.length),railEl(SN,states),card);
-      function ch(pos){if(done)return;done=true;const ok=order2[pos]===s.a;btns.forEach((b,q)=>{b.disabled=true;if(order2[q]===s.a)b.classList.add('right');});
-        const pr=pk.proc[s.st]||[0,0];pr[1]++;C.total++;if(ok){pr[0]++;C.right++;good=Math.min(7,good+1);SFX.right(si+1);const [x,y]=centerOf(btns[pos]);burst(x,y);}else{btns[pos].classList.add('wrong');SFX.wrong();card.classList.add('shake');}
-        pk.proc[s.st]=pr;res.push({st:s.st,ok});save();
-        const last=si+1>=c.steps.length;const nb=h('button',{class:'btn nx',onclick:go},last?'לסיכום המקרה ←':'לתחנה הבאה ←');
-        card.append(h('div',{class:'fb '+(ok?'good':'bad')},h('div',{class:'row'},h('span',{class:'h'},ok?'החלטה טובה':'לא הפעם'),h('span',{class:'sp'}),nb),h('div',{},s.w),h('div',{class:'rule'},h('b',{},'תחנה '+(k+1)+' · '+S0.t),S0.rule)));
-        let went=false;function go(){if(went)return;went=true;si++;if(si<c.steps.length)step();else chart();}
-        PLAYER.keys=e=>{if(e.key==='Enter'||e.key===' '){go();return true;}};setTimeout(()=>nb.focus({preventScroll:true}),50);}
-      PLAYER.keys=e=>{const n=+e.key;if(n>=1&&n<=btns.length){ch(n-1);return true;}};
-    };
-    const chart=()=>{pk.cases[c.id]=(pk.cases[c.id]||0)+1;save();const allOk=res.every(r=>r.ok);const last=C.ci+1>=order.length;
-      body.replaceChildren(h('div',{class:'pcard'},h('h3',{},'התיק של '+c.name),h('div',{},c.out),week(good),h('b',{},'המסלול שעברה'),
-        h('ol',{class:'ol'},c.steps.map((s,i)=>h('li',{},h('b',{},SN.find(x=>x.k===s.st).t+': '),s.o[s.a],res[i].ok?'':' ✗'))),
-        h('div',{class:'row'},h('button',{class:'btn',onclick:()=>{C.ci++;last?rebuild():playCase();}},last?'לשחזר את המסלול ←':'למטופלת הבאה ←'))));
-      if(allOk){banner('מסלול מושלם');SFX.fanfare();rain(50);}};
-    step();
-  }
-  function rebuild(){let n=0,miss=0;const states=SN.map(()=>'empty');const rb=h('div');const draw=()=>rb.replaceChildren(railEl(SN,states));draw();
-    const pool=h('div',{class:'row',style:'justify-content:center'});
-    shuffle(SN.map((_,i)=>i)).forEach(i=>{const b=h('button',{class:'opt',onclick:()=>{if(i===n){states[n]='ok';n++;draw();b.style.visibility='hidden';SFX.right(n);if(n===SN.length)setTimeout(()=>fin(miss),500);}else{miss++;SFX.wrong();b.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:300});}}},SN[i].t);pool.append(b);});
-    body.replaceChildren(h('div',{class:'pcard'},h('h3',{},'לשחזר את המסלול מהזיכרון'),h('span',{class:'note'},'הקישו על התחנות בסדר הנכון.'),rb,pool));PLAYER.keys=null;}
-  function fin(miss){const pct=C.total?C.right/C.total*100:0;recordRecall(id,pct);S.xp=(S.xp||0)+C.right*150;save();
-    const pr=SN.map(s=>{const x=pk.proc[s.k];return x&&x[1]?Math.round(x[0]/x[1]*100)+'%':'–';});
-    body.replaceChildren(h('div',{class:'pcard',style:'align-items:center;text-align:center'},h('h2',{},miss?'המסלול שוחזר':'המסלול ננעל'),h('div',{class:'num',style:'font-size:2.6rem;font-weight:800'},C.right+'/'+C.total),h('div',{class:'note'},'החלטות טובות · '+(miss?miss+' טעויות בשחזור':'שחזור מושלם')),
-      h('table',{class:'tbl'},h('tbody',{},SN.map((s,i)=>h('tr',{},h('td',{},(i+1)+'. '+s.t),h('td',{class:'num'},pr[i]))))),
-      h('div',{class:'row'},h('button',{class:'btn',onclick:()=>runCases(id)},'עוד שלוש מטופלות'),h('button',{class:'btn ghost',onclick:exitPlayer},'חזרה לנושא'))));
-    if(!miss){rain(100);SFX.fanfare();}}
-  playCase();
-}
-
-/* --- oral boards with follow-ups and spaced repetition --- */
-const DAYMS=20*3600*1000;
-let SPEAK=null;
-function speechCancel(){try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e){}}
-function sayAloud(t){if(S.muted)return;try{if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='he-IL';const v=speechSynthesis.getVoices().find(x=>/^he|^iw/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}}
-function examiner(m){const brow=m==='up'?'M17 20 Q22 16 26 20 M34 20 Q38 16 43 20':m==='down'?'M17 18 L26 22 M43 18 L34 22':'M17 20 L26 20 M34 20 L43 20',mouth=m==='up'?'M23 40 Q30 46 37 40':m==='down'?'M23 43 Q30 38 37 43':'M24 41 L36 41';
-  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 60 60');s.setAttribute('aria-hidden','true');
-  s.innerHTML='<circle cx="30" cy="30" r="29" style="fill:var(--rose-soft)"/><circle cx="30" cy="31" r="18" fill="#D9A07A"/><path d="M12 28 Q12 9 30 9 Q48 9 48 28 Q42 17 30 17 Q18 17 12 28Z" fill="#C9C2BA"/><path d="'+brow+'" stroke="#2a1d18" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="22" cy="28" r="6" style="fill:none;stroke:var(--ink);stroke-width:2"/><circle cx="38" cy="28" r="6" style="fill:none;stroke:var(--ink);stroke-width:2"/><circle cx="22" cy="28" r="1.8" fill="#2a1d18"/><circle cx="38" cy="28" r="1.8" fill="#2a1d18"/><path d="'+mouth+'" stroke="#2a1d18" stroke-width="2.4" fill="none" stroke-linecap="round"/>';return s;}
-function oralIndex(id){const p=PACKS[id],X={};(p.oral||[]).forEach(s=>s.q.forEach(q=>{X[q.id]={key:q.id,k:q.k,q:q.q,f:q.f,p:q.p,st:s.t,fuOf:q.fu?q.id+'F':null};if(q.fu)X[q.id+'F']={key:q.id+'F',k:'שאלת המשך',q:q.fu.q,f:q.fu.f,p:q.fu.p,st:s.t,fu:true};}));return X;}
-function runOralMenu(id){PLAYER.id=id;const p=PACKS[id],pk=PK(id),box=stage('בחינה בעל פה · '+TOPIC[id].name);
-  box.append(h('div',{class:'card'},h('div',{},'הבוחן שואל, אתם עונים בקול מהזיכרון. אחר כך הופכים את נקודות המפתח ומסמנים בכנות: אמרתי, חלקית או פספסתי. אחרי כל תשובה מגיעה שאלת המשך, וכל מה שפספסתם חוזר בחזרה המרווחת.')),
-    h('div',{class:'modes'},p.oral.map(s=>{const c=s.q.reduce((a,q)=>a+(pk.oral[q.id]||0),0)/s.q.length;return h('button',{class:'mode',onclick:()=>runOral(id,s.id)},h('b',{},s.t),h('span',{class:'note'},s.d),h('div',{class:'meter'},h('i',{style:'width:'+Math.round(c*100)+'%'})),h('span',{class:'note'},'כיסוי מיטבי '+Math.round(c*100)+'%'));})));}
-function runOral(id,sid){const X=oralIndex(id),s=PACKS[id].oral.find(x=>x.id===sid);oralFlow(id,s.t,s.q.map(q=>({...X[q.id],main:true})),false);}
-function runReview(id){const X=oralIndex(id),sr=PK(id).sr,now=Date.now(),by={};for(const k in sr){const e=sr[k];if(e.due<=now&&X[e.q])(by[e.q]=by[e.q]||[]).push(e.i);}
-  const q=shuffle(Object.keys(by)).slice(0,6).map(k=>({...X[k],hide:by[k].sort((a,b)=>a-b),review:true}));if(!q.length){toast('אין כרגע נקודות לחזרה');return;}PLAYER.id=id;oralFlow(id,'חזרה מרווחת',q,true);}
-function startGlobalReview(){const ids=Object.keys(S.packs).filter(id=>PACKS[id]&&srKeyCount(id)[0]);if(!ids.length){toast('אין כרגע נקודות לחזרה');return;}location.hash='t-'+ids[0];setTimeout(()=>runReview(ids[0]),30);}
-function srMark(pk,item,idx,v){const key=item.key+'#'+idx,e=pk.sr[key];
-  if(v===1){if(!e)return null;e.streak++;if(e.streak>=2){delete pk.sr[key];pk.srDone=(pk.srDone||0)+1;return 'locked';}e.due=Date.now()+DAYMS;return 'up';}
-  pk.sr[key]={q:item.key,i:idx,streak:0,due:Date.now()};return 'added';}
-function oralFlow(id,title,queue,review){
-  ac();const pk=PK(id),X=oralIndex(id);const O={i:0,said:0,total:0,full:0,locked:0,added:0,missed:[]};
-  const box=stage((review?'':'בעל פה · ')+title);const body=h('div',{class:'play'});box.append(body);let clk=0;
-  const isHid=(it,i)=>!it.hide||it.hide.includes(i);
-  function ask(){const it=queue[O.i];clearInterval(clk);const t0=Date.now();const clock=h('span',{class:'clock num'},'0:00');
-    clk=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);clock.textContent=Math.floor(s/60)+':'+pad2(s%60);},500);
-    const nh=it.p.filter((_,i)=>isHid(it,i)).length;
-    const done=h('button',{class:'btn nx',onclick:()=>flip(Math.floor((Date.now()-t0)/1000))},'סיימתי לענות');
-    const kind=it.review?'חזרה מרווחת · '+it.st:it.fu?'הבוחן לוחץ · שאלת המשך':it.k+' · '+it.st;
-    body.replaceChildren(h('div',{class:'pcard'},h('div',{class:'exr'},examiner(it.fu&&!it.review?'down':'flat'),h('div',{class:'bubble'},it.fu&&!it.review?h('span',{class:'press'},'ואם...?'):null,h('span',{class:'kind'},kind),it.q)),
-      h('div',{class:'row'},clock,h('span',{class:'note',style:'flex:1;min-width:12em'},it.review?'הנקודות שכבר אמרתם גלויות. השלימו בקול את '+nh+' החסרות.':'ענו בקול, במשפטים מלאים. '+nh+' נקודות מפתח מוסתרות. אין מגבלת זמן.')),
-      h('div',{class:'play',style:'gap:8px'},it.p.map((p,i)=>isHid(it,i)?h('div',{class:'kp hid'},h('span',{class:'n'},i+1),h('span',{class:'tx'},'• • • • •')):h('div',{class:'kp ctx'},h('span',{class:'n'},i+1),h('span',{},p)))),
-      h('div',{class:'row'},done,h('button',{class:'btn ghost',onclick:()=>sayAloud(it.q)},'השמע את השאלה'))));
-    if(it.fu&&!it.review){tone(330,.18,'triangle',.11);tone(247,.3,'triangle',.11,.16);}
-    PLAYER.keys=e=>{if(e.key==='Enter'||e.key===' '){done.click();return true;}};setTimeout(()=>done.focus({preventScroll:true}),50);}
-  function flip(secs){clearInterval(clk);speechCancel();const it=queue[O.i];const face=h('span',{},examiner('flat'));
-    const order=it.p.map((_,i)=>i).filter(i=>isHid(it,i));
-    const rows=it.p.map((p,i)=>isHid(it,i)?h('div',{class:'kp hid'},h('span',{class:'n'},i+1),h('span',{class:'tx'},'• • • • •')):h('div',{class:'kp ctx'},h('span',{class:'n'},i+1),h('span',{},p)));
-    const foot=h('div');
-    body.replaceChildren(h('div',{class:'pcard'},h('div',{class:'exr'},face,h('div',{class:'bubble'},h('span',{class:'kind'},'דיברתם '+Math.floor(secs/60)+':'+pad2(secs%60)+' · היו כנים'),'אמרתם את זה? הפכו כל נקודה.')),h('div',{class:'play',style:'gap:8px'},rows),foot));
-    let j=0,said=0,full=0;const miss=[];
-    function reveal(){if(j>=order.length)return verdict();const r=rows[order[j]];r.className='kp cur';r.children[1].textContent=it.p[order[j]];SFX.tap();
-      r.append(h('div',{class:'judge'},h('button',{class:'y',onclick:()=>mark(1)},'אמרתי (1)'),h('button',{class:'p',onclick:()=>mark(.5)},'חלקית (2)'),h('button',{class:'x',onclick:()=>mark(0)},'פספסתי (3)')));r.scrollIntoView({block:'nearest'});}
-    function mark(v){const idx=order[j],r=rows[idx];if(!r||!r.classList.contains('cur'))return;r.lastChild.remove();r.className='kp '+(v===1?'said':v>0?'part':'miss');said+=v;
-      const res=srMark(pk,it,idx,v===1?1:0);if(res==='added')O.added++;
-      if(v===1){full++;SFX.right(full);const [x,y]=centerOf(r.firstChild);burst(x,y,res==='locked'?36:12);face.replaceChildren(examiner('up'));if(res==='locked')O.locked++;}
-      else{miss.push(it.p[idx]+(v>0?' (חלקית)':''));SFX.close();face.replaceChildren(examiner(v>0?'flat':'down'));}
-      j++;save();setTimeout(reveal,v===1?240:180);}
-    function verdict(){const n=order.length,cov=n?said/n:1,complete=full===n;O.said+=said;O.total+=n;if(complete)O.full++;if(miss.length)O.missed.push({q:it.q,m:miss});
-      if(!it.review)pk.oral[it.key]=Math.max(pk.oral[it.key]||0,cov);save();face.replaceChildren(examiner(cov>=.8?'up':cov>=.5?'flat':'down'));
-      const willFU=it.main&&it.fuOf&&X[it.fuOf];const last=O.i+1>=queue.length&&!willFU;
-      const nb=h('button',{class:'btn nx',onclick:go},willFU?'הבוחן ממשיך ←':last?'סיכום ←':'לשאלה הבאה ←');
-      const again=it.review?null:h('button',{class:'btn ghost small',onclick:()=>{O.said-=said;O.total-=n;if(complete)O.full--;if(miss.length)O.missed.pop();ask();}},'טייק שני');
-      foot.replaceChildren(h('div',{class:'fb '+(cov>=.8?'good':cov>=.5?'close':'bad')},h('div',{class:'row'},h('span',{class:'h'},(Number.isInteger(said)?said:said.toFixed(1))+' מתוך '+n+(complete?' · תשובה מלאה':cov>=.8?' · חזקה':cov>=.5?' · עוברת':' · דלה')),h('span',{class:'sp'}),again,nb),
-        it.f?h('div',{class:'frame'},h('b',{},'פתחו את התשובה כך: '),it.f):null,miss.length?h('div',{class:'note'},'מה שפספסתם נכנס לחזרה המרווחת. אמרו אותו בקול עכשיו פעם אחת.'):null));
-      if(complete&&n>1){banner(it.fu?'עמדתם בלחץ':'תשובה מלאה');SFX.fanfare();rain(40);}
-      let went=false;function go(){if(went)return;went=true;if(willFU)queue.splice(O.i+1,0,{...X[it.fuOf]});O.i++;if(O.i>=queue.length)end();else ask();}
-      PLAYER.keys=e=>{if(e.key==='Enter'||e.key===' '){go();return true;}};setTimeout(()=>nb.focus({preventScroll:true}),50);}
-    PLAYER.keys=e=>{if(e.key==='1'){mark(1);return true;}if(e.key==='2'){mark(.5);return true;}if(e.key==='3'){mark(0);return true;}};reveal();}
-  function end(){clearInterval(clk);PLAYER.keys=null;const cov=O.total?O.said/O.total:0;if(!review)recordRecall(id,cov*100);S.xp=(S.xp||0)+Math.round(O.said*60)+O.full*150+O.locked*100;save();
-    const [due,all]=srKeyCount(id);
-    body.replaceChildren(h('div',{class:'pcard',style:'align-items:center;text-align:center'},examiner(cov>=.85?'up':cov>=.65?'flat':'down'),h('h2',{},review?(O.locked?O.locked+' נקודות ננעלו':'סבב חזרה הושלם'):cov>=.85?'הצטיינות':cov>=.65?'עובר':'צריך עוד סבב'),
-      h('div',{class:'num',style:'font-size:2.8rem;font-weight:800'},Math.round(cov*100)+'%'),h('div',{class:'note'},(Number.isInteger(O.said)?O.said:O.said.toFixed(1))+' מתוך '+O.total+' נקודות · '+O.full+' תשובות מלאות'),
-      h('div',{class:'rule',style:'text-align:start;width:100%;box-sizing:border-box'},h('b',{},'חזרה מרווחת'),(O.added?O.added+' נקודות חדשות נכנסו לחזרה. ':'')+(all?all+' ממתינות, '+due+' לחזרה עכשיו. נקודה ננעלת אחרי שתי הצלחות ברצף בימים שונים.':'אין נקודות ממתינות.')),
-      O.missed.length?h('div',{class:'card',style:'text-align:start;width:100%;box-sizing:border-box'},h('b',{},'אמרו את אלה בקול לפני שיוצאים'),h('ul',{class:'ol',style:'list-style:disc'},O.missed.map(m=>h('li',{},h('b',{},m.q),h('div',{class:'note'},m.m.join(' · ')))))):null,
-      h('div',{class:'row'},due?h('button',{class:'btn rose',onclick:()=>runReview(id)},'לסבב חזרה ('+due+')'):null,h('button',{class:'btn ghost',onclick:exitPlayer},'חזרה לנושא'))));
-    if(O.locked){banner(O.locked+' ננעלו');rain(80);SFX.fanfare();}else if(cov>=.85){rain(100);SFX.fanfare();}}
-  ask();
-}
+function startGlobalReview(){const ids=Object.keys(S.packs).filter(id=>PACKS[id]&&srKeyCount(id)[0]);if(!ids.length){toast('אין כרגע נקודות לחזרה');return;}runGame(ids[0],'review');}
 
 /* ---------- start ---------- */
 document.body.append(fx);sizeFx();addEventListener('resize',sizeFx);
