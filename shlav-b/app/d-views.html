@@ -1,0 +1,173 @@
+<header class="bar gut" dir="rtl">
+  <div class="wrap">
+    <div class="in">
+      <div class="brand">מרכז ההכנה ל<b>שלב ב׳</b></div>
+      <div class="cd" id="cd"></div>
+      <div class="sp"></div>
+      <span class="sync" id="sync"></span>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+  </div>
+</header>
+<main class="gut" dir="rtl" lang="he"><div class="wrap" id="view"></div></main>
+<script>
+/* ---------- routing ---------- */
+const TABS=[['today','היום'],['topics','נושאים'],['exams','מבחנים קודמים'],['tools','ארגז כלים']];
+let ROUTE='today',FILT={q:'',tier:'',dom:'',st:''};
+function go(r){if(location.hash!=='#'+r)location.hash=r;else route();}
+function route(){const r=(location.hash||'#today').slice(1);ROUTE=r||'today';render();window.scrollTo(0,0);}
+addEventListener('hashchange',route);
+function render(){
+  const tabKey=ROUTE.startsWith('t-')||ROUTE.startsWith('p-')?'topics':ROUTE;
+  $('#tabs').replaceChildren(...TABS.map(([k,l])=>h('button',{class:'tab',role:'tab','aria-selected':String(k===tabKey),onclick:()=>go(k)},l)));
+  paintCountdown();paintSync();
+  const v=$('#view');
+  if(ROUTE.startsWith('p-')){if(PLAYER.active)return;location.replace('#t-'+ROUTE.slice(2));return;}
+  v.replaceChildren(ROUTE==='topics'?viewTopics():ROUTE==='exams'?viewExams():ROUTE==='tools'?viewTools():ROUTE.startsWith('t-')?viewTopic(ROUTE.slice(2)):viewToday());
+}
+
+/* ---------- dates & phases ---------- */
+function submitDate(){const d=parseD(S.examDate);d.setMonth(d.getMonth()-1);return iso(d);}
+function phases(){const e=S.examDate;return [
+  {name:DATA.todayLogic.phases[0].name,end:addDays(e,-100),pace:DATA.todayLogic.phases[0].pace},
+  {name:DATA.todayLogic.phases[1].name,end:addDays(e,-42),pace:DATA.todayLogic.phases[1].pace},
+  {name:DATA.todayLogic.phases[2].name,end:e,pace:DATA.todayLogic.phases[2].pace}];}
+function curPhase(){const t=today();const P=phases();return P.findIndex(p=>t<=p.end);}
+function paintCountdown(){
+  const d1=daysBetween(today(),S.examDate),d2=daysBetween(today(),submitDate());
+  $('#cd').replaceChildren(h('span',{class:d1<=42?'hot':''},h('span',{class:'num'},d1),' ימים לבחינה'),h('span',{class:d2<=14?'hot':''},d2>=0?[h('span',{class:'num'},d2),' ימים להגשת העבודות']:'מועד ההגשה עבר'));
+}
+const weekAgo=()=>addDays(today(),-6);
+function topicRow(t,extra){
+  const st=T(t.id).s;
+  return h('li',{class:'li'},h('span',{class:'tier '+t.tier},t.tier),
+    h('a',{class:'t',href:'#t-'+t.id,style:'color:inherit;text-decoration:none'},t.name,hasPack(t.id)?h('span',{class:'pk'},'חבילה'):null,h('small',{},t.domainName+' · '+t.hits+' הופעות'+(t.sittings.length?' ('+t.sittings.join(' ')+')':''))),
+    extra||h('span',{class:'st s'+st},STATUS[st]));
+}
+function srDueAll(){const now=Date.now();let n=0;for(const id in S.packs){const sr=S.packs[id].sr||{};for(const k in sr)if(sr[k].due<=now)n++;}return n;}
+
+/* ---------- Today ---------- */
+function viewToday(){
+  const t0=today(),ph=curPhase(),P=phases();
+  const all=DATA.topics,opened=all.filter(t=>T(t.id).s>0),mastered=all.filter(t=>T(t.id).s===3);
+  const wk=S.log.filter(l=>l.d>=weekAgo()),avg=wk.length?(wk.reduce((a,l)=>a+l.score,0)/wk.length).toFixed(1):'–';
+  const d1=daysBetween(t0,S.examDate),d2=daysBetween(t0,submitDate());
+  const tiles=h('div',{class:'tiles'},
+    h('div',{class:'tile'+(d1<=42?' urgent':'')},h('span',{class:'lbl'},'ימים לבחינה'),h('b',{class:'num'},d1),h('span',{class:'note'},fmtD(S.examDate))),
+    h('div',{class:'tile'+(d2<=14?' urgent':'')},h('span',{class:'lbl'},'ימים להגשת העבודות'),h('b',{class:'num'},Math.max(0,d2)),h('span',{class:'note'},'עד '+fmtD(submitDate()))),
+    h('div',{class:'tile'},h('span',{class:'lbl'},'נושאים שנפתחו'),h('b',{class:'num'},opened.length+'/'+all.length),h('span',{class:'note'},mastered.length+' בשליטה')),
+    h('div',{class:'tile'},h('span',{class:'lbl'},'תחנות השבוע'),h('b',{class:'num'},wk.length),h('span',{class:'note'},'ממוצע ציון '+avg+' מתוך 4')));
+  // phase + pace
+  const weeksLeft=e=>Math.max(1,Math.ceil(daysBetween(t0,e)/7));
+  let paceTxt='';
+  if(ph===0){const n=all.filter(t=>t.tier==='A'&&T(t.id).s===0).length;paceTxt=Math.ceil(n/weeksLeft(P[0].end))+' נושאי A חדשים בשבוע ('+n+' נותרו) · תחנה מלאה אחת בשבוע';}
+  else if(ph===1){const n=all.filter(t=>t.tier==='B'&&T(t.id).s===0).length;paceTxt=Math.ceil(n/weeksLeft(P[1].end))+' נושאי B חדשים בשבוע ('+n+' נותרו) · שתי תחנות בשבוע';}
+  else if(ph===2)paceTxt='בלי חומר חדש חוץ מנושאים חמים · תחנות מלאות וחזרות';
+  const phase=h('div',{class:'card'},h('div',{class:'row'},h('h3',{},'שלב ההכנה'),h('span',{class:'sp'}),h('span',{class:'note'},ph>=0?'עד '+fmtD(P[ph].end):'הבחינה עברה')),
+    h('div',{class:'phase'},P.map((p,i)=>h('div',{class:'ph'+(i===ph?' now':i<ph?' done':'')},h('b',{},p.name),'עד '+fmtD(p.end)))),
+    paceTxt?h('div',{style:'font-weight:600'},'הקצב עכשיו: '+paceTxt):null);
+  // due topics
+  const due=all.filter(t=>{const x=S.topics[t.id];return x&&x.s>0&&x.next&&x.next<=t0;}).sort((a,b)=>S.topics[a.id].next<S.topics[b.id].next?-1:1).slice(0,8);
+  const srN=srDueAll();
+  const dueCard=h('div',{class:'card'},h('h3',{},'לחזרה היום'),
+    srN?h('div',{class:'row'},h('span',{},h('b',{class:'num'},srN),' נקודות בעל פה ממתינות בחזרה המרווחת'),h('span',{class:'sp'}),h('button',{class:'btn rose small',onclick:()=>startGlobalReview()},'לסבב חזרה')):null,
+    due.length?h('ul',{class:'list'},due.map(t=>topicRow(t,h('button',{class:'btn small ghost',onclick:e=>{e.preventDefault();reviewTopic(t.id);}},'חזרתי')))):h('div',{class:'empty'},'אין נושאים שמועד החזרה שלהם הגיע.'));
+  // next up
+  const next=all.filter(t=>t.tier==='A'&&T(t.id).s===0).sort((a,b)=>b.hits-a.hits||(hasPack(b.id)-hasPack(a.id))).slice(0,6);
+  const nextCard=h('div',{class:'card'},h('h3',{},'הבא בתור'),h('span',{class:'note'},'נושאי A שלא נפתחו, לפי מספר ההופעות במבחנים'),next.length?h('ul',{class:'list'},next.map(t=>topicRow(t))):h('div',{class:'empty'},'כל נושאי A נפתחו.'));
+  // tier progress
+  const tiers=['A','B','C'].map(tr=>{const ts=all.filter(t=>t.tier===tr),n=ts.length,c=[3,2,1].map(s=>ts.filter(t=>T(t.id).s===s).length);
+    return h('div',{class:'r'},h('span',{class:'tier '+tr},tr),h('div',{class:'stack',title:c.join(' / ')},h('i',{style:'width:'+c[0]/n*100+'%;background:var(--ok)'}),h('i',{style:'width:'+c[1]/n*100+'%;background:var(--teal)'}),h('i',{style:'width:'+c[2]/n*100+'%;background:var(--amber)'})),h('span',{class:'num note'},c[0]+'/'+c[1]+'/'+c[2]+' מתוך '+n));});
+  const prog=h('div',{class:'card'},h('h3',{},'התקדמות לפי דרגה'),h('div',{class:'bars'},tiers),h('div',{class:'row note'},h('span',{},'■ ',h('span',{style:'color:var(--ok)'},'שולט')),h('span',{},'■ ',h('span',{style:'color:var(--teal)'},'חזרתי')),h('span',{},'■ ',h('span',{style:'color:var(--amber)'},'קראתי'))));
+  // station + settings
+  const done=new Set(S.log.map(l=>l.id));
+  const pool=DATA.pastStations.clinical.filter(s=>!done.has(s.id));
+  const st=h('div',{class:'card'},h('h3',{},'תחנה מלאה'),h('span',{class:'note'},pool.length+' תחנות קליניות שעוד לא תרגלת'),
+    h('div',{class:'row'},h('button',{class:'btn',disabled:!pool.length,onclick:()=>{const s=pool[Math.floor(Math.random()*pool.length)];go('exams');setTimeout(()=>{const r=document.getElementById('row-'+s.id);if(r){r.scrollIntoView({block:'center'});r.style.outline='3px solid var(--amber)';}},80);}},'תחנה אקראית שלא תורגלה')));
+  const inp=h('input',{type:'date',id:'examDate',value:S.examDate,style:'border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:var(--panel)',onchange:e=>{if(e.target.value){S.examDate=e.target.value;save();render();toast('תאריך הבחינה עודכן');}}});
+  const settings=h('div',{class:'card'},h('h3',{},'הגדרות'),
+    h('label',{class:'row'},h('span',{},'תאריך בחינה'),inp),h('span',{class:'note'},DATA.exam.examDateNote),
+    h('div',{class:'row'},h('button',{class:'btn small ghost',onclick:()=>{S.muted=!S.muted;save();render();}},S.muted?'צלילים: כבויים':'צלילים: פועלים'),
+      h('button',{class:'btn small ghost',onclick:copyExport},'העתק גיבוי'),h('button',{class:'btn small ghost',onclick:showImport},'שחזר מגיבוי')),
+    h('div',{id:'imp'}));
+  return h('section',{class:'view'},tiles,phase,h('div',{class:'grid2'},dueCard,nextCard),h('div',{class:'grid2'},prog,h('div',{class:'view'},st,settings)));
+}
+function reviewTopic(id){const x=T(id);x.next=addDays(today(),INTERVAL[x.s]||3);save();render();toast('הנושא יחזור ב-'+fmtD(x.next));}
+function copyExport(){const txt=JSON.stringify(S);navigator.clipboard.writeText(txt).then(()=>toast('הגיבוי הועתק'),()=>{const ta=h('textarea',{readonly:true},txt);$('#imp').replaceChildren(ta);ta.select();});}
+function showImport(){const ta=h('textarea',{id:'impTxt',placeholder:'הדבק כאן את הגיבוי'});$('#imp').replaceChildren(ta,h('button',{class:'btn small',onclick:()=>{try{const o=JSON.parse(ta.value);if(o.v!==1)throw 0;S=Object.assign(seedState(),o);save();render();toast('הגיבוי שוחזר');}catch(e){toast('הטקסט אינו גיבוי תקין');}}},'שחזר'));}
+
+/* ---------- Topics ---------- */
+function viewTopics(){
+  const listBox=h('ul',{class:'list'});
+  const paint=()=>{
+    const q=FILT.q.trim();
+    const ts=DATA.topics.filter(t=>(!q||t.name.includes(q)||t.id.includes(q)||t.anchorSources.join(' ').includes(q))&&(!FILT.tier||t.tier===FILT.tier)&&(!FILT.dom||t.domain===FILT.dom)&&(FILT.st===''||(FILT.st==='pk'?hasPack(t.id):String(T(t.id).s)===FILT.st)))
+      .sort((a,b)=>a.tier.localeCompare(b.tier)||b.hits-a.hits);
+    listBox.replaceChildren(...(ts.length?ts.map(t=>topicRow(t)):[h('li',{class:'empty'},'אין נושאים שמתאימים לסינון.')]));
+    cnt.textContent=ts.length+' נושאים';
+  };
+  const cnt=h('span',{class:'note'});
+  const sel=(id,opts,key)=>h('select',{id,onchange:e=>{FILT[key]=e.target.value;paint();}},opts.map(([v,l])=>h('option',{value:v,selected:FILT[key]===v},l)));
+  const f=h('div',{class:'filters'},
+    h('input',{id:'q',type:'search',placeholder:'חיפוש נושא או מקור',value:FILT.q,oninput:e=>{FILT.q=e.target.value;paint();}}),
+    sel('ftier',[['','כל הדרגות'],['A','A'],['B','B'],['C','C']],'tier'),
+    sel('fdom',[['','כל התחומים'],...Object.entries(DATA.domains)],'dom'),
+    sel('fst',[['','כל הסטטוסים'],...STATUS.map((s,i)=>[String(i),s]),['pk','יש חבילת לימוד']],'st'));
+  paint();
+  return h('section',{class:'view'},h('div',{class:'row'},h('h2',{},'נושאים'),h('span',{class:'sp'}),cnt),
+    h('p',{class:'note',style:'margin:0'},'A = שכיח בקליניקה וחוזר במבחנים · B = פחות שכיח או קלאסי לבחינה · C = דף סיכום אחד. חזרה מרווחת: אחרי ״קראתי״ 3 ימים, ״חזרתי״ 10, ״שולט״ 30.'),f,h('div',{class:'card'},listBox));
+}
+
+/* ---------- Topic page ---------- */
+function viewTopic(id){
+  const t=TOPIC[id];if(!t)return h('div',{class:'empty'},'הנושא לא נמצא.');
+  const x=T(id);
+  const stBtns=h('div',{class:'row'},STATUS.map((s,i)=>h('button',{class:'chip','aria-pressed':String(x.s===i),onclick:()=>{x.s=i;x.next=i?addDays(today(),INTERVAL[i]):null;save();render();if(i)toast('חזרה הבאה: '+fmtD(x.next));}},s)));
+  const notes=h('textarea',{id:'notes-'+id,placeholder:'הערות חופשיות לנושא',oninput:e=>{x.notes=e.target.value;clearTimeout(notes._t);notes._t=setTimeout(save,600);}},x.notes||'');
+  const head=h('div',{class:'card'},
+    h('div',{class:'row'},h('a',{href:'#topics',class:'note'},'→ כל הנושאים')),
+    h('div',{class:'row'},h('span',{class:'tier '+t.tier},t.tier),h('h2',{},t.name)),
+    h('div',{class:'kv'},h('b',{},'תחום'),h('span',{},t.domainName),h('b',{},'הופעות במבחנים'),h('span',{},t.hits+(t.sittings.length?' · '+t.sittings.join(' '):'')),h('b',{},'מקורות עוגן'),h('span',{},t.anchorSources.join(' · ')),
+      x.next?[h('b',{},'חזרה הבאה'),h('span',{},fmtD(x.next)+(x.next<=today()?' (הגיע המועד)':''))]:null,
+      x.rc?[h('b',{},'שליפה אחרונה'),h('span',{},x.rc.pct+'% ב-'+fmtD(x.rc.d))]:null),
+    h('div',{class:'lbl'},'סטטוס'),stBtns,notes);
+  return h('section',{class:'view'},head,packCard(id));
+}
+
+/* ---------- Past exams ---------- */
+function viewExams(){
+  const P=DATA.pastStations;
+  const scoreSel=(id)=>{const last=[...S.log].reverse().find(l=>l.id===id);
+    return h('select',{id:'sc-'+id,'aria-label':'ציון תרגול',onchange:e=>{if(e.target.value==='')return;S.log.push({id,d:today(),score:+e.target.value});save();toast('נרשם תרגול בציון '+e.target.value);render();}},
+      h('option',{value:''},last?'תורגל '+fmtD(last.d)+' · '+last.score:'לא תורגל'),[0,1,2,3,4].map(n=>h('option',{value:n},'ציון '+n)));};
+  const clin=h('table',{class:'tbl'},h('thead',{},h('tr',{},h('th',{},'מועד'),h('th',{},'תאריך'),h('th',{},'תחנה'),h('th',{},'קובץ'),h('th',{},'תרגול'))),
+    h('tbody',{},P.clinical.map(s=>h('tr',{id:'row-'+s.id},h('td',{},s.sittingName),h('td',{class:'num'},s.date),h('td',{},s.stationType),h('td',{},h('a',{href:s.pdf,target:'_blank',rel:'noopener'},'PDF')),h('td',{},scoreSel(s.id))))));
+  const other=h('table',{class:'tbl'},h('thead',{},h('tr',{},h('th',{},'מועד'),h('th',{},'תחנה'),h('th',{},'קובץ'),h('th',{},'תרגול'))),
+    h('tbody',{},P.otherStations.map((s,i)=>h('tr',{},h('td',{},s.sittingName),h('td',{},s.station),h('td',{},h('a',{href:s.pdf,target:'_blank',rel:'noopener'},'PDF')),h('td',{},scoreSel('o'+i))))));
+  return h('section',{class:'view'},h('h2',{},'מבחנים קודמים'),
+    h('p',{class:'note',style:'margin:0'},'גרסאות הבוחנים עם מחוון. מוצגים רק מועד, סוג תחנה ותאריך, כדי לא לחשוף את התוכן לפני התרגול. אחרי תרגול, בחרו ציון 0–4 והוא נכנס לסיכום השבועי.'),
+    h('div',{class:'card'},h('h3',{},'תחנות קליניות'),h('div',{class:'scroll'},clin)),
+    h('div',{class:'card'},h('h3',{},'משפחה, ארגון פרקטיקה ומר״מ'),h('div',{class:'scroll'},other)),
+    h('p',{class:'note'},'מועדים מוקדמים יותר: '+P.olderSittings));
+}
+
+/* ---------- Tools ---------- */
+function viewTools(){
+  const E=DATA.exam;
+  const ol=a=>h('ol',{class:'ol'},a.map(x=>h('li',{},x)));
+  const ul=a=>h('ul',{class:'ol',style:'list-style:disc'},a.map(x=>h('li',{},x)));
+  const stations=h('div',{class:'view'},E.structure.map(s=>h('div',{class:'card'},h('div',{class:'row'},h('h3',{},s.name),h('span',{class:'sp'}),h('span',{class:'st'},s.minutes+' דק׳')),h('div',{},s.what),ul(s.tips))));
+  return h('section',{class:'view'},h('h2',{},'ארגז כלים'),
+    h('div',{class:'grid2'},
+      h('div',{class:'card'},h('h3',{},'תבנית תשובה לשאלה קלינית'),ol(DATA.answerTemplate)),
+      h('div',{class:'card'},h('h3',{},'עקרונות שחוזרים במחוונים'),ul(DATA.rubricPrinciples))),
+    h('div',{class:'card'},h('h3',{},'הבחינה'),h('div',{class:'kv'},h('b',{},'מועד'),h('span',{},E.sitting+' · '+fmtD(S.examDate)),h('b',{},'מעבר'),h('span',{},E.passRule),h('b',{},'הגשת עבודות'),h('span',{},E.submissionRule),
+      h('b',{},'חלון החומר'),h('span',{},E.materialWindow.afpAndGuidelines),h('b',{},'Goroll'),h('span',{},E.materialWindow.goroll),h('b',{},'עוד'),h('span',{},E.materialWindow.other),h('b',{},'כללי מקורות'),h('span',{},E.sourceRules.join(' '))),
+      h('div',{class:'row'},E.officialLinks.map(l=>h('a',{href:l.url,target:'_blank',rel:'noopener',class:'btn small ghost'},l.label)))),
+    h('h3',{},'שמונה התחנות'),stations,
+    h('div',{class:'grid2'},
+      h('div',{class:'card'},h('h3',{},'EBM: מושגים שנשאלו'),ul(DATA.ebmConcepts)),
+      h('div',{class:'card'},h('h3',{},'נושאים חמים לאביב 2027'),ul(DATA.hotTopics.map(x=>x.topic+': '+x.note)),h('span',{class:'note'},'לא כולם אומתו.'))),
+    h('div',{class:'card'},h('h3',{},'חוקים ותקנות'),h('div',{class:'scroll'},h('table',{class:'tbl'},h('tbody',{},DATA.laws.map(l=>h('tr',{},h('td',{style:'font-weight:600'},l.law),h('td',{},l.note))))))));
+}
+</script>

@@ -1,0 +1,2919 @@
+{
+ "exam": {
+  "name": "שלב ב׳ ברפואת המשפחה",
+  "sitting": "אביב 2027",
+  "examDate": "2027-04-04",
+  "examDateNote": "התאריך שנקבע בעמוד. לאמת מול לוח הבחינות של המועצה המדעית.",
+  "submissionRule": "עבודת הצגת הפרקטיקה ועבודת הצגת המשפחה מוגשות עד חודש קלנדרי לפני הבחינה. מי שלא מגיש, ההרשמה שלו מבוטלת.",
+  "passRule": "ציון כולל 67 ומעבר של 5 תחנות לפחות בציון 67 (P044-2026).",
+  "structure": [
+   {
+    "name": "קלינית גדולה + EBM",
+    "minutes": 25,
+    "what": "מטופל אחד לאורך שנים: 4 סעיפים קליניים ו-3 סעיפי EBM על תקציר או טבלה של מאמר שקשור למקרה.",
+    "tips": [
+     "כל סעיף נפתח בדף מידע חדש. לסכם את מה שהשתנה לפני שעונים.",
+     "ב-EBM: סוג מחקר מפורט (למשל קוהורט רטרוספקטיבי, active comparator), תוצא ראשוני ומשני, ערפלנים, מגבלות, והשלכה למטופל הספציפי.",
+     "תמיד לשאול אם תוצאות המחקר חלות על המטופל (EF שונה, גיל, מין)."
+    ]
+   },
+   {
+    "name": "קלינית גדולה + מערכות",
+    "minutes": 25,
+    "what": "5 סעיפים קליניים ו-2 סעיפי ארגון פרקטיקה (לא EBM).",
+    "tips": [
+     "סעיפי המערכת שואלים מה המרפאה עושה: צוות רב-מקצועי, עו״ס, מעקב, זמינות, סל, הפניות, בטיחות.",
+     "לחשוב גם על המטופל וגם על האוכלוסייה במרפאה (רשימות, מדדי איכות)."
+    ]
+   },
+   {
+    "name": "קלינית קטנה ×2",
+    "minutes": 25,
+    "what": "5 מקרים קצרים בכל תחנה, לרוב 3 תתי-שאלות לכל מקרה. ילדים, עור, אא״ג ומבוגרים מעורבבים.",
+    "tips": [
+     "תשובה קצרה ומובנית: אבחנה + נימוק + צעד הבא.",
+     "תמונות: לתאר לפני שמאבחנים (מיקום, צורה, צבע, גבולות).",
+     "מינונים בילדים לפי ק״ג."
+    ]
+   },
+   {
+    "name": "משפחה זהה",
+    "minutes": 20,
+    "what": "5 סעיפי פרקטיקה ממוקדת משפחה ו-2 סעיפים קליניים. אותה שאלה לכל הנבחנים באותו יום.",
+    "tips": [
+     "אתגרים בחלוקה ביו-פסיכו-סוציאלית.",
+     "SCREEEM: חברה, תרבות, דת, כלכלה, השכלה, סביבה, רפואה. לכל רכיב: מה ידוע, משאב או מכשלה, מה עוד מעניין לדעת.",
+     "מודל אולסון: לכידות, הסתגלות, תקשורת. לכל אחד: מצב קיים ומה אפשר לשפר.",
+     "שלב במעגל החיים, משבר, משולשים, Rolland."
+    ]
+   },
+   {
+    "name": "הצגת ארגון הפרקטיקה",
+    "minutes": 20,
+    "what": "הצגה של העבודה שהגשת על המרפאה.",
+    "tips": [
+     "ההגשה עד חודש קלנדרי לפני הבחינה. מי שלא מגיש, ההרשמה שלו מבוטלת.",
+     "להכין 3–4 שאלות צפויות על כל שקופית."
+    ]
+   },
+   {
+    "name": "הצגת משפחה",
+    "minutes": 20,
+    "what": "הצגה של העבודה המשפחתית שהגשת.",
+    "tips": [
+     "ההגשה עד חודש קלנדרי לפני הבחינה.",
+     "גנוגרמה, שלב במעגל החיים, מודלים, התערבות ומה למדת."
+    ]
+   },
+   {
+    "name": "מר״מ (מפגש רפואי מדומה)",
+    "minutes": 15,
+    "what": "שחקן עם שתי בעיות, בדרך כלל אחת ביו-רפואית ואחת פסיכו-סוציאלית נסתרת. המחוון בודק 6 תחומים.",
+    "tips": [
+     "לכל בעיה: היסטוריה, דגלים אדומים, גורמים, בירור עד כה, וחוויית חולי (צמר״ת: ציפיות, מחשבות, רגשות, תפקוד).",
+     "רקע: משפחה, אירועי חיים, תעסוקה, השכלה, פנאי, דת, משאבים.",
+     "לשקף ולחבר בין הבעיות במשפט אחד מפורש, ולקבל הסכמה.",
+     "לתת שם לבעיה הנסתרת ולהסביר אותה במילים פשוטות.",
+     "תוכנית משותפת לכל בעיה, עם בירור התנגדויות.",
+     "מבנה וזמן: 15 דקות בלבד."
+    ]
+   }
+  ],
+  "materialWindow": {
+   "afpAndGuidelines": "שבע שנים, עד 12 חודשים לפני הבחינה. לאביב 2027 בערך מאמצע 2019 עד אביב 2026.",
+   "goroll": "Goroll מהדורה 8 תקף לאביב 2027. מהדורה 9 נכנסת מסתיו 2027.",
+   "other": "המלצות כוח המשימה הישראלי לקידום בריאות (2022), אלגוריתמי ההחייאה של AHA, חוקי משרד הבריאות, שכיחות המחלות הכרוניות בישראל, פרקים נבחרים מ-Nelson."
+  },
+  "sourceRules": [
+   "להשתמש בגרסה העדכנית ביותר של כל מאמר AFP (לא בגרסה ישנה אם יש חדשה).",
+   "רק חומר בתוך חלון השנים של הסילבוס."
+  ],
+  "officialLinks": [
+   {
+    "label": "עמוד הספרות והמבחנים ברפואת משפחה (הר״י)",
+    "url": "https://www.ima.org.il/Internship/StaticPage.aspx?Page=16515"
+   },
+   {
+    "label": "רשימת הספרות ופרקי Nelson (P0021-2025)",
+    "url": "https://ima-contentfiles.s3.amazonaws.com/P0021-2025.pdf"
+   },
+   {
+    "label": "מבנה הבחינה (P044-2026)",
+    "url": "https://www.ima.org.il/File.aspx?usf=80f9d8f0-0b89-428a-92e4-62f34b3e9a1f"
+   },
+   {
+    "label": "שאלה לדוגמה: קלינית אינטגרטיבית",
+    "url": "https://www.ima.org.il/File.aspx?usf=9644105e-a05e-4055-9782-1649ae6c4a21"
+   },
+   {
+    "label": "עדכון הספרות מסתיו 2027",
+    "url": "https://www.ima.org.il/File.aspx?usf=d334d25f-ffdc-482b-bf64-0866e708746d"
+   }
+  ]
+ },
+ "answerTemplate": [
+  "סיכום של משפט אחד: מי המטופל ומה הבעיה.",
+  "דגלים אדומים. האם צריך מיון או הפניה דחופה עכשיו?",
+  "אבחנה מבדלת לפי קטגוריות, לפחות 5: הסבירה, המסוכנת, זו שאסור לפספס (ממאירות, נפשי, תרופתי).",
+  "אנמנזה ובדיקה ממוקדות, ומה כל אחת שוללת.",
+  "בירור: מעבדה והדמיה, מה בקהילה ומה בסל.",
+  "טיפול: לא-תרופתי, תרופתי (שם, מינון, תופעות לוואי), מעקב (מתי ומה), הפניה.",
+  "ביו-פסיכו-סוציאלי: משפחה, תפקוד, עבודה, מטפל עיקרי, זכויות (ביטוח לאומי, סיעוד).",
+  "קבלת החלטות משותפת והסבר למטופל בשפה פשוטה.",
+  "מניעה, פרוגנוזה, חובת דיווח או חוק רלוונטי."
+ ],
+ "rubricPrinciples": [
+  "אבחנה מבדלת רחבה ומותאמת למטופל: לפחות 5 אטיולוגיות, כולל ממאירות, בעיה נפשית ותרופות",
+  "אובדנות: הערכת סיכון מפורטת לפני כל החלטת טיפול",
+  "קבלת החלטות משותפת בכל בחירה טיפולית",
+  "לזהות מצב חירום ולהפנות למיון במפורש",
+  "ממצא אקראי בהדמיה: לציין שהוא דורש המשך בירור ומעקב",
+  "קטין או חסר ישע בסיכון: חובת דיווח לפקידת סעד",
+  "קשיש: סיכון לנפילות חוזרות, התאמת הבית ותרופות מסוכנות",
+  "סמנים ובדיקות עזר: לא אבחנתיים לבד. אבחנה מבדלת לעלייה",
+  "תרופה עם השפעות רב-מערכתיות: לא להפסיק לבד, צוות רב-תחומי",
+  "ילדים: מינון לפי ק״ג",
+  "אבחנה: לסווג במדויק לפי הסיווג המקובל ולציין פרוגנוזה",
+  "EBM: סוג המחקר במלואו; תוצאה מתוקננת מול גולמית; מסקנה זהירה במחקר תצפיתי; תחולה על המטופל",
+  "EBM: משתנים לתקנון מכמה קבוצות (דמוגרפיה, תחלואה, תרופות, מעבדה, הרגלים)",
+  "מר״מ: לתת שם לבעיה הפסיכו-סוציאלית, להסביר אותה, לשקף ולוודא הסכמה",
+  "מר״מ: להעלות את כלי ההערכה המקובל (ציון, נוסחה, שאלון) ולנהל לפיו",
+  "תוכנית ביו-פסיכו-סוציאלית: התייחסות לכל שלושת התחומים"
+ ],
+ "ebmConcepts": [
+  "סוגי מחקר: RCT, קוהורט פרוספקטיבי ורטרוספקטיבי, מקרה-בקרה, חתך, new user / active comparator",
+  "Propensity score: חישוב, matching או weighting, ולמה זה מנסה לדמות RCT",
+  "ערפלנים: אילו משתנים לתקנן (דמוגרפיה, תחלואה, תרופות, מעבדה, הרגלים, שימוש בשירותים)",
+  "תוצא משולב (composite): יתרונות (שכיחות אירועים, גודל מדגם) וחסרונות (משקל שווה, שכיחות שונה, כיוונים מנוגדים)",
+  "HR גולמי מול מתוקנן; רווח סמך; מובהקות; עוצמה (power) באירועים נדירים",
+  "ARR, RRR, NNT, NNH",
+  "רגישות, סגוליות, PPV, NPV, יחסי נראות",
+  "הטיות: בחירה, מידע, זכירה, אובדן מעקב; intention-to-treat",
+  "תחולה על המטופל: האם המטופל שלי דומה לאוכלוסיית המחקר",
+  "Users' Guides: טיפול, אבחון, נזק, סקירה (נספח ד׳ בסילבוס)"
+ ],
+ "laws": [
+  {
+   "law": "חוק זכויות החולה, 1996",
+   "note": "הסכמה מדעת, סודיות, מידע רפואי, ועדת אתיקה"
+  },
+  {
+   "law": "חוק החולה הנוטה למות, 2005",
+   "note": "הנחיות רפואיות מקדימות, מיופה כוח"
+  },
+  {
+   "law": "חוק טיפול בחולי נפש, 1991",
+   "note": "בדיקה ואשפוז כפויים: כל התנאים צריכים להתקיים"
+  },
+  {
+   "law": "תיקון 26 לחוק העונשין",
+   "note": "חובת דיווח על פגיעה בקטין או בחסר ישע"
+  },
+  {
+   "law": "חוזר מנכ״ל 4/2004",
+   "note": "בדיקת קטינים בלי הורה"
+  },
+  {
+   "law": "חוק הכשרות המשפטית והאפוטרופסות",
+   "note": "ייפוי כוח מתמשך"
+  },
+  {
+   "law": "חוק ביטוח סיעוד (ביטוח לאומי)",
+   "note": "גמלת סיעוד, החמרת מצב"
+  },
+  {
+   "law": "פקודת התעבורה",
+   "note": "כשירות לנהיגה ודיווח"
+  },
+  {
+   "law": "פקודת בריאות העם, 1940",
+   "note": "מחלות שחובה לדווח עליהן"
+  }
+ ],
+ "hotTopics": [
+  {
+   "topic": "GLP-1 וטירזפטייד",
+   "note": "השמנה, סוכרת, MASLD והגנה לבבית; תופעות לוואי ובטיחות."
+  },
+  {
+   "topic": "MASLD",
+   "note": "נייר עמדה הר״י 2024: הערכת סיכון לפיברוזיס בשלבים."
+  },
+  {
+   "topic": "חצבת",
+   "note": "התפרצות בישראל: אבחנה, סיבוכים, טיפול במגעים."
+  },
+  {
+   "topic": "RSV",
+   "note": "פסיבי לתינוקות ופגים; חיסון מגיל 60."
+  },
+  {
+   "topic": "COPD לפי GOLD העדכני",
+   "note": "ABE, אאוזינופילים, טיפול משולש, ביולוגיים."
+  },
+  {
+   "topic": "יל״ד ורעלת בהריון",
+   "note": "הנחיות הר״י 2025."
+  },
+  {
+   "topic": "STI ו-PrEP",
+   "note": "עגבת, HIV PrEP."
+  },
+  {
+   "topic": "סקר LDCT לסרטן ריאה",
+   "note": "כוח המשימה 2022."
+  },
+  {
+   "topic": "Lp(a) ו-CAC",
+   "note": "הערכת סיכון לבבי."
+  },
+  {
+   "topic": "השלכות המלחמה",
+   "note": "PTSD, חרדה בילדים, מילואים ומשפחה."
+  },
+  {
+   "topic": "מסכים, פעילות גופנית וקנאביס רפואי",
+   "note": "ניירות עמדה של הר״י."
+  }
+ ],
+ "domains": {
+  "card": "לב וכלי דם",
+  "endo": "אנדוקרינולוגיה ומטבוליזם",
+  "pulm": "נשימה ועישון",
+  "gi": "גסטרו וכבד",
+  "renal": "כליה ודרכי שתן",
+  "wom": "נשים והריון",
+  "neuro": "נוירולוגיה",
+  "psych": "בריאות הנפש",
+  "msk": "שריר-שלד",
+  "derm": "עור",
+  "ent": "אא״ג ועיניים",
+  "id": "זיהומיות, STI וחיסונים",
+  "heme": "המטולוגיה, אונקולוגיה וגריאטריה",
+  "peds": "ילדים ומתבגרים",
+  "core": "משפחה, מערכת, EBM וחוק"
+ },
+ "topics": [
+  {
+   "id": "htn",
+   "name": "יתר לחץ דם, כולל משני ועמיד",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 4,
+   "sittings": [
+    "F25",
+    "F24",
+    "S24"
+   ],
+   "anchorSources": [
+    "הנחיות הר״י יל״ד 2019",
+    "Goroll 19",
+    "AFP אלדוסטרוניזם 2023"
+   ]
+  },
+  {
+   "id": "lipids",
+   "name": "דיסליפידמיה והערכת סיכון CV",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 4,
+   "sittings": [
+    "F25",
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "הנחיות הר״י דיסליפידמיה 2020",
+    "Goroll 112"
+   ]
+  },
+  {
+   "id": "hf",
+   "name": "אי ספיקת לב (HFrEF/HFpEF)",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "F25",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP AHA/ACC HF 2023",
+    "Goroll 32"
+   ]
+  },
+  {
+   "id": "af",
+   "name": "פרפור פרוזדורים ונוגדי קרישה",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 4,
+   "sittings": [
+    "S26",
+    "F25",
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "ACC/AHA AF 2023",
+    "AFP נוגדי קרישה 2023",
+    "Goroll 28, 83"
+   ]
+  },
+  {
+   "id": "svt",
+   "name": "פלפיטציות, SVT ו-WPW",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "S24"
+   ],
+   "anchorSources": [
+    "Goroll 25",
+    "AFP SVT 2023",
+    "AHA 2020"
+   ]
+  },
+  {
+   "id": "brady",
+   "name": "ברדיקרדיה ו-sinus node dysfunction",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2021"
+   ]
+  },
+  {
+   "id": "chestpain",
+   "name": "כאב חזה ו-ACS",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "F25",
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 20",
+    "AFP ACS 2024"
+   ]
+  },
+  {
+   "id": "secprev",
+   "name": "מניעה שניונית אחרי MI/סטנט",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 27, 31",
+    "הר״י דיסליפידמיה 2020"
+   ]
+  },
+  {
+   "id": "pericard",
+   "name": "פריקרדיטיס וטמפונדה",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP 2024"
+   ]
+  },
+  {
+   "id": "valve",
+   "name": "מחלות מסתמים ופרופילקסיס לאנדוקרדיטיס",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "F25",
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 33, 16, 83"
+   ]
+  },
+  {
+   "id": "carotid",
+   "name": "היצרות קרוטיד, TIA ושבץ",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "Goroll 171",
+    "AFP קרוטיד 2021",
+    "AFP אחרי שבץ 2023"
+   ]
+  },
+  {
+   "id": "pad",
+   "name": "מחלת עורקים פריפרית",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2019",
+    "Goroll 23, 34"
+   ]
+  },
+  {
+   "id": "vte",
+   "name": "DVT ו-PE",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP VTE 2017/2022",
+    "Goroll 22"
+   ]
+  },
+  {
+   "id": "syncope",
+   "name": "סינקופה",
+   "domain": "card",
+   "domainName": "לב וכלי דם",
+   "tier": "B",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": [
+    "Goroll 24"
+   ]
+  },
+  {
+   "id": "dm2",
+   "name": "סוכרת סוג 2: איזון והעצמת טיפול",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "F25",
+    "S24"
+   ],
+   "anchorSources": [
+    "ADA Standards (שנתי)",
+    "Goroll 102"
+   ]
+  },
+  {
+   "id": "dmcomp",
+   "name": "סיבוכי סוכרת: כליה, עין, רגל, נוירופתיה",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S24"
+   ],
+   "anchorSources": [
+    "ADA",
+    "AFP DKD 2019",
+    "AFP רגל סוכרתית 2021"
+   ]
+  },
+  {
+   "id": "hypo",
+   "name": "היפוגליקמיה",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "ADA"
+   ]
+  },
+  {
+   "id": "lada",
+   "name": "סוכרת סוג 1 ו-LADA",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "ADA"
+   ]
+  },
+  {
+   "id": "gdm",
+   "name": "סוכרת הריונית וסקר מוקדם",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "נייר עמדה מיילדות 2023",
+    "ADA פרק 15"
+   ]
+  },
+  {
+   "id": "obesity",
+   "name": "השמנה: GLP-1 וניתוח בריאטרי",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "F25",
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP סמגלוטייד 2023",
+    "AFP ניתוח מטבולי 2022",
+    "הר״י בריאטרי 2023"
+   ]
+  },
+  {
+   "id": "thyroid",
+   "name": "תריס: היפר, היפו ואמיודרון",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 103, 104"
+   ]
+  },
+  {
+   "id": "adrenal",
+   "name": "אי ספיקת אדרנל",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "Goroll 8, 105"
+   ]
+  },
+  {
+   "id": "calcium",
+   "name": "היפרקלצמיה והיפרפארתירואידיזם",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP פארתירואיד 2022",
+    "Goroll 96"
+   ]
+  },
+  {
+   "id": "osteo",
+   "name": "אוסטאופורוזיס",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "S25"
+   ],
+   "anchorSources": [
+    "כוח משימה 2022 פרק 17",
+    "AFP 2023",
+    "Goroll 144, 164"
+   ]
+  },
+  {
+   "id": "lytes",
+   "name": "אשלגן ונתרן",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "A",
+   "hits": 5,
+   "sittings": [
+    "S26",
+    "F25",
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP אשלגן 2023",
+    "AFP נתרן 2023"
+   ]
+  },
+  {
+   "id": "prolact",
+   "name": "היפרפרולקטינמיה",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "Goroll 100",
+    "AFP 2022"
+   ]
+  },
+  {
+   "id": "hirsut",
+   "name": "הירסוטיזם ו-PCOS",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "Goroll 98",
+    "AFP 2019"
+   ]
+  },
+  {
+   "id": "hemochrom",
+   "name": "המוכרומטוזיס",
+   "domain": "endo",
+   "domainName": "אנדוקרינולוגיה ומטבוליזם",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2021"
+   ]
+  },
+  {
+   "id": "copd",
+   "name": "COPD",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S24"
+   ],
+   "anchorSources": [
+    "GOLD (שנתי)",
+    "Goroll 47"
+   ]
+  },
+  {
+   "id": "asthma",
+   "name": "אסתמה במבוגרים ובילדים",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "GINA (שנתי)"
+   ]
+  },
+  {
+   "id": "cough",
+   "name": "שיעול כרוני",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S25",
+    "F24"
+   ],
+   "anchorSources": [
+    "Goroll 41",
+    "AFP 2017"
+   ]
+  },
+  {
+   "id": "ild",
+   "name": "מחלת ריאה אינטרסטיציאלית ותפקודי ריאה",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "Goroll נספח 51-1"
+   ]
+  },
+  {
+   "id": "bronchiect",
+   "name": "ברונכיאקטזיות",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "נייר עמדה הר״י 2017"
+   ]
+  },
+  {
+   "id": "osa",
+   "name": "דום נשימה בשינה",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2021"
+   ]
+  },
+  {
+   "id": "smoking",
+   "name": "הפסקת עישון",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "A",
+   "hits": 4,
+   "sittings": [
+    "S26",
+    "F25",
+    "F24"
+   ],
+   "anchorSources": [
+    "כוח משימה 2022 פרק 12",
+    "AFP 2022",
+    "Goroll 54"
+   ]
+  },
+  {
+   "id": "lungca",
+   "name": "סקר LDCT לסרטן ריאה",
+   "domain": "pulm",
+   "domainName": "נשימה ועישון",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "כוח משימה 2022"
+   ]
+  },
+  {
+   "id": "ibd",
+   "name": "מחלות מעי דלקתיות",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP UC 2022",
+    "Goroll 73"
+   ]
+  },
+  {
+   "id": "ibs",
+   "name": "IBS ושלשול כרוני",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "נייר עמדה IBS 2022",
+    "Goroll 64, 74",
+    "AFP 2021"
+   ]
+  },
+  {
+   "id": "constip",
+   "name": "עצירות כרונית",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2022",
+    "Goroll 65"
+   ]
+  },
+  {
+   "id": "gerd",
+   "name": "GERD ודיספפסיה",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "הנחיות GERD 2018"
+   ]
+  },
+  {
+   "id": "masld",
+   "name": "כבד שומני (MASLD) ואנזימי כבד",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "נייר עמדה הר״י 2024",
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "hepat",
+   "name": "הפטיטיס A/B/C",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "Goroll 57",
+    "AFP 2021"
+   ]
+  },
+  {
+   "id": "divert",
+   "name": "דיברטיקוליטיס",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2022",
+    "Goroll 75"
+   ]
+  },
+  {
+   "id": "celiac",
+   "name": "צליאק",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP 2022",
+    "Nelson 384"
+   ]
+  },
+  {
+   "id": "abdpain",
+   "name": "כאב בטן חד",
+   "domain": "gi",
+   "domainName": "גסטרו וכבד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "Goroll 58"
+   ]
+  },
+  {
+   "id": "ckd",
+   "name": "מחלת כליה כרונית",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "Goroll 142",
+    "AFP CKD 2020"
+   ]
+  },
+  {
+   "id": "aki",
+   "name": "פגיעה כלייתית חדה",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP AKI"
+   ]
+  },
+  {
+   "id": "stones",
+   "name": "אבנים בכליות",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "F24",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2019",
+    "Goroll 135"
+   ]
+  },
+  {
+   "id": "uti",
+   "name": "UTI במבוגרים, בהריון ונשנה",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2024",
+    "נייר עמדה UTI בהריון 2023",
+    "Goroll 133"
+   ]
+  },
+  {
+   "id": "incont",
+   "name": "בריחת שתן",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2019",
+    "Goroll 134"
+   ]
+  },
+  {
+   "id": "bph",
+   "name": "BPH ואצירת שתן",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2023",
+    "Goroll 138"
+   ]
+  },
+  {
+   "id": "scrotum",
+   "name": "כאב או גוש באשך",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2022"
+   ]
+  },
+  {
+   "id": "infert",
+   "name": "אי-פוריות",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "Goroll 120",
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "hematuria",
+   "name": "המטוריה ופרוטאינוריה",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP",
+    "Nelson 558, 565"
+   ]
+  },
+  {
+   "id": "contracept",
+   "name": "אמצעי מניעה",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "Goroll 119"
+   ]
+  },
+  {
+   "id": "menopause",
+   "name": "גיל המעבר, HRT ו-GSM",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "Goroll 118",
+    "AFP 2023",
+    "כוח משימה"
+   ]
+  },
+  {
+   "id": "amen",
+   "name": "אמנוריאה ו-POI",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2019"
+   ]
+  },
+  {
+   "id": "endomet",
+   "name": "אנדומטריוזיס וכאב אגן",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP 2022"
+   ]
+  },
+  {
+   "id": "adnexal",
+   "name": "מסה אדנקסלית ו-CA125",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "vulvar",
+   "name": "גרד וולוורי וליכן סקלרוזוס",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2020",
+    "Goroll 114"
+   ]
+  },
+  {
+   "id": "pregHTN",
+   "name": "יל״ד בהריון ורעלת",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S24"
+   ],
+   "anchorSources": [
+    "הנחיות הר״י 2025",
+    "AFP 2024"
+   ]
+  },
+  {
+   "id": "preconc",
+   "name": "טיפול טרום הריון והריון",
+   "domain": "wom",
+   "domainName": "נשים והריון",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "הר״י תוספים בהריון 2020"
+   ]
+  },
+  {
+   "id": "headache",
+   "name": "כאב ראש, מיגרנה ו-MOH",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2020/2022",
+    "Goroll 165"
+   ]
+  },
+  {
+   "id": "parkinson",
+   "name": "פרקינסון ורעד",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2020",
+    "Goroll 168, 174"
+   ]
+  },
+  {
+   "id": "ms",
+   "name": "טרשת נפוצה ונויריטיס אופטית",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2022",
+    "Goroll 172"
+   ]
+  },
+  {
+   "id": "mg",
+   "name": "חולשת שרירים ומיאסתניה",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2020"
+   ]
+  },
+  {
+   "id": "dementia",
+   "name": "דמנציה ו-MCI",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "הר״י דמנציה 2023",
+    "AFP 2018",
+    "Goroll 169, 173"
+   ]
+  },
+  {
+   "id": "delirium",
+   "name": "דליריום",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "F24",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "neuropathy",
+   "name": "נוירופתיה ותסמונות לכידה (CTS)",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP CTS 2024",
+    "AFP נוירופתיה 2020"
+   ]
+  },
+  {
+   "id": "tn",
+   "name": "נוירלגיה טריגמינלית ו-TMD",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 176, 225"
+   ]
+  },
+  {
+   "id": "crps",
+   "name": "CRPS",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2021"
+   ]
+  },
+  {
+   "id": "dizzy",
+   "name": "סחרחורת ו-BPPV",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "B",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": [
+    "Goroll (סחרחורת)"
+   ]
+  },
+  {
+   "id": "seizure",
+   "name": "פרכוסים ואפילפסיה",
+   "domain": "neuro",
+   "domainName": "נוירולוגיה",
+   "tier": "B",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": [
+    "Nelson 633"
+   ]
+  },
+  {
+   "id": "depression",
+   "name": "דיכאון וטיפול תרופתי",
+   "domain": "psych",
+   "domainName": "בריאות הנפש",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2023",
+    "Goroll 227"
+   ]
+  },
+  {
+   "id": "suicide",
+   "name": "הערכת אובדנות",
+   "domain": "psych",
+   "domainName": "בריאות הנפש",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2021",
+    "חוק טיפול בחולי נפש 1991"
+   ]
+  },
+  {
+   "id": "anxiety",
+   "name": "חרדה ופאניקה",
+   "domain": "psych",
+   "domainName": "בריאות הנפש",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2022",
+    "Goroll 226"
+   ]
+  },
+  {
+   "id": "ptsd",
+   "name": "PTSD ונדודי שינה",
+   "domain": "psych",
+   "domainName": "בריאות הנפש",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2023",
+    "Goroll 232"
+   ]
+  },
+  {
+   "id": "eating",
+   "name": "הפרעות אכילה",
+   "domain": "psych",
+   "domainName": "בריאות הנפש",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2021",
+    "Goroll 233"
+   ]
+  },
+  {
+   "id": "addiction",
+   "name": "אלכוהול, חומרים וקנאביס רפואי",
+   "domain": "psych",
+   "domainName": "בריאות הנפש",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "הר״י קנאביס לכאב 2023"
+   ]
+  },
+  {
+   "id": "sleep",
+   "name": "הפרעות שינה (כולל RBD)",
+   "domain": "psych",
+   "domainName": "בריאות הנפש",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2022"
+   ]
+  },
+  {
+   "id": "backpain",
+   "name": "כאב גב תחתון",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 147"
+   ]
+  },
+  {
+   "id": "neckpain",
+   "name": "כאב צוואר ומיאלופתיה",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2020",
+    "Goroll 148"
+   ]
+  },
+  {
+   "id": "shoulder",
+   "name": "כאב כתף וכתף קפואה",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "Goroll 150",
+    "AFP 2019"
+   ]
+  },
+  {
+   "id": "elbowhand",
+   "name": "מרפק ושורש כף יד",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 153"
+   ]
+  },
+  {
+   "id": "hip",
+   "name": "כאב ירך ושבר צוואר ירך",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll 151",
+    "AFP 2021/2022"
+   ]
+  },
+  {
+   "id": "knee",
+   "name": "כאב ברך",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2018",
+    "Goroll 152"
+   ]
+  },
+  {
+   "id": "ankle",
+   "name": "נקע קרסול וכף רגל",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "Goroll 154"
+   ]
+  },
+  {
+   "id": "gout",
+   "name": "גאוט ומונוארתריטיס",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2021",
+    "Goroll 158"
+   ]
+  },
+  {
+   "id": "rheum",
+   "name": "מחלות ראומטולוגיות במבוגר",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "Goroll"
+   ]
+  },
+  {
+   "id": "falls",
+   "name": "נפילות בקשישים",
+   "domain": "msk",
+   "domainName": "שריר-שלד",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2024",
+    "AFP אורתוסטטיזם 2022"
+   ]
+  },
+  {
+   "id": "acne",
+   "name": "אקנה והידראדניטיס",
+   "domain": "derm",
+   "domainName": "עור",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2019"
+   ]
+  },
+  {
+   "id": "psoriasis",
+   "name": "פסוריאזיס",
+   "domain": "derm",
+   "domainName": "עור",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "נייר עמדה פסוריאזיס 2020",
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "eczema",
+   "name": "אטופיק דרמטיטיס וסבוריאה",
+   "domain": "derm",
+   "domainName": "עור",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2020",
+    "Nelson 696"
+   ]
+  },
+  {
+   "id": "skininf",
+   "name": "זיהומי עור",
+   "domain": "derm",
+   "domainName": "עור",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "F25",
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "נייר עמדה זיהומי עור בילדים 2023"
+   ]
+  },
+  {
+   "id": "melanoma",
+   "name": "נגעים פיגמנטריים ומלנומה",
+   "domain": "derm",
+   "domainName": "עור",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP 2024",
+    "Goroll 177"
+   ]
+  },
+  {
+   "id": "rash",
+   "name": "פריחות ונשירת שיער",
+   "domain": "derm",
+   "domainName": "עור",
+   "tier": "B",
+   "hits": 3,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2017–2018"
+   ]
+  },
+  {
+   "id": "zoster",
+   "name": "הרפס זוסטר ו-PHN",
+   "domain": "derm",
+   "domainName": "עור",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "Goroll 193",
+    "AFP 2017"
+   ]
+  },
+  {
+   "id": "hearing",
+   "name": "ירידה בשמיעה ואודיוגרם",
+   "domain": "ent",
+   "domainName": "אא״ג ועיניים",
+   "tier": "A",
+   "hits": 4,
+   "sittings": [
+    "S26",
+    "F25",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2019",
+    "AFP אודיומטריה 2024",
+    "Goroll 212"
+   ]
+  },
+  {
+   "id": "otitis",
+   "name": "דלקות אוזניים ו-OME",
+   "domain": "ent",
+   "domainName": "אא״ג ועיניים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "הנחיות AOM 2023",
+    "Nelson 680",
+    "AFP NICE 2024"
+   ]
+  },
+  {
+   "id": "pharyng",
+   "name": "דלקת גרון ו-ARF",
+   "domain": "ent",
+   "domainName": "אא״ג ועיניים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2024",
+    "Nelson 229, 430, 487"
+   ]
+  },
+  {
+   "id": "redeye",
+   "name": "עין אדומה וגלאוקומה",
+   "domain": "ent",
+   "domainName": "אא״ג ועיניים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "Goroll 199, 207",
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "visionloss",
+   "name": "ירידה פתאומית בראייה",
+   "domain": "ent",
+   "domainName": "אא״ג ועיניים",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "AFP 2025"
+   ]
+  },
+  {
+   "id": "smell",
+   "name": "הפרעות ריח ואוזן משנית",
+   "domain": "ent",
+   "domainName": "אא״ג ועיניים",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2023",
+    "AFP 2018"
+   ]
+  },
+  {
+   "id": "sti",
+   "name": "STI: עגבת, הרפס, אפידידימיטיס",
+   "domain": "id",
+   "domainName": "זיהומיות, STI וחיסונים",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP כיבים גניטליים 2020"
+   ]
+  },
+  {
+   "id": "hiv",
+   "name": "HIV ו-PrEP",
+   "domain": "id",
+   "domainName": "זיהומיות, STI וחיסונים",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2023",
+    "כוח משימה פרק 14"
+   ]
+  },
+  {
+   "id": "vaccines",
+   "name": "חיסוני מבוגרים",
+   "domain": "id",
+   "domainName": "זיהומיות, STI וחיסונים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "תדריך החיסונים",
+    "כוח משימה פרק 5"
+   ]
+  },
+  {
+   "id": "longcovid",
+   "name": "Long COVID",
+   "domain": "id",
+   "domainName": "זיהומיות, STI וחיסונים",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2022"
+   ]
+  },
+  {
+   "id": "anemia",
+   "name": "אנמיה",
+   "domain": "heme",
+   "domainName": "המטולוגיה, אונקולוגיה וגריאטריה",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "Goroll 79"
+   ]
+  },
+  {
+   "id": "leukemia",
+   "name": "ספירה חריגה ולוקמיה",
+   "domain": "heme",
+   "domainName": "המטולוגיה, אונקולוגיה וגריאטריה",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "polycyth",
+   "name": "אריתרוציטוזיס",
+   "domain": "heme",
+   "domainName": "המטולוגיה, אונקולוגיה וגריאטריה",
+   "tier": "C",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "AFP 2021",
+    "Goroll 80"
+   ]
+  },
+  {
+   "id": "screening",
+   "name": "סקר סרטן",
+   "domain": "heme",
+   "domainName": "המטולוגיה, אונקולוגיה וגריאטריה",
+   "tier": "A",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": [
+    "כוח משימה 2022"
+   ]
+  },
+  {
+   "id": "palliative",
+   "name": "כאב סרטני ופליאטיבי",
+   "domain": "heme",
+   "domainName": "המטולוגיה, אונקולוגיה וגריאטריה",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "Goroll 90",
+    "הר״י אופיואידים"
+   ]
+  },
+  {
+   "id": "frailty",
+   "name": "שבריריות וגריאטריה",
+   "domain": "heme",
+   "domainName": "המטולוגיה, אונקולוגיה וגריאטריה",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "AFP 2021"
+   ]
+  },
+  {
+   "id": "pfever",
+   "name": "חום בילדים וחום ללא מקור",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": [
+    "Nelson 219, 220"
+   ]
+  },
+  {
+   "id": "pvacc",
+   "name": "חיסוני שגרה בילדים ובפגים",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "תדריך החיסונים 2024"
+   ]
+  },
+  {
+   "id": "bronchiol",
+   "name": "ברונכיוליטיס וצפצופים",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "Nelson 439",
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "pcap",
+   "name": "דלקת ריאות בילדים ו-CF",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "הנחיות CAP ילדים 2023",
+    "Nelson 449, 454"
+   ]
+  },
+  {
+   "id": "pgastro",
+   "name": "גסטרואנטריטיס, התייבשות ו-HUS",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S25",
+    "F24"
+   ],
+   "anchorSources": [
+    "הנחיות גסטרואנטריטיס 2023",
+    "Nelson 387"
+   ]
+  },
+  {
+   "id": "pallergy",
+   "name": "אלרגיה למזון, FPIES ואנפילקסיס",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "AFP 2023",
+    "Nelson 190, 192"
+   ]
+  },
+  {
+   "id": "prash",
+   "name": "מחלות פריחה בילדים",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "F25",
+    "S24"
+   ],
+   "anchorSources": [
+    "Nelson 293, 300",
+    "כוח משימה פרק 5"
+   ]
+  },
+  {
+   "id": "pdev",
+   "name": "התפתחות ועיכוב שפה",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "S26",
+    "F24",
+    "S24"
+   ],
+   "anchorSources": [
+    "Nelson 22–26, 53",
+    "AFP 2023"
+   ]
+  },
+  {
+   "id": "pgrowth",
+   "name": "גדילה, קומה נמוכה ו-FTT",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "F25",
+    "S24"
+   ],
+   "anchorSources": [
+    "הר״י גדילה 2017",
+    "AFP FTT 2023"
+   ]
+  },
+  {
+   "id": "pobes",
+   "name": "השמנת ילדים ומתבגרים",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "Nelson 65"
+   ]
+  },
+  {
+   "id": "puti",
+   "name": "UTI בילדים ו-BBD",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "הנחיות ישראליות",
+    "Nelson 575"
+   ]
+  },
+  {
+   "id": "penur",
+   "name": "הרטבה",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP 2022",
+    "Nelson 580"
+   ]
+  },
+  {
+   "id": "prheum",
+   "name": "HSP, JIA וצליעה",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "F25"
+   ],
+   "anchorSources": [
+    "AFP 2020, 2023",
+    "Nelson 196, 210"
+   ]
+  },
+  {
+   "id": "pfmf",
+   "name": "FMF וכאב בטן חוזר",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S24"
+   ],
+   "anchorSources": [
+    "נייר עמדה FMF 2017"
+   ]
+  },
+  {
+   "id": "portho",
+   "name": "אורתופדיה בילדים",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "S25",
+    "S24"
+   ],
+   "anchorSources": [
+    "Nelson 719–721"
+   ]
+  },
+  {
+   "id": "pneuro",
+   "name": "ADHD, ASD, FASD ומסכים",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 2,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "Nelson 50, 58, 146",
+    "נייר עמדה מסכים 2023"
+   ]
+  },
+  {
+   "id": "adoles",
+   "name": "מתבגרים: סודיות, HEEADSSS וזהות מגדרית",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 3,
+   "sittings": [
+    "F25",
+    "S24"
+   ],
+   "anchorSources": [
+    "חוזר מנכ״ל 4/2004",
+    "Nelson 153",
+    "הר״י טיפולי המרה 2019"
+   ]
+  },
+  {
+   "id": "pneonate",
+   "name": "יילוד: צהבת ודימום אחרי ברית",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S25"
+   ],
+   "anchorSources": [
+    "Nelson 137",
+    "נייר עמדה דימום לאחר ברית"
+   ]
+  },
+  {
+   "id": "pmental",
+   "name": "חרדה, OCD ודיכאון בילדים",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "F24"
+   ],
+   "anchorSources": [
+    "Nelson 38, 39"
+   ]
+  },
+  {
+   "id": "pabuse",
+   "name": "התעללות והזנחה",
+   "domain": "peds",
+   "domainName": "ילדים ומתבגרים",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26",
+    "S24"
+   ],
+   "anchorSources": [
+    "Nelson 17",
+    "תיקון 26 לחוק העונשין"
+   ]
+  },
+  {
+   "id": "family",
+   "name": "מודלים משפחתיים",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "נספח ג׳ בסילבוס"
+   ]
+  },
+  {
+   "id": "pcm",
+   "name": "השיטה הממוקדת במטופל (מר״מ)",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "נספח ב׳ בסילבוס"
+   ]
+  },
+  {
+   "id": "caregiver",
+   "name": "מעמסת מטפל עיקרי",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "B",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": []
+  },
+  {
+   "id": "ipv",
+   "name": "אלימות במשפחה",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "A",
+   "hits": 1,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": []
+  },
+  {
+   "id": "ebm",
+   "name": "EBM וקריאה ביקורתית",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "S26"
+   ],
+   "anchorSources": [
+    "Users' Guides (JAMA)",
+    "ualberta"
+   ]
+  },
+  {
+   "id": "practice",
+   "name": "ארגון הפרקטיקה ומערכות",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "A",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": []
+  },
+  {
+   "id": "law",
+   "name": "חוקים ותקנות",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "A",
+   "hits": 2,
+   "sittings": [
+    "F24",
+    "S24"
+   ],
+   "anchorSources": [
+    "ויקירפואה"
+   ]
+  },
+  {
+   "id": "prevent",
+   "name": "המלצות כוח המשימה 2022",
+   "domain": "core",
+   "domainName": "משפחה, מערכת, EBM וחוק",
+   "tier": "A",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": [
+    "להד, טבנקין, אקסלרוד 2022"
+   ]
+  }
+ ],
+ "pastStations": {
+  "note": "תחנות קליניות בגרסת הבוחנים (עם מחוון). להציג רק מועד, סוג תחנה, תאריך ו-PDF. לא להציג תוכן, נושאים או תקציר: המשתמש שומר אותן לתרגול.",
+  "clinical": [
+   {
+    "id": "c0",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "27.4.26",
+    "stationType": "גדולה + EBM",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=0cad76a2-a39b-46d8-ad77-dfbd412fb26d"
+   },
+   {
+    "id": "c1",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "28.4.26",
+    "stationType": "גדולה + EBM",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=f0288b21-8c23-4df6-9701-5ed44b107b86"
+   },
+   {
+    "id": "c2",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "27.4.26",
+    "stationType": "גדולה 2",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=ff673774-949f-43c7-b576-7f6e3b6485f0"
+   },
+   {
+    "id": "c3",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "28.4.26",
+    "stationType": "גדולה 2",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=9387137f-e9a9-476d-ba44-9bb800d3860e"
+   },
+   {
+    "id": "c4",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "27.4.26",
+    "stationType": "קצרה 3",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=e1909477-2719-4fe7-818d-fa8f8530ce44"
+   },
+   {
+    "id": "c5",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "27.4.26",
+    "stationType": "קצרה 4",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=b48c2055-384d-4756-8c2b-ca0ebb055480"
+   },
+   {
+    "id": "c6",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "28.4.26",
+    "stationType": "קצרה 3",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=ba79948c-b2ae-4c14-bf31-34c147aa5282"
+   },
+   {
+    "id": "c7",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "28.4.26",
+    "stationType": "קצרה 4",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=61a139f0-5375-4637-a84d-c1ccd7887eb8"
+   },
+   {
+    "id": "c8",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "27.4.26",
+    "stationType": "משפחה זהה",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=0620d6cb-ffcb-4f5e-8975-e898609ee1c6"
+   },
+   {
+    "id": "c9",
+    "sitting": "S26",
+    "sittingName": "אביב 2026",
+    "date": "27.4.26",
+    "stationType": "מר״מ",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=123eae3e-0a5a-4c27-b77b-2543904267ec"
+   },
+   {
+    "id": "c10",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "17.11.25",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayon1711examiners.pdf"
+   },
+   {
+    "id": "c11",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "17.11.25",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2dayson1711examiners.pdf"
+   },
+   {
+    "id": "c12",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "18.11.25",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayTue1811examinees.pdf"
+   },
+   {
+    "id": "c13",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "18.11.25",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical21811examiners.pdf"
+   },
+   {
+    "id": "c14",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "17.11.25",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short3dayclinicalon1711forexaminers.pdf"
+   },
+   {
+    "id": "c15",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "17.11.25",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short4dayclinicalon1711examiners.pdf"
+   },
+   {
+    "id": "c16",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "18.11.25",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical31811examiners.pdf"
+   },
+   {
+    "id": "c17",
+    "sitting": "F25",
+    "sittingName": "סתיו 2025",
+    "date": "18.11.25",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical41811examiners.pdf"
+   },
+   {
+    "id": "c18",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "5.5.25",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayon050525orexaminees.pdf"
+   },
+   {
+    "id": "c19",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "5.5.25",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2dayson050525examinees.pdf"
+   },
+   {
+    "id": "c20",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "6.5.25",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayTue060525examiners.pdf"
+   },
+   {
+    "id": "c21",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "6.5.25",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2DayTue6525Examinees.pdf"
+   },
+   {
+    "id": "c22",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "5.5.25",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short3-dayclinicalon050525examiners.pdf"
+   },
+   {
+    "id": "c23",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "5.5.25",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short%204-dayclinicalon050525examiners.pdf"
+   },
+   {
+    "id": "c24",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "5.5.25",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short5-dayclinicalon050525examiners.pdf"
+   },
+   {
+    "id": "c25",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "6.5.25",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3daysTue060525examiners.pdf"
+   },
+   {
+    "id": "c26",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "6.5.25",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4daysTue060525examiners.pdf"
+   },
+   {
+    "id": "c27",
+    "sitting": "S25",
+    "sittingName": "אביב 2025",
+    "date": "6.5.25",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5daysTue060525examiners.pdf"
+   },
+   {
+    "id": "c28",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "22.12.24",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202404.pdf"
+   },
+   {
+    "id": "c29",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "22.12.24",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202405.pdf"
+   },
+   {
+    "id": "c30",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "23.12.24",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202409.pdf"
+   },
+   {
+    "id": "c31",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "23.12.24",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202410.pdf"
+   },
+   {
+    "id": "c32",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "22.12.24",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202411.pdf"
+   },
+   {
+    "id": "c33",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "22.12.24",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202412.pdf"
+   },
+   {
+    "id": "c34",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "22.12.24",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202413.pdf"
+   },
+   {
+    "id": "c35",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "23.12.24",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202406.pdf"
+   },
+   {
+    "id": "c36",
+    "sitting": "F24",
+    "sittingName": "סתיו 2024",
+    "date": "23.12.24",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202407.pdf"
+   },
+   {
+    "id": "c37",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "22.7.24",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinical1daexaminees.pdf"
+   },
+   {
+    "id": "c38",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "22.7.24",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Large2-dayclinicalexaminees.pdf"
+   },
+   {
+    "id": "c39",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "23.7.24",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinical1day230724examinees.pdf"
+   },
+   {
+    "id": "c40",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "23.7.24",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinicalday2230724examinees.pdf"
+   },
+   {
+    "id": "c41",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "22.7.24",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3daysexaminees.pdf"
+   },
+   {
+    "id": "c42",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "22.7.24",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4daysexaminees.pdf"
+   },
+   {
+    "id": "c43",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "22.7.24",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5daysexaminees.pdf"
+   },
+   {
+    "id": "c44",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "23.7.24",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3day3230724examinees.pdf"
+   },
+   {
+    "id": "c45",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "23.7.24",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4day3230724forexaminees.pdf"
+   },
+   {
+    "id": "c46",
+    "sitting": "S24",
+    "sittingName": "אביב 2024",
+    "date": "23.7.24",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5dayC230724examinees.pdf"
+   }
+  ],
+  "otherStations": [
+   {
+    "sittingName": "אביב 2026",
+    "station": "משפחה זהה 28.4",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=875d4500-524d-4269-b9e2-d61edcabfcc2"
+   },
+   {
+    "sittingName": "אביב 2026",
+    "station": "מר״מ 28.4",
+    "pdf": "https://www.ima.org.il/File.aspx?usf=2758f2d1-cce2-423b-9954-910591c22094"
+   },
+   {
+    "sittingName": "סתיו 2025",
+    "station": "ארגון הפרקטיקה 17.11",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Practiceorganization171125tthewebsite.pdf"
+   },
+   {
+    "sittingName": "סתיו 2025",
+    "station": "ארגון הפרקטיקה 18.11",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Organizingpractice1825tothewebsi.pdf"
+   },
+   {
+    "sittingName": "סתיו 2025",
+    "station": "משפחה זהה 17.11",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Identifyfamily171125forexaminees.pdf"
+   },
+   {
+    "sittingName": "סתיו 2025",
+    "station": "משפחה זהה 18.11",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/SameinthefamilyTuesday181125forexaminees.pdf"
+   },
+   {
+    "sittingName": "סתיו 2025",
+    "station": "מר״מ 17.11",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/MarMstationon1711examinees.pdf"
+   },
+   {
+    "sittingName": "סתיו 2025",
+    "station": "מר״מ 18.11",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/MarMstationTuesday1811examinees.pdf"
+   },
+   {
+    "sittingName": "אביב 2025",
+    "station": "ארגון הפרקטיקה 5.5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Practicequestionorganizationsamedayon050525forexaminees.pdf"
+   },
+   {
+    "sittingName": "אביב 2025",
+    "station": "ארגון הפרקטיקה 6.5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/PracticeorganizationsamequestionTuesday060525examinees.pdf"
+   },
+   {
+    "sittingName": "אביב 2025",
+    "station": "משפחה זהה 5.5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday050525FamilySamequestionExams.pdf"
+   },
+   {
+    "sittingName": "אביב 2025",
+    "station": "משפחה זהה 6.5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Tuesday060525FamilySamequestionExaminees.pdf"
+   },
+   {
+    "sittingName": "אביב 2025",
+    "station": "מר״מ 5.5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Mr_Mstationon050525examinees.pdf"
+   },
+   {
+    "sittingName": "אביב 2025",
+    "station": "מר״מ 6.5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Mr_MstationTuesday060525examinees.pdf"
+   },
+   {
+    "sittingName": "סתיו 2024",
+    "station": "ארגון הפרקטיקה 22.12",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202401.pdf"
+   },
+   {
+    "sittingName": "סתיו 2024",
+    "station": "ארגון הפרקטיקה 23.12",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202402.pdf"
+   },
+   {
+    "sittingName": "סתיו 2024",
+    "station": "משפחה זהה 22.12",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202414.pdf"
+   },
+   {
+    "sittingName": "סתיו 2024",
+    "station": "משפחה זהה 23.12",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202403.pdf"
+   },
+   {
+    "sittingName": "סתיו 2024",
+    "station": "מר״מ 23.12",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202415.pdf"
+   },
+   {
+    "sittingName": "אביב 2024",
+    "station": "ארגון הפרקטיקה 22.7",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Organizationofsame72224forexaminees.pdf"
+   },
+   {
+    "sittingName": "אביב 2024",
+    "station": "ארגון הפרקטיקה 23.7",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/organizationpracticeTuesday72324examinees.pdf"
+   },
+   {
+    "sittingName": "אביב 2024",
+    "station": "משפחה זהה 22.7",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday7222024_familysamexaminers.pdf"
+   },
+   {
+    "sittingName": "אביב 2024",
+    "station": "משפחה זהה 23.7",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyTuesday23724forexaminers.pdf"
+   },
+   {
+    "sittingName": "אביב 2024",
+    "station": "מר״מ 22.7",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Mar_mstationday22724examiners.pdf"
+   },
+   {
+    "sittingName": "אביב 2024",
+    "station": "מר״מ 23.7",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/MrMStationDay372324examinees.pdf"
+   }
+  ],
+  "olderSittings": "סתיו 2022 עד פברואר 2024 בעמוד הספרות של הר״י."
+ },
+ "todayLogic": {
+  "phases": [
+   {
+    "until": "examDate − 100 ימים",
+    "name": "שלב 1: מעבר ראשון על דרגה A",
+    "pace": "נושאי A שלא נפתחו ÷ שבועות שנותרו עד סוף השלב; תחנה מלאה אחת בשבוע"
+   },
+   {
+    "until": "examDate − 42 ימים",
+    "name": "שלב 2: דרגה B, ילדים, משפחה ומר״מ",
+    "pace": "נושאי B שלא נפתחו ÷ שבועות שנותרו; שתי תחנות בשבוע; הגשת העבודות חודש לפני"
+   },
+   {
+    "until": "examDate",
+    "name": "שלב 3: רק תחנות מלאות, חזרות ונקודות חולשה",
+    "pace": "בלי חומר חדש חוץ מנושאים חמים"
+   }
+  ],
+  "topicStatuses": [
+   "לא התחלתי",
+   "קראתי",
+   "חזרתי",
+   "שולט"
+  ],
+  "reviewIntervalDays": {
+   "קראתי": 3,
+   "חזרתי": 10,
+   "שולט": 30
+  },
+  "tiles": [
+   "ימים לבחינה",
+   "ימים להגשת העבודות",
+   "נושאים שנפתחו / סה״כ (וכמה בשליטה)",
+   "תחנות שתורגלו השבוע + ממוצע ציון 0–4"
+  ],
+  "lists": [
+   "התקדמות לפי דרגה A/B/C (שולט/חזרתי/קראתי)",
+   "לחזרה היום: נושאים שמועד החזרה שלהם הגיע (עד 8)",
+   "הבא בתור: נושאי A שלא נפתחו, ממוינים לפי מספר ההופעות במבחנים (6)",
+   "כפתור תחנה אקראית שעוד לא תורגלה",
+   "הגדרת תאריך בחינה"
+  ]
+ }
+}
