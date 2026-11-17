@@ -230,18 +230,23 @@ function mount(host,pack,onExit){
   host.replaceChildren(root);
   let p=0,cur=-1,render=null,lis=[],pearl=null,playing=false,stopAt=N,last=0;
   /* narration: recorded audio per chapter (c.narr = {src, dur, marks:[[t, sec]...]}); the reel follows the voice */
-  const hasNarr=ch.some(c=>c.narr&&c.narr.src),aud=hasNarr?new Audio():null;let narrOn=hasNarr,audCh=-1,pend=false;
+  const hasNarr=ch.some(c=>c.narr&&c.narr.src),aud=hasNarr?new Audio():null;let narrOn=hasNarr,audCh=-1,pend=false,pendT=0,lastAT=-1,lastStamp=0,stallT=0,retryT=0,pre=null;
+  const bad=new Set(); // chapters whose audio failed: they play on a timer at the narration's pace
+  if(aud){aud.preload='auto';aud.addEventListener('error',()=>{if(audCh>=0)bad.add(audCh);pend=false;});REEL._aud=aud;}
   try{if(hasNarr&&localStorage.getItem('shlavb-narr')==='0')narrOn=false;}catch(e){}
   const mapT=(v,m,a,b)=>{for(let k=1;k<m.length;k++){if(v<=m[k][a]||k===m.length-1){const x0=m[k-1][a],x1=m[k][a],f=x1>x0?Math.min(1,Math.max(0,(v-x0)/(x1-x0))):0;return m[k-1][b]+(m[k][b]-m[k-1][b])*f;}}return v;};
   const secToT=(sec,n)=>mapT(sec,n.marks,1,0),tToSec=(t,n)=>mapT(t,n.marks,0,1);
-  const voiced=i=>narrOn&&ch[i]&&ch[i].narr&&ch[i].narr.src;
-  function loadAud(i){if(audCh===i)return;audCh=i;aud.src=ch[i].narr.src;aud.load();}
+  const voiced=i=>narrOn&&ch[i]&&ch[i].narr&&ch[i].narr.src&&!bad.has(i);
+  const pace=i=>(narrOn&&ch[i]&&ch[i].narr&&ch[i].narr.dur)||11;
+  function preload(i){if(!voiced(i))return;const src=ch[i].narr.src;if(pre&&pre._src===src)return;pre=new Audio();pre.preload='auto';pre._src=src;pre.src=src;try{pre.load();}catch(e){}}
+  function loadAud(i){if(audCh===i)return;audCh=i;lastAT=-1;aud.src=ch[i].narr.src;aud.load();}
   if(hasNarr){const nb=h('button',{class:'btn small ghost nbtn','aria-pressed':String(narrOn)},narrOn?'🔊 קריינות':'🔇 קריינות');
     nb.onclick=()=>{narrOn=!narrOn;try{localStorage.setItem('shlavb-narr',narrOn?'1':'0');}catch(e){}nb.textContent=narrOn?'🔊 קריינות':'🔇 קריינות';nb.setAttribute('aria-pressed',String(narrOn));
       if(playing){if(narrOn)startAud();else aud.pause();}};
     root.querySelector('.rtop .sp').after(nb);}
   function startAud(){const i=Math.min(N-1,Math.floor(p));if(!voiced(i))return false;loadAud(i);const n=ch[i].narr;
-    pend=true;const go=()=>{pend=false;aud.currentTime=Math.min(tToSec(p-i,n),Math.max(0,(aud.duration||n.dur)-.05));aud.play().catch(()=>{});};
+    pend=true;pendT=performance.now();stallT=0;const go=()=>{if(audCh!==i)return;pend=false;try{aud.currentTime=Math.min(tToSec(p-i,n),Math.max(0,(aud.duration||n.dur)-.05));}catch(e){}lastAT=-1;
+      const pr=aud.play();if(pr&&pr.catch)pr.catch(err=>{if(audCh!==i)return;if(err&&err.name==='NotAllowedError'){stop();try{toast('לחצו ▶ כדי להמשיך עם הקריינות');}catch(e){}}else if(err&&err.name!=='AbortError')bad.add(i);});};
     if(aud.readyState>=1)go();else aud.addEventListener('loadedmetadata',go,{once:true});return true;}
   function build(i){const c=ch[i];cur=i;copy.innerHTML='';
     const ul=h('ul',{class:'points'});lis=(c.points||[]).map(pt=>{const li=h('li',{},h('span',{class:'k'},pt[1]),h('span',{html:pt[2]}));ul.append(li);return {li,at:pt[0]};});
@@ -251,6 +256,7 @@ function mount(host,pack,onExit){
     const g=S('g',{},svg);const ctx={tools,goto:lt=>{stop();setP(i+cl(lt,0,.999));}};
     const sc=c.scene||{};const fn=sc.type==='x'?(CUSTOM[pack.id]||{})[sc.name]:T[sc.type];render=fn?fn(g,c.scene,ctx):(()=>{M(300,220,'סצנה לא נתמכת: '+(c.scene&&c.scene.type),{'font-size':'14px'},g);return ()=>{};})();}
   function setP(v,fromInput){p=cl(v,0,N-.001);const i=Math.min(N-1,Math.floor(p)),t=p-i;if(i!==cur)build(i);render(t);
+    {const f0=Math.max(.02,Math.min(...(ch[i].points||[[.04]]).map(x=>x[0]))),u=REDUCE?1:Math.min(1,t/f0),e=1-Math.pow(1-u,3);svg.style.opacity=(.25+.75*e).toFixed(3);svg.style.transform=u<1?'translateY('+((1-e)*14).toFixed(1)+'px) scale('+(.96+.04*e).toFixed(3)+')':'';}
     let lo=null;lis.forEach(o=>{const on=t>=o.at;o.li.classList.toggle('on',on);o.li.classList.remove('now');if(on)lo=o.li;});if(lo&&t<.9)lo.classList.add('now');
     if(pearl)pearl.classList.toggle('on',t>=pearl._at);segEls.forEach((s,j)=>{s.firstChild.style.width=(j<i?100:j===i?t*100:0)+'%';s.classList.toggle('cur',j===i);});
     time.textContent=(i+1)+'/'+N+' · '+ch[i].label;if(!fromInput)scrub.value=Math.round(p*1000);scrub.setAttribute('aria-valuetext','פרק '+(i+1)+', '+ch[i].label);}
@@ -259,8 +265,20 @@ function mount(host,pack,onExit){
   function stop(){playing=false;icon();if(aud)aud.pause();}
   function tick(now){if(!playing||!root.isConnected){if(aud&&!root.isConnected)aud.pause();return;}const dt=Math.min(.05,(now-last)/1000);last=now;
     const i=Math.min(N-1,Math.floor(p));let np;
-    if(voiced(i)&&audCh===i){const n=ch[i].narr;if(pend){requestAnimationFrame(tick);return;}if(aud.ended){np=i+1;}else if(aud.paused&&aud.readyState<3){requestAnimationFrame(tick);return;}else np=i+Math.min(.999,secToT(aud.currentTime,n));}
-    else np=p+dt/11;
+    if(voiced(i)&&audCh!==i)startAud();
+    if(voiced(i)&&audCh===i){const n=ch[i].narr;
+      if(pend&&now-pendT>6000){pend=false;bad.add(i);} // audio never loaded: go on without it
+      if(pend){requestAnimationFrame(tick);return;}
+      if(aud.ended)np=i+1;
+      else{const ct=aud.currentTime;
+        if(aud.paused||aud.readyState<3){ // buffering, or the browser paused it: nudge, and give up after 8 s
+          if(!stallT)stallT=now;if(aud.paused&&aud.readyState>=2&&now-retryT>1000){retryT=now;const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{});}
+          if(now-stallT>8000){bad.add(i);aud.pause();}requestAnimationFrame(tick);return;}
+        stallT=0;if(ct!==lastAT){lastAT=ct;lastStamp=now;}
+        const est=ct+Math.min(.35,(now-lastStamp)/1000)*(aud.playbackRate||1); // smooth between coarse time updates
+        np=i+Math.min(.999,secToT(est,n));
+        if(est>n.dur*.5&&i+1<N)preload(i+1);}}
+    else np=p+dt/pace(i);
     if(np>=stopAt){setP(stopAt);stop();return;}const ni=Math.floor(np);setP(np);if(ni!==i&&voiced(ni))startAud();requestAnimationFrame(tick);}
   play.onclick=()=>{if(playing)stop();else start(p>=N-.01?(setP(0),N):N);};
   scrub.addEventListener('input',()=>{stop();setP(scrub.value/1000,true);});
