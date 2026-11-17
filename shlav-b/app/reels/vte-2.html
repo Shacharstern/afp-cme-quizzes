@@ -64,6 +64,17 @@ REEL.custom('vte',{
    op(lg2,span(t,.6,.7));op(ch,span(t,.74,.84));op(lg,1);};
  },
 
+ versus(g,d){ // DVT vs PE treatment, row by row: shared rows merge across both columns
+  const cols=d.cols||['DVT','PE'],rows=d.rows||[],XL=592,XA=470,XB=262,XE=8,y0=74,rh=Math.min(44,(420-y0)/rows.length);
+  M((XA+XB)/2,52,cols[0],{class:'disp','font-size':'20px',fill:C('rose')},g);M((XB+XE)/2,52,cols[1],{class:'disp','font-size':'20px',fill:C('teal')},g);
+  const R2=rows.map((r,i)=>{const y=y0+i*rh,e=S('g',{},g);R(XL,y+rh/2+4,r.k,{'font-size':'12px','font-weight':'700',fill:C('muted')},e);
+   const cell=(x1,x2,ls,tone)=>{S('rect',{x:x2+3,y:y+3,width:x1-x2-6,height:rh-6,rx:8,fill:C(tone+'-soft')},e);const L=[].concat(ls);L.forEach((t,j)=>M((x1+x2)/2,y+rh/2+4+(j-(L.length-1)/2)*14,t,{'font-size':L.length>1?'10.5px':'11.5px','font-weight':j===0?'700':'500'},e));};
+   if(r.same!=null){cell(XA,XE,r.same,'ok');S('text',{x:XE+10,y:y+14,text:d.sameTag||'זהה','font-size':'9px','font-weight':'700',fill:C('ok'),direction:'rtl','text-anchor':'end'},e);}
+   else{cell(XA,XB,r.dvt,'rose');cell(XB,XE,r.pe,'teal');}
+   return {e,at:r.at!=null?r.at:.04+i*.1};});
+  return t=>{R2.forEach(o=>{const v=span(t,o.at-.02,o.at+.05);o.e.style.opacity=v;o.e.setAttribute('transform','translate('+(1-v)*20+' 0)');});};
+ },
+
  seesaw(g,d){ // recurrence risk vs bleeding risk decides whether to continue after three months
   const cx=300,cy=290,Lb=190;S('path',{d:'M'+(cx-26)+' '+(cy+70)+' L'+cx+' '+cy+' L'+(cx+26)+' '+(cy+70)+' Z',fill:C('line')},g);
   const beam=S('g',{},g);S('rect',{x:cx-Lb,y:cy-5,width:Lb*2,height:10,rx:5,fill:C('ink')},beam);
