@@ -77,7 +77,9 @@ def check(p):
             for k in ('id', 'label', 'title', 'scene'):
                 if not c.get(k): E(f'{tag}: missing {k}')
             sc = c.get('scene') or {}
-            if sc.get('type') not in SCENES: E(f'{tag}: scene.type must be one of {sorted(SCENES)}')
+            if sc.get('type') == 'x':
+                if not sc.get('name'): E(f'{tag}: custom scene needs a name (defined in app/reels/<topic>.html)')
+            elif sc.get('type') not in SCENES: E(f'{tag}: scene.type must be x or one of {sorted(SCENES)}')
             for pt in c.get('points', []):
                 if not (isinstance(pt, list) and len(pt) == 3 and 0 <= float(pt[0]) <= 1): E(f'{tag}: points are [at 0..1, key, text]')
             if c.get('pearl') and not (isinstance(c['pearl'], list) and len(c['pearl']) == 2): E(f'{tag}: pearl is [at, text]')

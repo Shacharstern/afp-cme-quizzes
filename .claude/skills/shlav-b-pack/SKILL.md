@@ -34,6 +34,13 @@ Follow `shlav-b/engine/pack-format.md`. Content rules:
 - **Sizes:** reel 8–14 chapters; summary 8–12 sections; drills 25–60 with mixed `pick`/`swipe`/`num`, every one with a `w` (why); 3–6 cases; oral 2–4 stations × 2–4 questions, each with a follow-up. Keep the pack under 240 KB.
 - **Hebrew style:** short sentences, no filler, the way a senior family physician would explain it. Quote-like marks inside strings: use ״ and ׳, not ASCII double quotes.
 
+## 3b. Custom reel scenes (one topic at a time)
+The user chose a unique reel per topic. For each chapter, prefer a scene drawn for this topic over a catalog template: the topic's own mechanism, test, curve or algorithm (e.g. an ECG that morphs with potassium, a brain cell that swells as sodium falls, a speedometer for correction limits).
+- Write the drawing code in `shlav-b/app/reels/<topic-id>.html` (more files as `<topic-id>-2.html`): `REEL.custom('<topic-id>', { sceneName(g, d, ctx) { ...draw once...; return t => { ...update for 0 ≤ t ≤ 1... }; } })`, using `REEL.kit` (S, set, span, lerp, C, R for right-aligned Hebrew, M centered). Text comes from the pack (`d`), never hard-coded clinical content. See `reels/lytes.html` for the pattern.
+- In the pack, such a chapter uses `"scene": {"type": "x", "name": "sceneName", ...data}`. Templates stay allowed where nothing better fits (a recap, a long list).
+- Only draw findings the source states (lytes: the article text names T-wave flattening, QRS widening, bradycardia and junctional rhythm; it does not name peaked T waves, so they are not drawn).
+- Check visually before publishing: build, render every chapter at t≈0.45 and t≈0.92 with Playwright, look for clipped or overlapping text, fix, then rebuild. Custom code ships inside the app, so finish with: build → publish the app artifact (same file path) → upload the pack.
+
 ## 4. Validate
 `python3 shlav-b/engine/validate_pack.py shlav-b/packs/<id>.json` must print OK. Fix every ERROR; fix warnings unless there is a reason.
 
