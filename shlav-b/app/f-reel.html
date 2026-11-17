@@ -26,6 +26,7 @@
 .rl .dock{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding-top:8px;border-top:1px solid var(--line)}
 .rl .pbtn{width:42px;height:42px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);display:grid;place-items:center;cursor:pointer}
 .rl .pbtn svg{width:16px;height:16px;fill:currentColor}
+.rl .rbtn{min-width:52px;font-variant-numeric:tabular-nums}.rl .rbtn.on{background:var(--ink);color:var(--bg)}
 .rl .track{position:relative;min-width:0}
 .rl .segs{display:flex;gap:3px;height:30px}
 .rl .seg{flex:1;min-width:0;position:relative;background:var(--line);border-radius:4px;overflow:hidden}
@@ -235,7 +236,7 @@ function mount(host,pack,onExit){
   const play=h('button',{class:'pbtn','aria-label':'נגן'}),pi=document.createElementNS(NS,'svg');pi.setAttribute('viewBox','0 0 16 16');play.append(pi);
   const segs=h('div',{class:'segs'}),scrub=h('input',{type:'range',id:'reelScrub',min:0,max:N*1000,step:1,value:0,'aria-label':'גלילה בסרטון'}),time=h('span',{class:'time'});
   const segEls=ch.map(c=>{const d=h('div',{class:'seg'},h('i'),h('span',{},c.label));segs.append(d);return d;});
-  root.append(h('div',{class:'rtop'},h('button',{class:'btn small ghost',onclick:()=>{stop();onExit();}},'→ חזרה לנושא'),h('b',{},pack.title),h('span',{class:'sp'}),h('span',{class:'note'},'גררו את הסרגל, או ← → במקלדת')),
+  root.append(h('div',{class:'rtop'},h('button',{class:'btn small ghost',onclick:()=>{stop();onExit();}},'→ חזרה לנושא'),h('b',{},pack.title),h('span',{class:'sp'}),h('span',{class:'note'},'גררו את הסרגל, או ← → במקלדת · [ ] מהירות')),
     h('main',{class:'stage'},copy,h('figure',{class:'visual',style:'margin:0'},svg,tools,vcap)),
     h('footer',{class:'dock'},play,h('div',{class:'track'},segs,scrub),time));
   host.replaceChildren(root);
@@ -248,12 +249,20 @@ function mount(host,pack,onExit){
   const hasNarr=ch.some(c=>c.narr&&c.narr.dur&&(ONE||c.narr.src)),aud=hasNarr?new Audio():null;
   let narrOn=hasNarr,G=0,lastAT=-1,lastStamp=0,retryT=0,quietSince=0,failed=false;
   try{if(hasNarr&&localStorage.getItem('shlavb-narr')==='0')narrOn=false;}catch(e){}
+  /* playback speed: one rate for the animation clock and the narration (pitch kept) */
+  const RATES=[.75,1,1.25,1.5,1.75,2];let rate=1;try{const r=+localStorage.getItem('shlavb-rate');if(RATES.includes(r))rate=r;}catch(e){}
+  const rateLbl=r=>String(r).replace(/^0/,'')+'×';
+  const rb=h('button',{class:'btn small ghost rbtn',dir:'ltr','aria-label':'מהירות הניגון',title:'מהירות הניגון ( [ / ] במקלדת)'},rateLbl(rate));
+  function applyRate(){if(aud){aud.defaultPlaybackRate=rate;aud.playbackRate=rate;aud.preservesPitch=true;}}
+  function setRate(r){rate=r;try{localStorage.setItem('shlavb-rate',String(r));}catch(e){}rb.textContent=rateLbl(r);rb.classList.toggle('on',r!==1);applyRate();}
+  rb.onclick=()=>setRate(RATES[(RATES.indexOf(rate)+1)%RATES.length]);rb.classList.toggle('on',rate!==1);
+  root.querySelector('.rtop .sp').after(rb);
   const mapT=(v,m,a,b)=>{for(let k=1;k<m.length;k++){if(v<=m[k][a]||k===m.length-1){const x0=m[k-1][a],x1=m[k][a],f=x1>x0?Math.min(1,Math.max(0,(v-x0)/(x1-x0))):0;return m[k-1][b]+(m[k][b]-m[k-1][b])*f;}}return v;};
   const secToT=(sec,n)=>mapT(sec,n.marks,1,0),tToSec=(t,n)=>mapT(t,n.marks,0,1);
   const voiced=i=>narrOn&&ch[i]&&ch[i].narr&&ch[i].narr.dur&&(ONE||ch[i].narr.src);
   const srcOf=i=>ONE?ONE.src:ch[i].narr.src,base=i=>ONE?ONE.offs[i]:0;
   const resume=h('button',{class:'btn small rose',hidden:true,onclick:()=>{resume.hidden=true;failed=false;const i=Math.min(N-1,Math.floor(p));if(voiced(i))playAt(i,p-i);}},'▶ להפעיל קריינות');
-  if(aud){aud.preload='auto';aud.addEventListener('error',()=>{failed=true;});REEL._aud=aud;
+  if(aud){aud.preload='auto';applyRate();aud.addEventListener('error',()=>{failed=true;});REEL._aud=aud;
     ['play','pause','ended','error','stalled','waiting','loadedmetadata','canplay'].forEach(ev=>aud.addEventListener(ev,()=>dlog('a:'+ev,{ct:+aud.currentTime.toFixed(1),rs:aud.readyState,src:(aud._src||'').slice(-8),err:aud.error?aud.error.code:0})));}
   /* diagnostics: a short rolling log in the user's own state (read back to debug playback on the user's machine) */
   function dlog(ev,x){try{const A=appState(),L=(A.dbg=A.dbg||[]);L.push(Object.assign({t:new Date().toISOString().slice(11,23),ev,p:+p.toFixed(3),pk:pack.id},x||{}));if(L.length>150)L.splice(0,L.length-150);clearTimeout(REEL._dsave);REEL._dsave=setTimeout(()=>{try{save();}catch(e){}},3000);}catch(e){}}
@@ -261,7 +270,7 @@ function mount(host,pack,onExit){
   dlog('mount',{ua:navigator.userAgent.slice(0,90),rm:REDUCE,n:N,one:!!ONE,narr:hasNarr&&narrOn});
   function loadSrc(i){const s=srcOf(i);if(aud._src===s)return;aud._src=s;failed=false;aud.src=s;try{aud.load();}catch(e){}lastAT=-1;}
   function playAt(i,t){if(!aud||!voiced(i))return;loadSrc(i);G=base(i)+tToSec(t,ch[i].narr);const want=G;
-    const go=()=>{try{if(Math.abs(aud.currentTime-want)>.25)aud.currentTime=want;}catch(e){}lastAT=-1;const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{});};
+    const go=()=>{applyRate();try{if(Math.abs(aud.currentTime-want)>.25)aud.currentTime=want;}catch(e){}lastAT=-1;const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{});};
     if(aud.readyState>=1)go();else aud.addEventListener('loadedmetadata',go,{once:true});}
   if(hasNarr){const nb=h('button',{class:'btn small ghost nbtn','aria-pressed':String(narrOn)},narrOn?'🔊 קריינות':'🔇 קריינות');
     nb.onclick=()=>{narrOn=!narrOn;try{localStorage.setItem('shlavb-narr',narrOn?'1':'0');}catch(e){}nb.textContent=narrOn?'🔊 קריינות':'🔇 קריינות';nb.setAttribute('aria-pressed',String(narrOn));
@@ -285,7 +294,7 @@ function mount(host,pack,onExit){
     dlog('start',{to,voiced:!!voiced(i)});playing=true;last=performance.now();quietSince=0;icon();if(voiced(i))playAt(i,p-i);requestAnimationFrame(tick);}
   function stop(why){dlog('stop',{why:why||''});playing=false;icon();if(aud)aud.pause();resume.hidden=true;}
   let lastLog=0;
-  function tick(now){if(!playing||!root.isConnected){if(aud&&!root.isConnected)aud.pause();if(playing)dlog('tickEnd',{conn:root.isConnected});return;}const dt=Math.min(.05,(now-last)/1000);last=now;
+  function tick(now){if(!playing||!root.isConnected){if(aud&&!root.isConnected)aud.pause();if(playing)dlog('tickEnd',{conn:root.isConnected});return;}const dt=Math.min(.05,(now-last)/1000)*rate;last=now;
     if(now-lastLog>2000){lastLog=now;dlog('tick',{G:+G.toFixed(2),pa:aud?aud.paused:null,ct:aud?+aud.currentTime.toFixed(1):null,rs:aud?aud.readyState:null,f:failed,src:aud?(aud._src||'').slice(-8):''});}
     const i=Math.min(N-1,Math.floor(p));let np;
     if(voiced(i)){const n=ch[i].narr,ct=aud.currentTime,mine=aud._src===srcOf(i);
@@ -306,7 +315,7 @@ function mount(host,pack,onExit){
   play.onclick=()=>{if(playing)stop();else start(p>=N-.01?(setP(0),N):N);};
   scrub.addEventListener('input',()=>{stop();setP(scrub.value/1000,true);});
   const jump=i=>{i=cl(i,0,N-1);stop();setP(i);start(i+.92);};
-  PLAYER.keys=e=>{const k=e.key;if(k===' '){play.click();return true;}if(k==='ArrowLeft'||k==='ArrowRight'){stop();const fwd=k==='ArrowLeft';if(e.shiftKey)jump(cur+(fwd?1:-1));else setP(p+(fwd?.04:-.04));return true;}if(k==='PageDown'){jump(cur+1);return true;}if(k==='PageUp'){jump(cur-1);return true;}};
+  PLAYER.keys=e=>{const k=e.key;if(k===' '){play.click();return true;}if(k===']'||k==='['){const j=RATES.indexOf(rate)+(k===']'?1:-1);if(j>=0&&j<RATES.length)setRate(RATES[j]);return true;}if(k==='ArrowLeft'||k==='ArrowRight'){stop();const fwd=k==='ArrowLeft';if(e.shiftKey)jump(cur+(fwd?1:-1));else setP(p+(fwd?.04:-.04));return true;}if(k==='PageDown'){jump(cur+1);return true;}if(k==='PageUp'){jump(cur-1);return true;}};
   icon();setP(.92);
 }
 return {mount,types:Object.keys(T),custom:(id,defs)=>{CUSTOM[id]=Object.assign(CUSTOM[id]||{},defs);},kit:{S,set,lerp,ease,span,C,R,M,wrap,lines}};
