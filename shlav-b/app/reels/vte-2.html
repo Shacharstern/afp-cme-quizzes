@@ -1,0 +1,85 @@
+<script>
+/* DVT and PE reel scenes, part 2: imaging choice, treatment setting, drug phases, recurrence and duration. */
+(()=>{
+const {S,set,lerp,ease,span,C,R,M}=REEL.kit;
+const N=(x,y,text,o={},p)=>S('text',Object.assign({x,y,text,direction:'ltr','text-anchor':'middle'},o),p);
+const lin=(t,a,b)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+const op=(el,v)=>{el.style.opacity=v;};
+
+REEL.custom('vte',{
+ scan(g,d){ // CTPA by default; contraindications reroute to V/Q
+  const card=(x,o,tone)=>{const e=S('g',{},g);const b=S('rect',{x,y:250,width:250,height:140,rx:16,fill:C('bg'),stroke:C('line'),'stroke-width':'2.5px'},e);
+   M(x+125,284,o.h,{class:'disp','font-size':'22px',fill:C(tone)},e);(o.s||[]).forEach((s,i)=>M(x+125,312+i*22,s,{'font-size':'12px'},e));return {e,b};};
+  const ct=card(320,d.ct,'teal'),vq=card(30,d.vq,'amber');
+  S('circle',{cx:300,cy:62,r:20,fill:C('ink')},g);M(300,100,d.pt||'',{'font-size':'12px','font-weight':'700'},g);
+  const p1=S('path',{d:'M300 110 Q300 180 445 246',fill:'none',stroke:C('line'),'stroke-width':'3px'},g),p2=S('path',{d:'M300 110 Q300 180 155 246',fill:'none',stroke:C('line'),'stroke-width':'3px'},g);
+  const ci=(d.ci||[]).map((c,i)=>{const e=S('g',{},g),x=150+i*150;const r=S('rect',{x:x-68,y:150,width:136,height:30,rx:15,fill:C('amber-soft'),stroke:C('amber'),'stroke-width':'1.5px'},e);M(x,170,c,{'font-size':'11.5px','font-weight':'700',fill:C('amber')},e);return e;});
+  const tok=S('circle',{r:9,fill:C('amber'),stroke:C('bg'),'stroke-width':'3px'},g);
+  const pr=M(300,424,d.preg||'',{'font-size':'12px','font-weight':'700',fill:C('rose')},g);
+  return t=>{const a=span(t,.06,.32),swap=t>.5,b=span(t,.56,.8);
+   ci.forEach((e,i)=>op(e,span(t,.4+i*.04,.46+i*.04)));
+   const P=swap?p2:p1,u=swap?b:a,L=P.getTotalLength?P.getTotalLength():200,q=P.getPointAtLength?P.getPointAtLength(L*u):{x:300,y:110};set(tok,{cx:q.x,cy:q.y});
+   set(p1,{stroke:!swap&&a>0?C('teal'):C('line')});set(p2,{stroke:swap?C('amber'):C('line')});
+   set(ct.b,{stroke:!swap&&a>.95?C('teal'):C('line')});set(vq.b,{stroke:swap&&b>.95?C('amber'):C('line')});op(pr,span(t,.84,.9));};
+ },
+
+ spesi(g,d){ // six sPESI items; zero points = home, any point = consider admission
+  const it=d.items||[];const rows=it.map((x,i)=>{const y=86+i*44,e=S('g',{},g);
+   const b=S('rect',{x:300,y:y-18,width:290,height:34,rx:10,fill:C('bg'),stroke:C('line'),'stroke-width':'1.5px'},e);
+   const v=N(322,y+5,'',{'font-size':'14px','font-weight':'700'},e);R(570,y+5,x,{'font-size':'12.5px'},e);return {b,v};});
+  M(140,70,'sPESI',{class:'disp','font-size':'18px',fill:C('muted')},g);const sc=N(140,140,'0',{class:'disp','font-size':'56px'},g);
+  const home=S('g',{},g);S('path',{d:'M50 300 L95 262 L140 300 L140 350 L50 350 Z',fill:C('ok-soft'),stroke:C('ok'),'stroke-width':'3px'},home);M(95,376,d.home.h,{'font-size':'13px','font-weight':'700',fill:C('ok')},home);M(95,396,d.home.s,{'font-size':'11px',class:'mut'},home);
+  const hosp=S('g',{},g);S('rect',{x:170,y:258,width:90,height:92,rx:6,fill:C('rose-soft'),stroke:C('rose'),'stroke-width':'3px'},hosp);S('path',{d:'M215 282 v36 M197 300 h36',stroke:C('rose'),'stroke-width':'7px'},hosp);M(215,376,d.hosp.h,{'font-size':'13px','font-weight':'700',fill:C('rose')},hosp);M(215,396,d.hosp.s,{'font-size':'11px',class:'mut'},hosp);
+  const flip=d.flip||[];
+  return t=>{const k=Math.floor(lin(t,.06,.42)*rows.length+1e-6),late=t>.6;let s=0;
+   rows.forEach((r,i)=>{const pos=late&&flip.indexOf(i)>=0;if(pos)s++;const done=i<k||late;
+    set(r.v,{text:done?(pos?'1':'0'):''});r.v.style.fill=pos?C('rose'):C('ok');set(r.b,{stroke:pos?C('rose'):done?C('ok'):C('line'),fill:pos?C('rose-soft'):C('bg')});});
+   set(sc,{text:String(s)});sc.style.fill=s?C('rose'):C('ok');const showv=t>.44;op(home,showv?(s?.25:1):.25);op(hosp,showv?(s?1:.25):.25);};
+ },
+
+ phases(g,d){ // treatment phases and the dose steps of each anticoagulant along one time axis
+  const X=s=>570-s*104,ticks=d.ticks||[],lanes=d.lanes||[];
+  (d.bands||[]).forEach(b=>{S('rect',{x:X(b.to),y:46,width:X(b.from)-X(b.to),height:28,rx:8,fill:C(b.tone+'-soft')},g);M((X(b.from)+X(b.to))/2,65,b.t,{'font-size':'11.5px','font-weight':'700',fill:C(b.tone)},g);});
+  S('line',{x1:X(0),y1:96,x2:X(5),y2:96,stroke:C('muted'),'stroke-width':'1.5px'},g);
+  ticks.forEach(tk=>{S('line',{x1:X(tk.at),y1:91,x2:X(tk.at),y2:101,stroke:C('muted')},g);M(X(tk.at),116,tk.l,{'font-size':'10.5px',class:'mut'},g);});
+  const L=lanes.map((ln,i)=>{const y=150+i*62,e=S('g',{},g);R(590,y-14,ln.name,{'font-size':'12.5px','font-weight':'700',fill:C(ln.tone)},e);
+   const segs=(ln.segs||[]).map(sg=>{const r=S('rect',{x:X(sg.to)+2,y:y-6,width:X(sg.from)-X(sg.to)-4,height:30,rx:8,fill:C(sg.tone?sg.tone+'-soft':ln.tone+'-soft'),stroke:C(sg.tone||ln.tone),'stroke-width':'1.5px'},e);
+    const tx=M((X(sg.from)+X(sg.to))/2,y+13,sg.t,{'font-size':'11px','font-weight':'700'},e);return {r,tx,sg};});return {e,segs};});
+  const cur=S('line',{y1:84,y2:150+lanes.length*62-20,stroke:C('amber'),'stroke-width':'2.5px'},g);
+  const nb=R(590,428,d.note||'',{'font-size':'12px',fill:C('rose'),'font-weight':'700'},g);
+  return t=>{const s=lerp(0,5,lin(t,.06,.84));set(cur,{x1:X(s),x2:X(s)});
+   L.forEach((ln,i)=>{op(ln.e,span(t,.02+i*.03,.08+i*.03));ln.segs.forEach(o=>{const on=s>=o.sg.from;o.r.style.opacity=on?1:.3;o.tx.style.opacity=on?1:.35;set(o.r,{'stroke-width':s>=o.sg.from&&s<o.sg.to?'3px':'1.5px'});});});
+   op(nb,span(t,.86,.92));};
+ },
+
+ recur(g,d){ // first-year recurrence after stopping, by context (CHEST table)
+  const rows=d.rows||[],max=d.max||16,X0=380,W=320,X=v=>X0-v/max*W;
+  S('line',{x1:X0,y1:70,x2:X0,y2:76+rows.length*62,stroke:C('muted'),'stroke-width':'1.5px'},g);
+  const B=rows.map((r,i)=>{const y=96+i*62,e=S('g',{},g);R(590,y+6,r.l,{'font-size':'12.5px','font-weight':'700'},e);R(590,y+24,r.s||'',{'font-size':'10.5px',class:'mut'},e);
+   const bar=S('rect',{x:X0,y:y-12,width:0,height:26,rx:6,fill:C(r.tone||'teal')},e);const v=N(0,y+6,'',{'font-size':'14px','font-weight':'700',fill:C(r.tone||'teal')},e);
+   const after=r.after!=null?S('rect',{x:X(r.after),y:y+16,width:X0-X(r.after),height:6,rx:3,fill:C(r.tone||'teal'),opacity:.45},e):null;return {r,bar,v,after};});
+  const lg=R(590,52,d.legend||'',{'font-size':'11px',class:'mut'},g),lg2=R(X0-6,76+rows.length*62+18,d.after||'',{'font-size':'10.5px',class:'mut'},g);
+  const ch=S('g',{},g);(d.chips||[]).forEach((c,i)=>{const x=580-i*195;R(x,392,c.v,{class:'disp','font-size':'20px',fill:C(c.tone||'ink')},ch);R(x,412,c.l,{'font-size':'11px',class:'mut'},ch);});
+  return t=>{B.forEach((b,i)=>{const u=span(t,.05+i*.1,.2+i*.1),v=b.r.v*u;set(b.bar,{x:X(v),width:X0-X(v)});set(b.v,{x:X(v)-24,text:(Math.round(v*10)/10)+'%'});op(b.v,u>0?1:0);if(b.after)op(b.after,span(t,.6,.7)*.6);});
+   op(lg2,span(t,.6,.7));op(ch,span(t,.74,.84));op(lg,1);};
+ },
+
+ seesaw(g,d){ // recurrence risk vs bleeding risk decides whether to continue after three months
+  const cx=300,cy=290,Lb=190;S('path',{d:'M'+(cx-26)+' '+(cy+70)+' L'+cx+' '+cy+' L'+(cx+26)+' '+(cy+70)+' Z',fill:C('line')},g);
+  const beam=S('g',{},g);S('rect',{x:cx-Lb,y:cy-5,width:Lb*2,height:10,rx:5,fill:C('ink')},beam);
+  const pan=(side)=>{const e=S('g',{},g);S('path',{d:'M-75 -14 L75 -14 L60 0 L-60 0 Z',fill:C(side>0?'rose':'amber')},e);return e;};
+  const pR=pan(1),pL=pan(-1);const bR=S('g',{},g),bL=S('g',{},g);
+  M(cx+Lb,cy+70,d.rec||'',{'font-size':'12.5px','font-weight':'700',fill:C('rose')},g);M(cx-Lb,cy+70,d.bleed||'',{'font-size':'12.5px','font-weight':'700',fill:C('amber')},g);
+  const sl=M(cx,44,'',{'font-size':'14px','font-weight':'700'},g),vb=S('rect',{x:150,y:398,width:300,height:36,rx:18,fill:C('ink')},g),vt=M(cx,421,'',{'font-size':'13.5px','font-weight':'700',fill:C('bg')},g);
+  const sc=d.scen||[],n=sc.length;let shown=-1;
+  const fill=(grp,items,tone)=>{while(grp.firstChild)grp.removeChild(grp.firstChild);items.forEach((x,i)=>{const e=S('g',{transform:'translate(0 '+(-14-24*(i+1))+')'},grp);S('rect',{x:-70,y:0,width:140,height:22,rx:5,fill:C(tone+'-soft'),stroke:C(tone),'stroke-width':'1.5px'},e);M(0,15,x,{'font-size':'10.5px','font-weight':'700'},e);});};
+  return t=>{const i=Math.min(n-1,Math.floor(lin(t,.04,.9)*n)),s=sc[i],loc=lin(t,.04+i*(.86/n),.04+(i+1)*(.86/n));
+   if(i!==shown){shown=i;fill(bR,s.r||[],'rose');fill(bL,s.b||[],'amber');set(sl,{text:s.t});set(vt,{text:s.v});set(vb,{fill:C(s.tone||'ink')});}
+   const rw=s.rw!=null?s.rw:(s.r||[]).length,bw=s.bw!=null?s.bw:(s.b||[]).length,want=Math.max(-14,Math.min(14,(rw-bw)*6)),a=want*ease(Math.min(1,loc*2.2)),rad=a*Math.PI/180;
+   beam.setAttribute('transform','rotate('+a+' '+cx+' '+cy+')');
+   const ex=Lb*Math.cos(rad),ey=Lb*Math.sin(rad);[[pR,bR,1],[pL,bL,-1]].forEach(([p,b,sd])=>{const x=cx+sd*ex,y=cy+sd*ey-5;p.setAttribute('transform','translate('+x+' '+y+')');b.setAttribute('transform','translate('+x+' '+y+')');});
+   const vv=span(loc,.45,.6);op(vb,vv);op(vt,vv);};
+ }
+});
+})();
+</script>

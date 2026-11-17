@@ -1,0 +1,129 @@
+<script>
+/* Topic-specific reel scenes: DVT and PE (AFP 2025 VTE + AFP 2022 recurrent VTE), part 1: diagnosis. Text comes from the pack. */
+(()=>{
+const {S,set,lerp,ease,span,C,R,M}=REEL.kit;
+const N=(x,y,text,o={},p)=>S('text',Object.assign({x,y,text,direction:'ltr','text-anchor':'middle'},o),p);
+const lin=(t,a,b)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+const op=(el,v)=>{el.style.opacity=v;};
+
+REEL.custom('vte',{
+ embolus(g,d){ // a calf clot grows, breaks off and lodges in the lung
+  const lungL=S('ellipse',{cx:105,cy:120,rx:46,ry:68,fill:C('teal-soft'),stroke:C('teal'),'stroke-width':'3px'},g);
+  S('ellipse',{cx:215,cy:120,rx:46,ry:68,fill:C('teal-soft'),stroke:C('teal'),'stroke-width':'3px'},g);
+  M(160,40,d.lungs||'',{'font-size':'11px',class:'mut'},g);
+  S('path',{d:'M128 268 Q116 350 130 432 L214 432 Q226 350 204 268 Z',fill:C('line'),opacity:.45},g);
+  M(166,424,d.leg||'',{'font-size':'11px',class:'mut'},g);
+  S('path',{d:'M178 412 L170 330 L162 232',fill:'none',stroke:C('teal'),'stroke-width':'7px','stroke-linecap':'round'},g);
+  S('path',{d:'M160 182 L118 130 M160 182 L204 130',fill:'none',stroke:C('rose'),'stroke-width':'6px','stroke-linecap':'round',opacity:.55},g);
+  S('circle',{cx:161,cy:206,r:27,fill:C('rose-soft'),stroke:C('rose'),'stroke-width':'3px'},g);
+  M(161,210,d.heart||'',{'font-size':'11px','font-weight':'700',fill:C('rose')},g);
+  const route=S('path',{d:'M176 392 L170 330 L162 232 L161 182 L118 130',fill:'none',stroke:'none'},g);
+  const clot=S('ellipse',{cx:176,cy:392,rx:5,ry:8,fill:C('rose')},g);
+  const hit=S('ellipse',{cx:108,cy:118,rx:0,ry:0,fill:C('rose'),opacity:.55},g);
+  const emb=S('circle',{r:7,fill:C('rose'),stroke:C('bg'),'stroke-width':'2px'},g);
+  const L=route.getTotalLength?route.getTotalLength():300;
+  const st=(d.stats||[]).map((s,i)=>{const e=S('g',{},g);R(580,72+i*72,s.v,{class:'disp','font-size':'26px',fill:C(s.tone||'ink')},e);R(580,94+i*72,s.l,{'font-size':'12px',class:'mut'},e);return {e,at:s.at||0};});
+  return t=>{const gr=span(t,.04,.3);set(clot,{ry:8+14*gr,rx:5+3*gr});
+   const tr=span(t,.36,.68);op(emb,t>.34&&tr<1?1:0);if(route.getPointAtLength){const q=route.getPointAtLength(L*tr);set(emb,{cx:q.x,cy:q.y});}
+   const h=span(t,.66,.76);set(hit,{rx:26*h,ry:30*h});set(clot,{ry:(8+14*gr)*(1-.45*span(t,.34,.4))});
+   st.forEach(s=>op(s.e,span(t,s.at-.02,s.at+.06)));};
+ },
+
+ wells(g,d){ // score items tick one by one, a dial shows the pretest probability band
+  const items=d.items||[],dy=Math.min(30,300/items.length),y0=60;
+  const rows=items.map((it,i)=>{const y=y0+i*dy,r=S('g',{},g);
+   const box=S('rect',{x:570,y:y-12,width:16,height:16,rx:4,fill:'none',stroke:C('muted'),'stroke-width':'1.5px'},r);
+   const tick=S('path',{d:'M573 '+(y-4)+' l4 4 l7 -8',fill:'none',stroke:C('bg'),'stroke-width':'2.5px'},r);
+   const tx=R(562,y+1,it.t,{'font-size':'12px'},r);
+   N(318,y+1,(it.p>0?'+':'')+it.p,{'font-size':'12.5px','font-weight':'700',fill:C(it.p<0?'teal':'amber')},r);
+   return {box,tick,tx,p:it.p};});
+  const cx=150,cy=300,rr=100,mn=d.min,mx=d.max,A=v=>Math.PI*(1-(v-mn)/(mx-mn)),P=(v,q)=>[cx+q*Math.cos(A(v)),cy-q*Math.sin(A(v))];
+  const zs=(d.zones||[]).map(z=>{const a=P(z.from,rr),b=P(z.to,rr);const arc=S('path',{d:'M'+a[0]+' '+a[1]+' A'+rr+' '+rr+' 0 0 1 '+b[0]+' '+b[1],fill:'none',stroke:C(z.tone),'stroke-width':'16px',opacity:.3},g);
+   const m=P((z.from+z.to)/2,rr+24);M(m[0],m[1]+4,z.label,{'font-size':'11px','font-weight':'700',fill:C(z.tone)},g);return {arc,z};});
+  for(let v=mn;v<=mx;v++){const q=P(v,rr-22);N(q[0],q[1]+4,String(v),{'font-size':'9.5px',class:'mut'},g);}
+  const needle=S('line',{x1:cx,y1:cy,stroke:C('ink'),'stroke-width':'3px','stroke-linecap':'round'},g);S('circle',{cx,cy,r:7,fill:C('ink')},g);
+  const sc=N(cx,cy+40,'',{class:'disp','font-size':'30px'},g),vd=M(cx,cy+66,'',{'font-size':'13px','font-weight':'700'},g);
+  M(cx,76,d.title||'',{'font-size':'13px','font-weight':'700'},g);M(cx,96,d.sub||'',{'font-size':'11px',class:'mut'},g);
+  const on=d.on||[];
+  return t=>{const f=lin(t,.08,.84)*on.length,k=Math.min(on.length,Math.floor(f+1e-6)),fr=f-k;
+   let s=0;rows.forEach(r=>{set(r.box,{fill:'none',stroke:C('muted')});op(r.tick,0);r.tx.style.fill='';});
+   for(let i=0;i<k;i++){const r=rows[on[i]];s+=r.p;set(r.box,{fill:C(r.p<0?'teal':'amber'),stroke:C(r.p<0?'teal':'amber')});op(r.tick,1);r.tx.style.fill=C(r.p<0?'teal':'amber');}
+   const v=k<on.length?s+rows[on[k]].p*ease(Math.min(1,fr*2.5)):s,q=P(Math.max(mn,Math.min(mx,v)),rr-12);set(needle,{x2:q[0],y2:q[1]});
+   set(sc,{text:String(s)});let cur=null;zs.forEach(o=>{const inn=s>=o.z.from&&(s<o.z.to||o.z.to===mx);if(inn)cur=o;set(o.arc,{opacity:inn?1:.25});});
+   set(vd,{text:cur?cur.z.verdict||cur.z.label:''});vd.style.fill=cur?C(cur.z.tone):'';};
+ },
+
+ tree(g,d){ // a diagnostic algorithm; three patients walk their own path through it
+  const H=30,by={};(d.nodes||[]).forEach(n=>{by[n.id]=n;});const ed={};
+  (d.edges||[]).forEach(([a,b,lab,ox,oy])=>{const A=by[a],B=by[b],y1=A.y+H/2,y2=B.y-H/2,my=(y1+y2)/2;
+   const el=S('path',{d:'M'+A.x+' '+y1+' V'+my+' H'+B.x+' V'+y2,fill:'none',stroke:C('line'),'stroke-width':'2.5px'},g);
+   if(lab){const lx=ox!=null?ox:B.x,ly=oy!=null?oy:my+(y2-my)/2+4;S('text',{x:lx,y:ly,text:lab,'text-anchor':'middle',direction:'rtl','font-size':'10.5px','font-weight':'700',fill:C('muted'),stroke:C('bg'),'stroke-width':'4px','paint-order':'stroke'},g);}
+   ed[a+'>'+b]=el;});
+  const nd={};(d.nodes||[]).forEach(n=>{const w=n.w||110,e=S('g',{},g);
+   const box=S('rect',{x:n.x-w/2,y:n.y-H/2,width:w,height:H,rx:8,fill:C('bg'),stroke:C(n.tone||'line'),'stroke-width':'2px'},e);
+   const tx=M(n.x,n.y+4,n.t,{'font-size':'11.5px','font-weight':n.tone?'700':'500'},e);nd[n.id]={box,tx,n};});
+  const tok=S('circle',{r:8,fill:C('amber'),stroke:C('bg'),'stroke-width':'3px'},g);
+  const lab=R(590,430,'',{'font-size':'12.5px','font-weight':'700'},g);
+  const paths=d.paths||[];
+  return t=>{Object.values(nd).forEach(o=>{set(o.box,{fill:C('bg'),stroke:C(o.n.tone||'line')});});Object.values(ed).forEach(e=>set(e,{stroke:C('line')}));
+   let act=null;paths.forEach(p=>{const u=lin(t,p.at[0],p.at[1]);if(u<=0)return;const ids=p.ids,f=u*(ids.length-1),k=Math.floor(f+1e-6);
+    const old=t>p.at[1]+.04;for(let i=0;i<=Math.min(k,ids.length-1);i++){const o=nd[ids[i]];set(o.box,{fill:old?C('bg'):C(p.tone+'-soft'),stroke:C(p.tone)});if(i>0&&ed[ids[i-1]+'>'+ids[i]])set(ed[ids[i-1]+'>'+ids[i]],{stroke:C(p.tone)});}
+    if(t>=p.at[0]&&t<=p.at[1]+.04){act=p;const a=by[ids[Math.min(k,ids.length-1)]],b=by[ids[Math.min(k+1,ids.length-1)]],fr=ease(Math.min(1,f-k));set(tok,{cx:lerp(a.x,b.x,fr),cy:lerp(a.y,b.y,fr)});tok.style.fill=C(p.tone);}});
+   op(tok,act?1:0);set(lab,{text:act?act.label:''});lab.style.fill=act?C(act.tone):'';};
+ },
+
+ cus(g,d){ // compression ultrasound: a normal vein collapses under the probe, a thrombosed vein does not
+  const panes=[{cx:440,clot:false,x:d.normal},{cx:160,clot:true,x:d.clot}];
+  const P=panes.map(p=>{const e=S('g',{},g),cy=230;
+   M(p.cx,64,p.x.h,{'font-size':'14px','font-weight':'700',fill:C(p.clot?'rose':'ok')},e);
+   S('rect',{x:p.cx-125,y:150,width:250,height:150,rx:14,fill:C('line'),opacity:.25},e);
+   const skin=S('path',{fill:'none',stroke:C('muted'),'stroke-width':'2px'},e);
+   const probe=S('rect',{x:p.cx-38,width:76,height:46,rx:8,fill:C('ink')},e);
+   S('circle',{cx:p.cx-48,cy,r:24,fill:C('rose-soft'),stroke:C('rose'),'stroke-width':'2.5px'},e);M(p.cx-48,cy+4,d.artery||'A',{'font-size':'10px',fill:C('rose')},e);
+   const vein=S('ellipse',{cx:p.cx+34,cy,rx:34,ry:28,fill:p.clot?C('amber-soft'):C('teal-soft'),stroke:C('teal'),'stroke-width':'2.5px'},e);
+   const th=p.clot?S('ellipse',{cx:p.cx+34,cy,rx:22,ry:18,fill:C('rose'),opacity:.75},e):null;
+   M(p.cx+34,cy+48,d.vein||'V',{'font-size':'10px',fill:C('teal')},e);
+   const res=S('g',{},e);M(p.cx,334,p.x.s,{'font-size':'12.5px','font-weight':'700',fill:C(p.clot?'rose':'ok')},res);
+   return {p,skin,probe,vein,th,res,cy};});
+  const ch=S('g',{},g);(d.chips||[]).forEach((c,i)=>{R(580,380+i*24,c,{'font-size':'12px'},ch);});
+  return t=>{const pr=Math.sin(Math.PI*lin(t,.08,.62))*1;const hold=t>.62?span(t,.62,.7):0,press=Math.max(pr,hold);
+   P.forEach(o=>{const cx=o.p.cx,dip=18*press;set(o.skin,{d:'M'+(cx-125)+' 170 Q'+cx+' '+(170+dip*2)+' '+(cx+125)+' 170'});set(o.probe,{y:118+dip});
+    const ry=o.p.clot?28-3*press:Math.max(2,28-26*press);set(o.vein,{ry,cy:o.cy+ (o.p.clot?0:press*6)});if(o.th)set(o.th,{ry:18-2*press});
+    op(o.res,span(t,.3,.4));});
+   op(ch,span(t,.74,.84));};
+ },
+
+ agecut(g,d){ // D-dimer cutoff: fixed 500 vs age x 10 after 50
+  const X=a=>60+(a-30)/60*300,Y=v=>370-v/1000*250;
+  S('line',{x1:60,y1:370,x2:360,y2:370,stroke:C('muted'),'stroke-width':'1.5px'},g);S('line',{x1:60,y1:120,x2:60,y2:370,stroke:C('muted'),'stroke-width':'1.5px'},g);
+  [30,40,50,60,70,80,90].forEach(a=>N(X(a),390,String(a),{'font-size':'10.5px',class:'mut'},g));
+  [250,500,750,1000].forEach(v=>N(40,Y(v)+4,String(v),{'font-size':'10px',class:'mut'},g));
+  M(210,414,d.xAxis||'',{'font-size':'11px',class:'mut'},g);M(80,104,d.yAxis||'',{'font-size':'11px',class:'mut'},g);
+  const area=S('path',{d:'M'+X(50)+' '+Y(500)+' L'+X(90)+' '+Y(900)+' L'+X(90)+' '+Y(500)+' Z',fill:C('ok-soft')},g);
+  S('line',{x1:X(30),y1:Y(500),x2:X(90),y2:Y(500),stroke:C('rose'),'stroke-width':'3px','stroke-dasharray':'6 4'},g);
+  const adj=S('path',{d:'M'+X(30)+' '+Y(500)+' L'+X(50)+' '+Y(500)+' L'+X(90)+' '+Y(900),fill:'none',stroke:C('teal'),'stroke-width':'4px',pathLength:1,'stroke-dasharray':'1','stroke-dashoffset':'1'},g);
+  R(X(90),Y(500)+20,d.std||'',{'font-size':'11px','font-weight':'700',fill:C('rose')},g);
+  const al=R(X(78)-6,Y(800)-8,d.adj||'',{'font-size':'11.5px','font-weight':'700',fill:C('teal')},g);
+  const sp=M(X(76),Y(600)+4,d.spare||'',{'font-size':'10.5px',fill:C('ok'),'font-weight':'700'},g);
+  const dot=S('circle',{r:8,fill:C('amber'),stroke:C('bg'),'stroke-width':'3px'},g),dv=N(0,0,'',{'font-size':'13px','font-weight':'700'},g);
+  const rl=S('g',{},g);R(580,140,d.raiseH||'',{'font-size':'13px','font-weight':'700',fill:C('amber')},rl);(d.raise||[]).forEach((x,i)=>R(580,166+i*22,'• '+x,{'font-size':'12px'},rl));
+  return t=>{const u=span(t,.06,.5);set(adj,{'stroke-dashoffset':1-u});op(area,span(t,.44,.56));op(sp,span(t,.5,.58));op(al,span(t,.3,.4));
+   const a=lerp(34,88,span(t,.1,.7)),v=a>50?a*10:500;set(dot,{cx:X(a),cy:Y(v)});set(dv,{x:X(a),y:Y(v)-16,text:Math.round(a)+' → '+Math.round(v)});
+   op(rl,span(t,.7,.8));};
+ },
+
+ perc(g,d){ // eight PERC lights: all clear = stop; one positive = D-dimer
+  const it=d.items||[];const cells=it.map((x,i)=>{const col=i%2,row=Math.floor(i/2),w=262,h=50,x0=col===0?312:26,y0=96+row*60,e=S('g',{},g);
+   const box=S('rect',{x:x0,y:y0,width:w,height:h,rx:12,fill:C('bg'),stroke:C('line'),'stroke-width':'2px'},e);
+   const lt=S('circle',{cx:x0+w-24,cy:y0+h/2,r:11,fill:C('line')},e);R(x0+w-44,y0+h/2+5,x,{'font-size':'12.5px'},e);return {box,lt};});
+  M(300,56,d.gate||'',{'font-size':'12.5px','font-weight':'700',fill:C('teal')},g);
+  const vb=S('rect',{x:110,y:352,width:380,height:44,rx:22,fill:C('ok-soft')},g),vt=M(300,380,'',{'font-size':'14px','font-weight':'700'},g);
+  const flip=d.flip==null?0:d.flip;
+  return t=>{const k=Math.floor(lin(t,.06,.46)*cells.length+1e-6),bad=t>.66;
+   cells.forEach((c,i)=>{const g1=i<k;set(c.lt,{fill:g1?C('ok'):C('line')});set(c.box,{stroke:g1?C('ok'):C('line')});});
+   if(bad){set(cells[flip].lt,{fill:C('rose')});set(cells[flip].box,{stroke:C('rose')});}
+   const show=t>.48;op(vb,show?1:0);op(vt,show?1:0);set(vb,{fill:bad?C('rose-soft'):C('ok-soft')});set(vt,{text:bad?d.no:d.yes});vt.style.fill=bad?C('rose'):C('ok');};
+ }
+});
+})();
+</script>
