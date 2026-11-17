@@ -229,6 +229,20 @@ function mount(host,pack,onExit){
     h('footer',{class:'dock'},play,h('div',{class:'track'},segs,scrub),time));
   host.replaceChildren(root);
   let p=0,cur=-1,render=null,lis=[],pearl=null,playing=false,stopAt=N,last=0;
+  /* narration: recorded audio per chapter (c.narr = {src, dur, marks:[[t, sec]...]}); the reel follows the voice */
+  const hasNarr=ch.some(c=>c.narr&&c.narr.src),aud=hasNarr?new Audio():null;let narrOn=hasNarr,audCh=-1,pend=false;
+  try{if(hasNarr&&localStorage.getItem('shlavb-narr')==='0')narrOn=false;}catch(e){}
+  const mapT=(v,m,a,b)=>{for(let k=1;k<m.length;k++){if(v<=m[k][a]||k===m.length-1){const x0=m[k-1][a],x1=m[k][a],f=x1>x0?Math.min(1,Math.max(0,(v-x0)/(x1-x0))):0;return m[k-1][b]+(m[k][b]-m[k-1][b])*f;}}return v;};
+  const secToT=(sec,n)=>mapT(sec,n.marks,1,0),tToSec=(t,n)=>mapT(t,n.marks,0,1);
+  const voiced=i=>narrOn&&ch[i]&&ch[i].narr&&ch[i].narr.src;
+  function loadAud(i){if(audCh===i)return;audCh=i;aud.src=ch[i].narr.src;aud.load();}
+  if(hasNarr){const nb=h('button',{class:'btn small ghost nbtn','aria-pressed':String(narrOn)},narrOn?'🔊 קריינות':'🔇 קריינות');
+    nb.onclick=()=>{narrOn=!narrOn;try{localStorage.setItem('shlavb-narr',narrOn?'1':'0');}catch(e){}nb.textContent=narrOn?'🔊 קריינות':'🔇 קריינות';nb.setAttribute('aria-pressed',String(narrOn));
+      if(playing){if(narrOn)startAud();else aud.pause();}};
+    root.querySelector('.rtop .sp').after(nb);}
+  function startAud(){const i=Math.min(N-1,Math.floor(p));if(!voiced(i))return false;loadAud(i);const n=ch[i].narr;
+    pend=true;const go=()=>{pend=false;aud.currentTime=Math.min(tToSec(p-i,n),Math.max(0,(aud.duration||n.dur)-.05));aud.play().catch(()=>{});};
+    if(aud.readyState>=1)go();else aud.addEventListener('loadedmetadata',go,{once:true});return true;}
   function build(i){const c=ch[i];cur=i;copy.innerHTML='';
     const ul=h('ul',{class:'points'});lis=(c.points||[]).map(pt=>{const li=h('li',{},h('span',{class:'k'},pt[1]),h('span',{html:pt[2]}));ul.append(li);return {li,at:pt[0]};});
     copy.append(h('div',{class:'eyebrow'},c.eyebrow||''),h('h1',{},c.title),c.lede?h('p',{class:'lede'},c.lede):null,ul);
@@ -241,9 +255,13 @@ function mount(host,pack,onExit){
     if(pearl)pearl.classList.toggle('on',t>=pearl._at);segEls.forEach((s,j)=>{s.firstChild.style.width=(j<i?100:j===i?t*100:0)+'%';s.classList.toggle('cur',j===i);});
     time.textContent=(i+1)+'/'+N+' · '+ch[i].label;if(!fromInput)scrub.value=Math.round(p*1000);scrub.setAttribute('aria-valuetext','פרק '+(i+1)+', '+ch[i].label);}
   function icon(){pi.innerHTML=playing?'<path d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/>':'<path d="M12 2.5v11L3 8z"/>';play.setAttribute('aria-label',playing?'השהה':'נגן');}
-  function start(to){if(REDUCE){setP(to);return;}stopAt=Math.min(to,N-.001);if(p>=stopAt-.002)setP(Math.floor(stopAt));playing=true;last=performance.now();icon();requestAnimationFrame(tick);}
-  function stop(){playing=false;icon();}
-  function tick(now){if(!playing||!root.isConnected)return;const dt=Math.min(.05,(now-last)/1000);last=now;let np=p+dt/11;if(np>=stopAt){setP(stopAt);stop();return;}setP(np);requestAnimationFrame(tick);}
+  function start(to){stopAt=Math.min(to,N-.001);if(p>=stopAt-.002)setP(Math.floor(stopAt));if(REDUCE&&!voiced(Math.floor(p))){setP(to);return;}playing=true;last=performance.now();icon();if(hasNarr)startAud();requestAnimationFrame(tick);}
+  function stop(){playing=false;icon();if(aud)aud.pause();}
+  function tick(now){if(!playing||!root.isConnected){if(aud&&!root.isConnected)aud.pause();return;}const dt=Math.min(.05,(now-last)/1000);last=now;
+    const i=Math.min(N-1,Math.floor(p));let np;
+    if(voiced(i)&&audCh===i){const n=ch[i].narr;if(pend){requestAnimationFrame(tick);return;}if(aud.ended){np=i+1;}else if(aud.paused&&aud.readyState<3){requestAnimationFrame(tick);return;}else np=i+Math.min(.999,secToT(aud.currentTime,n));}
+    else np=p+dt/11;
+    if(np>=stopAt){setP(stopAt);stop();return;}const ni=Math.floor(np);setP(np);if(ni!==i&&voiced(ni))startAud();requestAnimationFrame(tick);}
   play.onclick=()=>{if(playing)stop();else start(p>=N-.01?(setP(0),N):N);};
   scrub.addEventListener('input',()=>{stop();setP(scrub.value/1000,true);});
   const jump=i=>{i=cl(i,0,N-1);stop();setP(i);start(i+.92);};
