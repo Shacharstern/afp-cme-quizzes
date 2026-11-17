@@ -28,6 +28,7 @@ function seedState(){
 let S=seedState();
 try{const r=localStorage.getItem(LKEY);if(r){const o=JSON.parse(r);if(o&&o.v===1)S=Object.assign(seedState(),o);}}catch(e){}
 const SYNC={db:null,ref:null,state:'local',busy:false,again:false,timer:0};
+function appState(){return S;}
 function T(id){return S.topics[id]||(S.topics[id]={s:0,next:null,notes:'',rc:null});}
 function PK(id){return S.packs[id]||(S.packs[id]={box:{},proc:{},cases:{},oral:{},sr:{},srDone:0});}
 function save(){
