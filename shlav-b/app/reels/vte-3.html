@@ -1,0 +1,48 @@
+<script>
+/* DVT and PE reel scenes, part 3 (Goroll ch. 35): superficial vein thrombosis, and where the clot sits. */
+(()=>{
+const {S,set,lerp,ease,span,C,R,M}=REEL.kit;
+const lin=(t,a,b)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+const op=(el,v)=>{el.style.opacity=v;};
+
+REEL.custom('vte',{
+ svt(g,d){ // a saphenous clot in three places: a varicose branch, the main vein, near the junction
+  S('path',{d:'M392 40 Q372 160 380 250 Q384 330 392 418 L500 418 Q508 330 510 250 Q516 150 504 40 Z',fill:C('line'),opacity:.35},g);
+  const DX=488;S('line',{x1:DX,y1:30,x2:DX,y2:410,stroke:C('teal'),'stroke-width':'12px','stroke-linecap':'round',opacity:.85},g);
+  M(DX,24,d.deep||'',{'font-size':'11px','font-weight':'700',fill:C('teal')},g);
+  const gsv='M412 410 L410 300 L414 200 L420 110 Q430 82 '+(DX-6)+' 78';S('path',{d:gsv,fill:'none',stroke:C('amber'),'stroke-width':'6px','stroke-linecap':'round'},g);
+  S('path',{d:'M411 330 Q392 342 400 356 Q410 370 392 382 Q378 392 388 404',fill:'none',stroke:C('amber'),'stroke-width':'4px',opacity:.8},g);
+  const jn=S('circle',{cx:DX-6,cy:78,r:8,fill:'none',stroke:C('rose'),'stroke-width':'2.5px'},g);
+  R(DX-18,64,d.junction||'',{'font-size':'10.5px','font-weight':'700',fill:C('rose')},g);M(400,428,d.gsv||'',{'font-size':'10.5px',fill:C('amber'),'font-weight':'700'},g);
+  const clots=[S('path',{d:'M411 330 Q392 342 400 356 Q410 370 392 382',fill:'none',stroke:C('rose'),'stroke-width':'8px','stroke-linecap':'round'},g),
+   S('path',{d:'M412 270 L413 210',fill:'none',stroke:C('rose'),'stroke-width':'11px','stroke-linecap':'round'},g),
+   S('path',{d:'M415 170 L420 110 Q426 92 440 84',fill:'none',stroke:C('rose'),'stroke-width':'11px','stroke-linecap':'round'},g)];
+  clots.forEach(c=>{set(c,{pathLength:1,'stroke-dasharray':'1','stroke-dashoffset':'1'});});
+  const rul=S('g',{},g);S('path',{d:'M432 270 h8 M436 270 V210 M432 210 h8',stroke:C('ink'),'stroke-width':'2px',fill:'none'},rul);R(398,244,d.len||'',{'font-size':'11px','font-weight':'700'},rul);
+  const near=S('g',{},g);S('path',{d:'M448 84 Q462 100 '+(DX-10)+' 80',stroke:C('ink'),'stroke-width':'2px',fill:'none','stroke-dasharray':'3 3'},near);R(398,128,d.near||'',{'font-size':'11px','font-weight':'700'},near);
+  M(180,48,d.us||'',{'font-size':'12px','font-weight':'700',fill:C('teal')},g);
+  const cards=(d.cases||[]).map((c,i)=>{const e=S('g',{},g),y=86+i*112;
+   const b=S('rect',{x:20,y,width:320,height:100,rx:14,fill:C('bg'),stroke:C('line'),'stroke-width':'2px'},e);
+   R(326,y+26,c.t,{'font-size':'13px','font-weight':'700',fill:C(c.tone||'ink')},e);(c.lines||[]).forEach((l,j)=>R(326,y+50+j*20,l,{'font-size':'12px'},e));return {e,b,tone:c.tone||'ink'};});
+  return t=>{const w=[[.04,.3],[.34,.62],[.66,.9]];
+   clots.forEach((c,i)=>{const u=span(t,w[i][0],w[i][0]+.12);set(c,{'stroke-dashoffset':1-u});c.style.opacity=t>w[i][1]+.02?.35:1;});
+   op(rul,span(t,.44,.5));op(near,span(t,.76,.82));set(jn,{'stroke-width':t>.7?'4px':'2.5px'});
+   cards.forEach((o,i)=>{const on=t>=w[i][0]+.04;op(o.e,on?1:.25);set(o.b,{stroke:on&&t<w[i][1]+.02?C(o.tone):C('line')});});};
+ },
+
+ clotmap(g,d){ // where the clot sits changes the risk: hotspots on a body, each with its number
+  const F=S('g',{},g),ln={stroke:C('line'),'stroke-width':'14px','stroke-linecap':'round',fill:'none'};
+  S('circle',{cx:300,cy:44,r:20,fill:C('line')},F);S('rect',{x:266,y:70,width:68,height:130,rx:22,fill:C('line')},F);
+  S('path',Object.assign({d:'M272 84 L242 196'},ln),F);S('path',Object.assign({d:'M328 84 L358 196'},ln),F);
+  S('path',Object.assign({d:'M284 196 L280 420'},ln),F);S('path',Object.assign({d:'M316 196 L320 420'},ln),F);
+  const H=(d.spots||[]).map(s=>{const e=S('g',{},g),r=s.side==='r',cx=r?592:8,w=226,x=r?cx-w:cx,cy=s.cy;
+   S('line',{x1:s.x,y1:s.y,x2:r?x:x+w,y2:cy,stroke:C(s.tone||'ink'),'stroke-width':'1.5px','stroke-dasharray':'3 3'},e);
+   const dot=S('circle',{cx:s.x,cy:s.y,r:9,fill:C(s.tone||'ink'),stroke:C('bg'),'stroke-width':'3px'},e);
+   const L=[].concat(s.l||[]),hh=34+L.length*16;S('rect',{x,y:cy-hh/2,width:w,height:hh,rx:12,fill:C((s.tone||'teal')+'-soft')},e);
+   R(x+w-12,cy-hh/2+24,s.v,{class:'disp','font-size':'17px',fill:C(s.tone||'ink')},e);L.forEach((l,j)=>R(x+w-12,cy-hh/2+44+j*16,l,{'font-size':'11px'},e));
+   return {e,dot,at:s.at||0};});
+  return t=>{H.forEach(o=>{const v=span(t,o.at-.02,o.at+.06);op(o.e,v);set(o.dot,{r:9+3*Math.sin(t*40)*(v>.9?1:0)});});};
+ }
+});
+})();
+</script>
