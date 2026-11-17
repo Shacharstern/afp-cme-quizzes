@@ -24,6 +24,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 button,input,select,textarea{font:inherit;color:inherit}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.fc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;max-width:460px}.fcd{display:flex;flex-direction:column;align-items:center;gap:3px}.fcb{height:56px;width:100%;background:var(--line);border-radius:6px;display:flex;align-items:flex-end;overflow:hidden}.fcb i{display:block;width:100%;background:var(--rose)}
 .mut{color:var(--muted)}
 .lbl{font-size:.75rem;font-weight:600;color:var(--muted)}
 h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}

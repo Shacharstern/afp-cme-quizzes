@@ -20,14 +20,15 @@ function exitPlayer(){try{GAME.stop();}catch(e){}PLAYER.active=false;PLAYER.keys
 function stage(){PLAYER.active=true;if(location.hash!=='#p-'+PLAYER.id)history.replaceState(null,'','#p-'+PLAYER.id);const v=$('#view');v.innerHTML='';const box=h('section');v.append(box);window.scrollTo(0,0);return box;}
 addEventListener('keydown',e=>{if(!PLAYER.active||!PLAYER.keys)return;const tg=e.target.tagName;if(tg==='INPUT'&&e.key.startsWith('Arrow'))return;if(tg==='TEXTAREA'||tg==='SELECT')return;if(tg==='BUTTON'&&(e.key==='Enter'||e.key===' ')&&!e.target.classList.contains('nx'))return;if(PLAYER.keys(e))e.preventDefault();});
 function recordRecall(id,pct){T(id).rc={d:today(),pct:Math.round(pct)};}
-const srKeyCount=id=>{const sr=(S.packs[id]||{}).sr||{},now=Date.now();let d=0,a=0;for(const k in sr){a++;if(sr[k].due<=now)d++;}return [d,a];};
+function runDaily(scope){PLAYER.id=scope||'all';PLAYER.active=true;history.replaceState(null,'','#p-'+PLAYER.id);const v=$('#view');v.innerHTML='';const box=h('section');v.append(box);window.scrollTo(0,0);
+  GAME.daily(box,()=>{try{GAME.stop();}catch(e){}PLAYER.active=false;PLAYER.keys=null;location.hash=scope?'t-'+scope:'today';},scope);}
 
 function packCard(id){
   const p=PACKS[id];
   if(!p)return h('div',{class:'card'},h('h3',{},'חבילת לימוד'),h('div',{class:'empty'},'לנושא הזה עוד אין חבילה.'),
     h('div',{class:'note'},'כדי ליצור חבילה, פתחו סשן של Claude Code במאגר afp-cme-quizzes והקלידו ',h('span',{class:'num'},'/shlav-b-pack '+id),'. המנוע קורא את מקורות העוגן מתיקיית ״שלב א״ ב-Drive, כותב סרטון ומשחק בעברית ומעלה אותם לכאן. החבילה תופיע בדף הזה בלי לרענן.'));
-  const pk=PK(id),drills=p.drills||[],mast=drills.filter(d=>((pk.box||{})[d.id]||0)>=3).length,stars=Object.values(pk.stars||{}).reduce((a,b)=>a+b,0);
-  const [due,all]=srKeyCount(id),ch=(p.reel&&p.reel.chapters)||[];
+  const pk=PK(id),drills=p.drills||[],mast=drills.filter(d=>SRS.boxOf('d|'+id+'|'+d.id)>=5).length,stars=Object.values(pk.stars||{}).reduce((a,b)=>a+b,0);
+  const cn=SRS.counts(id),ch=(p.reel&&p.reel.chapters)||[];
   return h('div',{class:'card'},h('div',{class:'row'},h('h3',{},'חבילת לימוד'),h('span',{class:'sp'}),h('span',{class:'note'},p.sources.map(s=>s.kind+' '+s.year).join(' · '))),
     p.summary?h('div',{class:'note'},p.summary.oneLiner):null,
     h('div',{class:'modes'},
@@ -35,10 +36,10 @@ function packCard(id){
       h('button',{class:'mode game',onclick:()=>runGame(id)},h('span',{class:'lbl',style:'color:var(--amber)'},'לשחק ולהיבחן'),h('b',{},'המשחק'),
         h('span',{class:'note'},[drills.length?'משמרות עם לבבות וקומבו':null,p.pathway?'מסלול מקרים':null,p.oral?'בחינה בעל פה עם שאלות המשך':null].filter(Boolean).join(' · ')),
         drills.length?h('div',{class:'meter'},h('i',{style:'width:'+Math.round(mast/drills.length*100)+'%'})):null,
-        h('span',{class:'note'},mast+'/'+drills.length+' עובדות ננעלו · '+stars+' כוכבים'))),
+        h('span',{class:'note'},mast+'/'+drills.length+' עובדות בשליטה · '+stars+' כוכבים'))),
     h('div',{class:'row'},p.summary?h('button',{class:'btn small ghost',onclick:()=>runSummary(id)},'דף סיכום'):null,h('span',{class:'sp'}),
-      all?h('span',{class:'note'},'חזרה מרווחת: '+due+' עכשיו · '+(all-due)+' ממתינות · '+(pk.srDone||0)+' ננעלו'):null,
-      due?h('button',{class:'btn rose small',onclick:()=>runGame(id,'review')},'סבב חזרה'):null));
+      cn.total?h('span',{class:'note'},'חזרה מרווחת: '+cn.all+' להיום · '+cn.total+' כרטיסים · '+cn.mastered+' בשליטה'):null,
+      cn.total?h('button',{class:'btn '+(cn.all?'rose':'ghost')+' small',onclick:()=>runDaily(id)},'חזרה בנושא הזה'):null));
 }
 function runReel(id){PLAYER.id=id;const box=stage();REEL.mount(box,PACKS[id],exitPlayer);}
 function runGame(id,start){PLAYER.id=id;const box=stage();GAME.open(box,id,exitPlayer,start);}
@@ -49,7 +50,7 @@ function runSummary(id){
   p.summary.sections.forEach(x=>s.append(h('div',{class:'card'},h('h3',{},x.h),h('ul',{},x.points.map(y=>h('li',{},y))),x.pearl?h('div',{class:'pearl2'},h('b',{},'פנינה: '),x.pearl):null)));
   const t=T(id);if(t.s===0)s.append(h('div',{class:'row'},h('button',{class:'btn',onclick:()=>{t.s=1;t.next=addDays(today(),3);save();toast('סומן ״קראתי״. חזרה ב-'+fmtD(t.next));exitPlayer();}},'סיימתי לקרוא · סמן ״קראתי״')));
 }
-function startGlobalReview(){const ids=Object.keys(S.packs).filter(id=>PACKS[id]&&srKeyCount(id)[0]);if(!ids.length){toast('אין כרגע נקודות לחזרה');return;}runGame(ids[0],'review');}
+function startGlobalReview(){runDaily(null);}
 
 /* ---------- start ---------- */
 document.body.append(fx);sizeFx();addEventListener('resize',sizeFx);

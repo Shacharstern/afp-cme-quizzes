@@ -22,7 +22,8 @@ function render(){
   $('#tabs').replaceChildren(...TABS.map(([k,l])=>h('button',{class:'tab',role:'tab','aria-selected':String(k===tabKey),onclick:()=>go(k)},l)));
   paintCountdown();paintSync();
   const v=$('#view');
-  if(ROUTE.startsWith('p-')){if(PLAYER.active)return;location.replace('#t-'+ROUTE.slice(2));return;}
+  if(ROUTE.startsWith('p-')){if(PLAYER.active)return;const x=ROUTE.slice(2);location.replace(x==='all'?'#today':'#t-'+x);return;}
+  SRS.st();
   v.replaceChildren(ROUTE==='topics'?viewTopics():ROUTE==='exams'?viewExams():ROUTE==='tools'?viewTools():ROUTE.startsWith('t-')?viewTopic(ROUTE.slice(2)):viewToday());
 }
 
@@ -44,7 +45,16 @@ function topicRow(t,extra){
     h('a',{class:'t',href:'#t-'+t.id,style:'color:inherit;text-decoration:none'},t.name,hasPack(t.id)?h('span',{class:'pk'},'חבילה'):null,h('small',{},t.domainName+' · '+t.hits+' הופעות'+(t.sittings.length?' ('+t.sittings.join(' ')+')':''))),
     extra||h('span',{class:'st s'+st},STATUS[st]));
 }
-function srDueAll(){const now=Date.now();let n=0;for(const id in S.packs){const sr=S.packs[id].sr||{};for(const k in sr)if(sr[k].due<=now)n++;}return n;}
+function srsCard(){
+  const s=SRS.st(),cn=SRS.counts(null),pl=SRS.plan(null),f=SRS.forecast(null,7),mx=Math.max(1,...f),names=['היום','מחר','+2','+3','+4','+5','+6'],todo=pl.due.length+pl.fresh.length;
+  const fc=h('div',{class:'fc'},f.map((n,i)=>h('div',{class:'fcd'},h('span',{class:'num note'},String(n)),h('div',{class:'fcb'},h('i',{style:'height:'+Math.round(n/mx*100)+'%'})),h('span',{class:'note'},names[i]))));
+  const top=SRS.byTopic().slice(0,6);
+  return h('div',{class:'card'},h('div',{class:'row'},h('h3',{},'חזרה מרווחת'),h('span',{class:'sp'}),h('span',{class:'note'},'היום '+s.day.done+'/'+s.cfg.cap)),
+    cn.total?h('div',{class:'row'},h('span',{},h('b',{class:'num'},cn.d),' עובדות'),h('span',{},h('b',{class:'num'},cn.c),' החלטות במקרים'),h('span',{},h('b',{class:'num'},cn.o),' נקודות בעל פה'),h('span',{class:'note'},pl.fresh.length?'+ '+pl.fresh.length+' חדשים':'')):h('div',{class:'empty'},'כרטיסים נכנסים לחזרה ברגע שעונים עליהם במשחק של נושא כלשהו.'),
+    cn.total?fc:null,
+    top.length?h('div',{class:'row note'},top.map(([p,n])=>h('a',{href:'#t-'+p,style:'color:inherit'},(TOPIC[p]?TOPIC[p].name:p)+' '+n))):null,
+    h('div',{class:'row'},h('button',{class:'btn rose',disabled:!todo,onclick:()=>runDaily(null)},todo?'להתחיל חזרה יומית ('+todo+')':'אין כרטיסים לחזרה עכשיו'),h('span',{class:'sp'}),h('span',{class:'note'},cn.total+' כרטיסים · '+cn.mastered+' בשליטה')));
+}
 
 /* ---------- Today ---------- */
 function viewToday(){
@@ -68,9 +78,9 @@ function viewToday(){
     paceTxt?h('div',{style:'font-weight:600'},'הקצב עכשיו: '+paceTxt):null);
   // due topics
   const due=all.filter(t=>{const x=S.topics[t.id];return x&&x.s>0&&x.next&&x.next<=t0;}).sort((a,b)=>S.topics[a.id].next<S.topics[b.id].next?-1:1).slice(0,8);
-  const srN=srDueAll();
+  const srs=srsCard();
   const dueCard=h('div',{class:'card'},h('h3',{},'לחזרה היום'),
-    srN?h('div',{class:'row'},h('span',{},h('b',{class:'num'},srN),' נקודות בעל פה ממתינות בחזרה המרווחת'),h('span',{class:'sp'}),h('button',{class:'btn rose small',onclick:()=>startGlobalReview()},'לסבב חזרה')):null,
+    h('span',{class:'note'},'נושאים שכרטיסים שלהם הגיעו למועד, ונושאים בלי חבילה שסימנתם'),
     due.length?h('ul',{class:'list'},due.map(t=>topicRow(t,h('button',{class:'btn small ghost',onclick:e=>{e.preventDefault();reviewTopic(t.id);}},'חזרתי')))):h('div',{class:'empty'},'אין נושאים שמועד החזרה שלהם הגיע.'));
   // next up
   const next=all.filter(t=>t.tier==='A'&&T(t.id).s===0).sort((a,b)=>b.hits-a.hits||(hasPack(b.id)-hasPack(a.id))).slice(0,6);
@@ -87,10 +97,13 @@ function viewToday(){
   const inp=h('input',{type:'date',id:'examDate',value:S.examDate,style:'border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:var(--panel)',onchange:e=>{if(e.target.value){S.examDate=e.target.value;save();render();toast('תאריך הבחינה עודכן');}}});
   const settings=h('div',{class:'card'},h('h3',{},'הגדרות'),
     h('label',{class:'row'},h('span',{},'תאריך בחינה'),inp),h('span',{class:'note'},DATA.exam.examDateNote),
+    h('label',{class:'row'},h('span',{},'כרטיסים לחזרה ביום'),h('input',{type:'number',min:5,max:300,step:5,value:SRS.st().cfg.cap,style:'width:5em;border:1px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--panel)',onchange:e=>{SRS.st().cfg.cap=Math.max(5,+e.target.value||40);save();render();}})),
+    h('label',{class:'row'},h('span',{},'כרטיסים חדשים ביום'),h('input',{type:'number',min:0,max:100,step:5,value:SRS.st().cfg.newCap,style:'width:5em;border:1px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--panel)',onchange:e=>{SRS.st().cfg.newCap=Math.max(0,+e.target.value||0);save();render();}})),
+    h('label',{class:'row'},h('input',{type:'checkbox',checked:SRS.st().cfg.exam,onchange:e=>{SRS.st().cfg.exam=e.target.checked;save();}}),h('span',{},'לקצר רווחים לקראת הבחינה')),
     h('div',{class:'row'},h('button',{class:'btn small ghost',onclick:()=>{S.muted=!S.muted;save();render();}},S.muted?'צלילים: כבויים':'צלילים: פועלים'),
       h('button',{class:'btn small ghost',onclick:copyExport},'העתק גיבוי'),h('button',{class:'btn small ghost',onclick:showImport},'שחזר מגיבוי')),
     h('div',{id:'imp'}));
-  return h('section',{class:'view'},tiles,phase,h('div',{class:'grid2'},dueCard,nextCard),h('div',{class:'grid2'},prog,h('div',{class:'view'},st,settings)));
+  return h('section',{class:'view'},tiles,srs,phase,h('div',{class:'grid2'},dueCard,nextCard),h('div',{class:'grid2'},prog,h('div',{class:'view'},st,settings)));
 }
 function reviewTopic(id){const x=T(id);x.next=addDays(today(),INTERVAL[x.s]||3);save();render();toast('הנושא יחזור ב-'+fmtD(x.next));}
 function copyExport(){const txt=JSON.stringify(S);navigator.clipboard.writeText(txt).then(()=>toast('הגיבוי הועתק'),()=>{const ta=h('textarea',{readonly:true},txt);$('#imp').replaceChildren(ta);ta.select();});}

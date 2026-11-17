@@ -163,6 +163,7 @@
 .gm .frame b{font-size:.76rem;display:block}
 .gm .qdots{display:flex;gap:4px}.gm .qdots i{width:22px;height:6px;border-radius:3px;background:var(--line)}.gm .qdots i.d{background:var(--rose)}.gm .qdots i.c{background:var(--amber)}.gm .qdots i.f{width:10px}
 .gm .srbox{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.gm .fc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;width:100%;max-width:420px}.gm .fcd{display:flex;flex-direction:column;align-items:center;gap:4px}.gm .fcb{height:64px;width:100%;background:var(--line);border-radius:6px;display:flex;align-items:flex-end;overflow:hidden}.gm .fcb i{display:block;width:100%;background:var(--rose);border-radius:6px 6px 0 0}.gm .fcn{font-weight:700;font-size:.85rem}.gm .fcl{font-size:.72rem;color:var(--muted)}.gm .srbox.dr{border:1px solid var(--line);border-radius:16px;padding:12px 16px;background:var(--panel)}
 .gm .srstat{display:flex;gap:14px;flex-wrap:wrap;font-size:.86rem}.gm .srstat b{font-size:1.15rem}
 .gfloat{position:fixed;pointer-events:none;font-weight:800;font-size:1.6rem;color:var(--amber);z-index:60;animation:gfloat 1s forwards;text-shadow:0 1px 0 var(--bg);font-family:var(--f)}
 .gbanner{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:61;pointer-events:none;font-weight:800;font-size:clamp(1.9rem,8.5vw,3.4rem);color:var(--amber);text-shadow:0 2px 0 var(--bg),0 0 24px var(--amber-soft);white-space:nowrap;animation:gbanner 1.4s forwards;font-family:var(--f)}
@@ -310,6 +311,9 @@ function home(){
   root.append(h('div',{class:'rank'},rankBadge(ri),h('div',{style:'min-width:0'},h('div',{class:'lbl'},'הדרגה שלך'),h('div',{class:'name'},RANKS[ri][1]),h('div',{class:'xpbar'},bar)),
     h('div',{class:'xp'},(S.xp||0).toLocaleString()+' XP',h('br'),nx?('הבאה: '+nx[1]+' ב-'+nx[0].toLocaleString()):'הדרגה הגבוהה ביותר')));
   requestAnimationFrame(()=>bar.style.width=(nx?((S.xp||0)-lo)/(nx[0]-lo)*100:100)+'%');
+  {const cn=SRS.counts(PID);root.append(h('div',{class:'srbox dr'},h('div',{class:'lbl',style:'color:var(--rose)'},'חזרה מרווחת · '+(TOPIC[PID]?TOPIC[PID].name:pack.title)),
+    h('div',{class:'srstat'},h('span',{},h('b',{},cn.all),' לחזרה היום'),h('span',{},h('b',{},cn.total),' כרטיסים'),h('span',{},h('b',{},cn.mastered),' בשליטה')),
+    h('div',{style:'display:flex;gap:10px;flex-wrap:wrap'},h('button',{class:'gbtn rose',onclick:()=>daily(host,home,PID)},cn.all?'חזרה בנושא הזה ('+cn.all+')':'חזרה בנושא הזה'))));}
   if(pack.pathway&&pack.pathway.cases&&pack.pathway.cases.length)root.append(homePathway());
   if(pack.oral&&pack.oral.length)root.append(homeOral());
   const B=BANK();
@@ -320,11 +324,11 @@ function home(){
       grid.append(h('button',{class:'shift'+(sh.boss?' boss':''),disabled:!ok,onclick:()=>startShift(sh.id)},h('span',{class:'n'},sh.n+(ok?'':' · נעול')),h('span',{class:'t'},sh.t),
         h('span',{class:'d'},ok?sh.d:'כוכב אחד ב'+SHIFTS().find(s=>s.id===sh.need).t+' פותח את המשמרת'),h('div',{class:'stars'},[0,1,2].map(i=>starSvg(i<st))),best?h('span',{class:'best'},'שיא '+best.toLocaleString()):null));});
     root.append(grid);
-    const m=h('div',{class:'mastery'}),mastered=B.filter(b=>(g.box[b.id]||0)>=3).length;
-    m.append(h('div',{style:'display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline'},h('span',{class:'lbl'},'שליטה בחומר'),h('span',{style:'font-size:.88rem'},mastered+' מתוך '+B.length+' עובדות ננעלו')));
+    const bx=b=>SRS.boxOf('d|'+PID+'|'+b.id),cls=b=>{const x=bx(b);return x>=5?'b3':x>=3?'b2':x>=1?'b1':'';},m=h('div',{class:'mastery'}),mastered=B.filter(b=>bx(b)>=5).length;
+    m.append(h('div',{style:'display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline'},h('span',{class:'lbl'},'שליטה בחומר'),h('span',{style:'font-size:.88rem'},mastered+' מתוך '+B.length+' עובדות בשליטה')));
     const secs=pack.drillSections&&pack.drillSections.length?pack.drillSections:[{id:null,label:'הכול'}];
-    secs.forEach(s=>m.append(h('div',{class:'mrow'},h('span',{style:'font-weight:700;font-size:.86rem'},s.label),h('div',{class:'mts'},B.filter(b=>!s.id||b.sec===s.id).map(b=>h('i',{class:'mt b'+(g.box[b.id]||0),title:b.q}))))));
-    m.append(h('div',{class:'legend'},[['','חדש'],['b1','נכון פעם אחת'],['b2','פעמיים'],['b3','ננעל (3 פעמים ברצף בניסיון ראשון)']].map(([c,t])=>h('span',{},h('i',{class:'mt '+c}),t))));
+    secs.forEach(s=>m.append(h('div',{class:'mrow'},h('span',{style:'font-weight:700;font-size:.86rem'},s.label),h('div',{class:'mts'},B.filter(b=>!s.id||b.sec===s.id).map(b=>h('i',{class:'mt '+cls(b),title:b.q+' · קופסה '+bx(b)}))))));
+    m.append(h('div',{class:'legend'},[['','לא נענתה'],['b1','קופסה 1–2'],['b2','קופסה 3–4'],['b3','קופסה 5–6: בשליטה']].map(([c,t])=>h('span',{},h('i',{class:'mt '+c}),t))));
     root.append(m);
   }
   root.append(h('p',{class:'mut',style:'margin:0;font-size:.8rem'},'מקלדת: 1–5 לבחירה · ← → להחלקה · חצים לגלגלות ו-Enter לנעילה ולמעבר.'));
@@ -373,6 +377,7 @@ function outcome(res,info,c){
   else if(res==='close'){const mult=Math.min(5,1+Math.floor(G.streak/3));pts=Math.round(50*mult*(gold?3:1));SX.close();floatText('קרוב +'+pts,x,y,'teal');face.replaceChildren(avatar(c.seed,'calm'));}
   else{G.lives--;G.streak=0;SX.wrong();card.classList.add('shake','bad');face.replaceChildren(avatar(c.seed,'sad'));g.box[it.id]=0;if(!G.missed.includes(it))G.missed.push(it);
     if(!d.retry&&G.lives>0)G.deck.splice(Math.min(G.deck.length,G.i+4),0,{it,retry:true});}
+  if(!d.retry)SRS.grade('d|'+PID+'|'+it.id,res==='right'?'right':res==='close'?'close':'wrong');
   G.score+=pts;persist();hud();
   const head={right:'נכון!',close:'קרוב מאוד',wrong:info.timeout?'נגמר הזמן':'לא הפעם'}[res];
   const nb=h('button',{class:'next nx',onclick:go},G.lives<=0?'לתוצאות':'למטופל הבא ←');
@@ -428,7 +433,7 @@ function renderStation(){
     const [x,y]=centerOf(btns[pos]);const pr=g.proc[step.st]||[0,0];pr[1]++;CS.total++;const lastOf=!c.steps.slice(CS.si+1).some(s=>s.st===step.st),prev=CS.res.find(r=>r.st===step.st);
     if(ok){pr[0]++;CS.right++;SX.right(CS.si+1);burst(x,y,22);CS.dry=Math.min(7,CS.dry+1);floatText('+יום טוב',x,y,'teal');face.replaceChildren(avatar(seed,'happy'));}
     else{btns[pos].classList.add('wrong');SX.wrong();card.classList.add('shake');face.replaceChildren(avatar(seed,'sad'));}
-    g.proc[step.st]=pr;persist();const state=ok&&(!prev||prev.state==='ok')?'ok':'bad';CS.res.push({st:step.st,state,last:lastOf,ok});if(prev)prev.last=false;
+    g.proc[step.st]=pr;SRS.grade('c|'+PID+'|'+c.id+'|'+CS.si,ok?'right':'wrong');persist();const state=ok&&(!prev||prev.state==='ok')?'ok':'bad';CS.res.push({st:step.st,state,last:lastOf,ok});if(prev)prev.last=false;
     const rl=root.querySelector('.rail');if(rl&&lastOf){const d=rl.children[si];d.className='st '+state+' fill';d.querySelector('.dot').textContent=state==='ok'?'✓':'✗';}
     const nw=weekEl(CS.dry);week.replaceWith(nw);week=nw;
     const nb=h('button',{class:'next nx',onclick:go},CS.si+1<c.steps.length?'לתחנה הבאה ←':'לתיק המטופל ←');
@@ -466,7 +471,8 @@ function finishRounds(miss){
 /* ---------- oral boards ---------- */
 const DAYMS=20*3600*1000;
 function QIDX(){const X={};(pack.oral||[]).forEach(s=>s.q.forEach(q=>{X[q.id]={key:q.id,k:q.k,q:q.q,f:q.f,p:q.p,st:s.t};if(q.fu)X[q.id+'F']={key:q.id+'F',k:'שאלת המשך',q:q.fu.q,f:q.fu.f,p:q.fu.p,st:s.t,fu:true};}));return X;}
-function srDue(){const now=Date.now(),X=QIDX();return Object.entries(gs().sr).filter(([k,e])=>e.due<=now&&X[e.q]);}
+function oralCards(dueOnly){const s=SRS.st(),n=SRS.dayN(),X=QIDX();return Object.keys(s.c).filter(k=>{const q=SRS.parse(k);return q.t==='o'&&q.p===PID&&X[q.id]&&(!dueOnly||s.c[k][1]<=n);}).map(k=>{const q=SRS.parse(k);return [k,{q:q.id,i:q.i,box:s.c[k][0]}];});}
+function srDue(){return oralCards(true);}
 function srMark(item,idx,v){const sr=gs().sr,key=item.key+'#'+idx,e=sr[key];
   if(v===1){if(!e)return null;e.streak++;if(e.streak>=2){delete sr[key];P.srDone=(P.srDone||0)+1;return 'locked';}e.due=Date.now()+DAYMS;return 'up';}
   sr[key]={q:item.key,i:idx,streak:0,due:Date.now()};return 'added';}
@@ -477,17 +483,16 @@ function homeOral(){
   const g=gs(),X=QIDX();
   const grid=h('div',{class:'ostations'},pack.oral.map(s=>{const cov=s.q.reduce((a,q)=>a+(g.oral[q.id]||0),0)/s.q.length;
     return h('button',{class:'ost',onclick:()=>startOral(s.id)},h('b',{},s.t),h('span',{class:'mut',style:'font-size:.85rem'},s.d||''),h('div',{class:'cov'},h('i',{style:'width:'+Math.round(cov*100)+'%'})),h('span',{class:'mut',style:'font-size:.78rem'},'כיסוי מיטבי '+Math.round(cov*100)+'%'));}));
-  const all=Object.values(g.sr).filter(e=>X[e.q]),due=srDue().length,next=all.length?Math.min(...all.map(e=>e.due))-Date.now():0;
-  const hrs=Math.max(1,Math.round(next/3600000));
+  const all=oralCards(false),due=srDue().length,mast=all.filter(([k,e])=>e.box>=6).length,nd=all.length?Math.min(...all.map(([k])=>SRS.st().c[k][1]))-SRS.dayN():0;
   return h('div',{class:'oralhome'},h('div',{class:'lbl',style:'color:var(--rose)'},'בחינה בעל פה · בלי טיימר, בלי שאלות אמריקאיות'),h('h2',{class:'disp'},'בחינה בעל פה'),
     h('p',{},'הבוחן שואל, אתם עונים בקול מהזיכרון. אחר כך הופכים את נקודות המפתח ומסמנים בכנות: אמרתי, חלקית או פספסתי. אחרי כל תשובה הבוחן לוחץ עם שאלת המשך, וכל מה שפספסתם חוזר בחזרה המרווחת.'),grid,
-    h('div',{class:'srbox'},h('div',{class:'lbl',style:'color:var(--rose)'},'חזרה מרווחת'),h('div',{class:'srstat'},h('span',{},h('b',{},due),' לחזרה עכשיו'),h('span',{},h('b',{},all.length-due),' ממתינות'),h('span',{},h('b',{},g.srDone||0),' ננעלו')),
+    h('div',{class:'srbox'},h('div',{class:'lbl',style:'color:var(--rose)'},'חזרה מרווחת'),h('div',{class:'srstat'},h('span',{},h('b',{},due),' לחזרה עכשיו'),h('span',{},h('b',{},all.length-due),' ממתינות'),h('span',{},h('b',{},mast),' בשליטה')),
       h('div',{style:'display:flex;gap:10px;align-items:center;flex-wrap:wrap'},due?h('button',{class:'gbtn rose',onclick:()=>startReview(false)},'סבב חזרה ('+due+')'):null,
-        !due&&all.length?h('span',{class:'mut',style:'font-size:.85rem'},'הבאה '+(hrs<24?'בעוד '+hrs+' שעות':'מחר')+'.'):null,!due&&all.length?h('button',{class:'gbtn ghost',style:'padding:7px 14px',onclick:()=>startReview(true)},'לתרגל עכשיו בכל זאת'):null,
-        !all.length?h('span',{class:'mut',style:'font-size:.85rem'},'כל נקודה שתפספסו או תאמרו חלקית תחזור לכאן, עד שתאמרו אותה פעמיים ברצף בימים שונים.'):null)));
+        !due&&all.length?h('span',{class:'mut',style:'font-size:.85rem'},'הבאה '+(nd<=1?'מחר':'בעוד '+nd+' ימים')+'.'):null,!due&&all.length?h('button',{class:'gbtn ghost',style:'padding:7px 14px',onclick:()=>startReview(true)},'לתרגל עכשיו בכל זאת'):null,
+        !all.length?h('span',{class:'mut',style:'font-size:.85rem'},'כל נקודה שתסמנו נכנסת לחזרה המרווחת: פספסתם חוזרת מחר, אמרתם חוזרת בעוד 3 ימים ואז ברווחים שהולכים וגדלים.'):null)));
 }
 function startOral(sid){ac();const X=QIDX(),s=pack.oral.find(x=>x.id===sid);OR={mode:'station',title:s.t,sid,queue:s.q.map(q=>({...X[q.id],main:true})),i:0,said:0,total:0,full:0,missed:[],srAdded:0,locked:0};askItem();}
-function startReview(early){ac();const X=QIDX();const src=early?Object.entries(gs().sr).filter(([k,e])=>X[e.q]):srDue();const by={};src.forEach(([k,e])=>{(by[e.q]=by[e.q]||[]).push(e.i);});
+function startReview(early){ac();const X=QIDX();const src=early?oralCards(false):srDue();const by={};src.forEach(([k,e])=>{(by[e.q]=by[e.q]||[]).push(e.i);});
   const queue=shuffle(Object.keys(by)).slice(0,6).map(qk=>({...X[qk],hide:by[qk].sort((a,b)=>a-b),review:true}));if(!queue.length)return home();
   OR={mode:'review',title:'חזרה מרווחת',queue,i:0,said:0,total:0,full:0,missed:[],srAdded:0,locked:0};askItem();}
 function oralTop(){const root=frame();root.append(h('div',{class:'top'},h('span',{class:'lbl'},(OR.mode==='review'?'':'תחנה בעל פה · ')+OR.title),h('div',{class:'qdots'},OR.queue.map((it,i)=>h('i',{class:(i<OR.i?'d':i===OR.i?'c':'')+(it.fu?' f':'')}))),h('span',{class:'sp'}),
@@ -514,8 +519,8 @@ function flipItem(secs){
   function reveal(){if(j>=order.length)return verdict();const r=rows[order[j]];r.className='kp cur';r.children[1].textContent=it.p[order[j]];SX.tap();
     r.append(h('div',{class:'judge'},h('button',{class:'y',onclick:()=>mark(1)},'אמרתי (1)'),h('button',{class:'p',onclick:()=>mark(.5)},'חלקית (2)'),h('button',{class:'x',onclick:()=>mark(0)},'פספסתי (3)')));r.scrollIntoView({block:'nearest',behavior:REDUCE?'auto':'smooth'});}
   function mark(v){const idx=order[j],r=rows[idx];if(!r||!r.classList.contains('cur'))return;r.lastChild.remove();r.className='kp '+(v===1?'said':v>0?'part':'miss');said+=v;
-    const res=srMark(it,idx,v===1?1:0);if(res==='added')OR.srAdded++;
-    if(v===1){full++;SX.right(full);const [x,y]=centerOf(r.firstChild);burst(x,y,res==='locked'?40:12);face.replaceChildren(examinerFace('up'));if(res==='locked'){OR.locked++;floatText('ננעלה',x,y,'gold');}else if(res==='up')floatText('עוד פעם אחת',x,y,'teal');}
+    const gr=SRS.grade('o|'+PID+'|'+it.key+'|'+idx,v===1?'right':v>0?'part':'wrong'),res=gr.mastered?'locked':v===1?'up':'added';if(gr.isNew)OR.srAdded++;
+    if(v===1){full++;SX.right(full);const [x,y]=centerOf(r.firstChild);burst(x,y,res==='locked'?40:12);face.replaceChildren(examinerFace('up'));if(res==='locked'){OR.locked++;floatText('ננעלה',x,y,'gold');}else if(res==='up')floatText(gr.iv<=1?'מחר':'בעוד '+gr.iv+' ימים',x,y,'teal');}
     else{miss.push(it.p[idx]+(v>0?' (חלקית)':''));SX.close();face.replaceChildren(examinerFace(v>0?'flat':'down'));}j++;persist();setTimeout(reveal,v===1?260:200);}
   function verdict(){const n=order.length,cov=n?said/n:1,complete=full===n,g=gs();OR.said+=said;OR.total+=n;if(complete)OR.full++;if(miss.length)OR.missed.push({q:it.q,m:miss});
     if(!it.review)g.oral[it.key]=Math.max(g.oral[it.key]||0,cov);persist();face.replaceChildren(examinerFace(cov>=.8?'up':cov>=.5?'flat':'down'));
@@ -532,7 +537,7 @@ function flipItem(secs){
 function oralEnd(){
   const rev=OR.mode==='review',cov=OR.total?OR.said/OR.total:0,grade=rev?(OR.locked?'נקודות ננעלו':'סבב החזרה הושלם'):cov>=.85?'הצטיינות':cov>=.65?'עובר':'צריך עוד סבב';
   const xp=Math.round(OR.said*(rev?40:60))+OR.full*(rev?0:150)+OR.locked*100,r0=rankOf(S.xp||0);S.xp=(S.xp||0)+xp;if(!rev)recordRecall(PID,cov*100);persist();const r1=rankOf(S.xp);
-  const root=frame(),sid=OR.sid,X=QIDX(),pending=Object.values(gs().sr).filter(e=>X[e.q]).length,due=srDue().length;
+  const root=frame(),sid=OR.sid,X=QIDX(),pending=oralCards(false).length,due=srDue().length;
   root.append(h('div',{class:'screen res'},h('div',{class:'lbl'},(rev?'':'תחנה בעל פה · ')+OR.title),examinerFace(cov>=.85?'up':cov>=.65?'flat':'down','exam'),
     h('h2',{class:'disp',style:'margin:0;font-size:1.9rem'},grade),h('div',{class:'big',style:'direction:ltr'},Math.round(cov*100)+'%'),
     h('div',{class:'mut'},nf(OR.said)+' מתוך '+OR.total+' נקודות'+(rev?' · '+OR.locked+' ננעלו':' · '+OR.full+' תשובות מלאות')+' · '+xp+'+ XP'),
@@ -544,9 +549,84 @@ function oralEnd(){
   if(r1>r0)setTimeout(()=>{gbanner('קידום: '+RANKS[r1][1]);SX.fanfare();rain(90);},1600);
 }
 
+/* ---------- daily review: one mixed session across topics (facts, case decisions, oral points) ---------- */
+let DR=null;
+const tname=p=>TOPIC[p]?TOPIC[p].name:(PACKS[p]?PACKS[p].title:p);
+function daily(el,exit,scope){host=el;PLAYER.keys=e=>KEYS?KEYS(e):false;ac();
+  const pl=SRS.plan(scope),items=[],oral={};
+  [...pl.due.map(k=>[k,false]),...pl.fresh.map(k=>[k,true])].forEach(([k,fresh])=>{const q=SRS.parse(k);
+    if(q.t==='o'){const g=q.p+'|'+q.id;(oral[g]=oral[g]||{t:'o',p:q.p,id:q.id,idx:[]}).idx.push(q.i);}else items.push({t:q.t,p:q.p,id:q.id,i:q.i,k,fresh});});
+  DR={scope,exit,queue:[...shuffle(items),...Object.values(oral)],i:0,n:0,right:0,wrong:0,up:0,mastered:0,xp:0,fresh:pl.fresh.length};
+  if(!DR.queue.length)return drEmpty();drNext();}
+function drSet(it){pack=PACKS[it.p];PID=it.p;gs();}
+function drFrame(it){const root=frame();root.append(h('div',{class:'top'},h('span',{class:'lbl'},'חזרה יומית'+(DR.scope?' · '+tname(DR.scope):'')),
+  h('div',{class:'qdots'},DR.queue.slice(0,40).map((x,i)=>h('i',{class:(i<DR.i?'d':i===DR.i?'c':'')+(x.again?' f':'')}))),h('span',{class:'sp'}),
+  h('span',{class:'mut',style:'font-size:.8rem'},(DR.i+1)+' / '+DR.queue.length),h('button',{class:'iconbtn',onclick:drEnd},'לסיים')));return root;}
+function drNext(){if(DR.i>=DR.queue.length)return drEnd();const it=DR.queue[DR.i];drSet(it);if(!PACKS[it.p]){DR.i++;return drNext();}
+  if(it.t==='d')drDrill(it);else if(it.t==='c')drCase(it);else drOral(it);}
+function drTag(it,extra){return h('div',{class:'tag'},tname(it.p)+(extra?' · '+extra:'')+(it.again?' · שוב, בלי ניקוד':it.fresh?' · חדש':''));}
+function drDrill(it){const d=BANK().find(b=>b.id===it.id);if(!d){DR.i++;return drNext();}const root=drFrame(it),seed=hash(it.k);
+  const card=h('div',{class:'card in'},h('div',{class:'pt'},avatar(seed,'calm'),h('div',{},h('div',{class:'who'},'עובדה'),drTag(it,SEC()[d.sec]||''))));
+  const L=decks()[d.d]||['לא','כן'];card.append(h('p',{class:'q'},d.k==='swipe'?L[0]+' או '+L[1]+'?':d.q));
+  const w=d.k==='pick'?wPick(d,(res,info)=>drAfter(it,card,res,{w:d.w,answer:info.answer,at:info.at})):d.k==='swipe'?wSwipe(d,decks(),(res,info)=>drAfter(it,card,res,{w:d.w,answer:info.answer,at:info.at})):wDial(d,(res,info)=>drAfter(it,card,res,{w:d.w,answer:info.answer,at:info.at}));
+  card.append(w.el);root.append(card);}
+function drCase(it){const c=((pack.pathway||{}).cases||[]).find(x=>x.id===it.id),step=c&&c.steps[it.i];if(!step){DR.i++;return drNext();}
+  const SN=STN(),si=SN.findIndex(s=>s.k===step.st),S0=SN[si],root=drFrame(it);const order=shuffle(step.o.map((_,i)=>i)),opts=h('div',{class:'opts'});
+  const card=h('div',{class:'card'},h('div',{class:'pt'},avatar(hash(c.id),'worried'),h('div',{style:'min-width:0'},h('div',{class:'who'},c.name+(c.age?', '+c.age:'')),drTag(it,'מסלול מקרים'),h('div',{},c.story))),
+    h('div',{class:'sthead'},h('span',{class:'n'},'תחנה '+(si+1)),h('span',{class:'t'},S0?S0.t:'')),h('p',{class:'q'},step.q),opts);root.append(card);
+  let locked=false;const btns=order.map((oi,pos)=>{const b=h('button',{class:'opt',onclick:()=>choose(pos)},h('kbd',{},String(pos+1)),h('span',{},step.o[oi]));opts.append(b);return b;});
+  function choose(pos){if(locked)return;locked=true;const ok=order[pos]===step.a;btns.forEach((b,p)=>{b.disabled=true;if(order[p]===step.a)b.classList.add('right');});if(!ok)btns[pos].classList.add('wrong');
+    drAfter(it,card,ok?'right':'wrong',{w:step.w,answer:step.o[step.a],rule:S0?'תחנה '+(si+1)+' · '+S0.t+': '+S0.rule:'',at:btns[pos]});}
+  KEYS=e=>{const n=parseInt(e.key,10);if(n>=1&&n<=btns.length){choose(n-1);return true;}};}
+function drAfter(it,card,res,info){let g=null;
+  if(!it.again){g=SRS.grade(it.k,res);SRS.tick(it.fresh);DR.n++;if(res==='right'){DR.right++;DR.xp+=60;if(g.box>g.prev)DR.up++;if(g.mastered)DR.mastered++;}else DR.wrong++;
+    if(res!=='right')DR.queue.push({...it,again:true});}
+  else if(res==='right')DR.xp+=20;
+  const [x,y]=centerOf(info.at||card);
+  if(res==='right'){SX.right(DR.right);burst(x,y,g&&g.mastered?50:16);if(g&&g.mastered)floatText('בשליטה',x,y,'gold');}else if(res==='close')SX.close();else{SX.wrong();card.classList.add('shake');}
+  persist();const nb=h('button',{class:'next nx',onclick:go},'הבא ←'),when=g?(g.iv<=1?'מחר':'בעוד '+g.iv+' ימים'):'';
+  card.append(h('div',{class:'fb '+(res==='right'?'good':res==='close'?'close':'bad')},
+    h('div',{class:'row'},h('span',{class:'h'},{right:'נכון',close:'קרוב',wrong:'לא הפעם'}[res]),res!=='right'&&info.answer!=null?h('span',{style:'font-size:.84rem'},'התשובה: '+info.answer):null,h('span',{class:'sp'}),
+      g?h('span',{class:'mut',style:'font-size:.8rem'},'קופסה '+g.box+' · חוזר '+when):null,nb),
+    h('div',{},info.w||''),info.rule?h('div',{class:'rule'},info.rule):null,g&&res!=='right'?h('div',{class:'mut',style:'font-size:.82rem'},'יחזור שוב בסוף הסבב, בלי ניקוד.'):null));
+  let went=false;function go(){if(went)return;went=true;KEYS=null;DR.i++;drNext();}
+  KEYS=e=>{if(e.key==='Enter'||e.key===' '){go();return true;}};setTimeout(()=>nb.focus({preventScroll:true}),60);}
+function drOral(it){const o=SRS.oralItem(pack,it.id);if(!o){DR.i++;return drNext();}const root=drFrame(it),hid=new Set(it.idx);
+  const rows=o.p.map((p,i)=>hid.has(i)?h('div',{class:'kp hid'},h('span',{class:'n'},String(i+1)),h('span',{class:'tx'},'• • • • •')):h('div',{class:'kp ctx'},h('span',{class:'n'},String(i+1)),h('span',{class:'tx'},p)));
+  const foot=h('div'),done=h('button',{class:'gbtn nx',onclick:flip},'סיימתי לענות');foot.append(done);
+  root.append(h('div',{class:'card'},h('div',{class:'examiner'},examinerFace('flat'),h('div',{class:'bubble'},h('span',{class:'kind'},'בעל פה · '+tname(it.p)+' · '+o.st),o.q)),
+    h('div',{class:'speak'},h('span',{class:'mic'}),h('span',{class:'mut',style:'flex:1;min-width:12em'},'ענו בקול. השלימו את '+(hid.size===1?'הנקודה החסרה':hid.size+' הנקודות החסרות')+'.')),h('div',{class:'board'},rows),foot));
+  KEYS=e=>{if(e.key==='Enter'||e.key===' '){done.click();return true;}};setTimeout(()=>done.focus({preventScroll:true}),60);
+  function flip(){const order=[...hid].sort((a,b)=>a-b);let j=0;foot.replaceChildren();
+    const reveal=()=>{if(j>=order.length)return end();const r=rows[order[j]];r.className='kp cur';r.children[1].textContent=o.p[order[j]];SX.tap();
+      r.append(h('div',{class:'judge'},h('button',{class:'y',onclick:()=>mark(1)},'אמרתי (1)'),h('button',{class:'p',onclick:()=>mark(.5)},'חלקית (2)'),h('button',{class:'x',onclick:()=>mark(0)},'פספסתי (3)')));};
+    const mark=v=>{const idx=order[j],r=rows[idx];if(!r||!r.classList.contains('cur'))return;r.lastChild.remove();r.className='kp '+(v===1?'said':v>0?'part':'miss');
+      const g=SRS.grade('o|'+it.p+'|'+o.key+'|'+idx,v===1?'right':v>0?'part':'wrong');SRS.tick(false);DR.n++;
+      if(v===1){DR.right++;DR.xp+=40;if(g.box>g.prev)DR.up++;if(g.mastered)DR.mastered++;SX.right(DR.right);}else{DR.wrong++;SX.close();}persist();j++;setTimeout(reveal,200);};
+    KEYS=e=>{if(e.key==='1'){mark(1);return true;}if(e.key==='2'){mark(.5);return true;}if(e.key==='3'){mark(0);return true;}};reveal();}
+  function end(){const nb=h('button',{class:'next nx',onclick:go},'הבא ←');
+    foot.replaceChildren(h('div',{class:'fb good'},h('div',{class:'row'},h('span',{class:'h'},'סומן'),h('span',{class:'sp'}),nb),o.f?h('div',{class:'frame'},h('b',{},'פתחו את התשובה כך'),o.f):null));
+    let went=false;function go(){if(went)return;went=true;KEYS=null;DR.i++;drNext();}KEYS=e=>{if(e.key==='Enter'||e.key===' '){go();return true;}};setTimeout(()=>nb.focus({preventScroll:true}),60);}}
+function drForecast(scope){const f=SRS.forecast(scope,7),mx=Math.max(1,...f),names=['היום','מחר','+2','+3','+4','+5','+6'];
+  return h('div',{class:'fc'},f.map((n,i)=>h('div',{class:'fcd'},h('span',{class:'fcn'},String(n)),h('div',{class:'fcb'},h('i',{style:'height:'+Math.round(n/mx*100)+'%'})),h('span',{class:'fcl'},names[i]))));}
+function drEnd(){const d=DR;if(!d)return;const r0=rankOf(S.xp||0);S.xp=(S.xp||0)+d.xp;persist();const r1=rankOf(S.xp);const root=frame(),acc=d.n?d.right/d.n:0;
+  const more=SRS.plan(d.scope),moreN=more.due.length+more.fresh.length;
+  root.append(h('div',{class:'screen res'},h('div',{class:'lbl'},'חזרה יומית'+(d.scope?' · '+tname(d.scope):'')),h('h2',{class:'disp',style:'margin:0;font-size:1.8rem'},d.n?'הסבב הושלם':'לא נענו כרטיסים'),
+    h('div',{class:'big',style:'direction:ltr'},Math.round(acc*100)+'%'),
+    h('div',{class:'stats'},h('div',{},h('b',{},d.n),'כרטיסים'),h('div',{},h('b',{},d.up),'עלו קופסה'),h('div',{},h('b',{},d.mastered),'הגיעו לשליטה')),
+    h('div',{class:'mut'},'+'+d.xp+' XP · היום: '+SRS.st().day.done+' מתוך '+SRS.st().cfg.cap+' כרטיסים'),
+    h('div',{class:'lbl'},'מה מחכה בשבוע הקרוב'),drForecast(d.scope),
+    h('div',{class:'btnrow'},moreN?h('button',{class:'gbtn rose',onclick:()=>daily(host,d.exit,d.scope)},'עוד סבב ('+moreN+')'):null,h('button',{class:'gbtn ghost',onclick:()=>{DR=null;d.exit();}},'סיום'))));
+  if(d.mastered){gbanner(d.mastered===1?'כרטיס הגיע לשליטה':d.mastered+' כרטיסים הגיעו לשליטה');rain(80);SX.fanfare();}else if(acc>=.85&&d.n){rain(60);SX.fanfare();}
+  if(r1>r0)setTimeout(()=>{gbanner('קידום: '+RANKS[r1][1]);SX.fanfare();rain(90);},1500);DR=null;}
+function drEmpty(){const d=DR,s=SRS.st(),root=frame();
+  root.append(h('div',{class:'screen res'},h('div',{class:'lbl'},'חזרה יומית'+(d.scope?' · '+tname(d.scope):'')),h('h2',{class:'disp',style:'margin:0'},s.day.done>=s.cfg.cap?'עמדתם במכסה היומית':'אין כרטיסים לחזרה עכשיו'),
+    h('p',{class:'mut',style:'margin:0'},s.day.done>=s.cfg.cap?'עניתם היום על '+s.day.done+' כרטיסים. המכסה ניתנת לשינוי בהגדרות.':'כרטיסים נכנסים לחזרה ברגע שעונים עליהם במשמרות, במסלול המקרים או בבחינה בעל פה.'),
+    h('div',{class:'lbl'},'מה מחכה בשבוע הקרוב'),drForecast(d.scope),h('div',{class:'btnrow'},h('button',{class:'gbtn ghost',onclick:()=>{DR=null;d.exit();}},'חזרה'))));}
+
 /* ---------- entry ---------- */
 function open(el,id,exit,start){host=el;PID=id;pack=PACKS[id];onExit=exit;gs();PLAYER.keys=e=>KEYS?KEYS(e):false;
   if(start==='review')startReview(false);else if(start==='cases')startCases();else home();}
-return {open,stop:()=>{stopTimer();clearInterval(oClock);hush();}};
+return {open,daily,stop:()=>{stopTimer();clearInterval(oClock);hush();}};
 })();
 </script>
