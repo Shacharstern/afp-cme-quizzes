@@ -1,0 +1,91 @@
+<script>
+/* Topic-specific reel scenes: atrial fibrillation and anticoagulation (AFP 2024, AFP 2025 on ACC/AHA 2023, Goroll 28 and 83). */
+(()=>{
+const {S,set,lerp,ease,span,C,R,M}=REEL.kit;
+const N=(x,y,text,o={},p)=>S('text',Object.assign({x,y,text,direction:'ltr','text-anchor':'middle'},o),p);
+const lin=(t,a,b)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+const op=(el,v)=>{el.style.opacity=v;};
+const rnd=i=>{const x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x);};
+
+REEL.custom('af',{
+ afecg(g,d){ // sinus rhythm vs AF: no P waves, irregularly irregular R-R
+  const strip=(y0,label,tone)=>{S('rect',{x:16,y:y0-62,width:568,height:110,rx:10,fill:C(tone+'-soft'),opacity:.45},g);R(576,y0-42,label,{'font-size':'13px','font-weight':'700',fill:C(tone)},g);};
+  strip(118,d.sinus||'',"teal");strip(278,d.af||'',"rose");
+  let p='M24 120';for(let x=40;x<560;x+=78){p+=' L'+x+' 120 Q'+(x+8)+' 110 '+(x+16)+' 120 L'+(x+26)+' 120 L'+(x+30)+' 128 L'+(x+34)+' 70 L'+(x+38)+' 132 L'+(x+42)+' 120 Q'+(x+56)+' 104 '+(x+68)+' 120';}
+  const sin=S('path',{d:p,fill:'none',stroke:C('teal'),'stroke-width':'2.5px',pathLength:1,'stroke-dasharray':'1','stroke-dashoffset':'1'},g);
+  const beats=[];let bx=52;for(let i=0;bx<540;i++){beats.push(bx);bx+=38+rnd(i+3)*70;}
+  let q='M24 280';for(let x=24;x<=560;x+=3){const hit=beats.find(b=>x>=b&&x<b+12);if(hit!==undefined&&x<hit+3){q+=' L'+(hit+2)+' 288 L'+(hit+5)+' 228 L'+(hit+8)+' 292 L'+(hit+11)+' 280';x=hit+11;continue;}
+   q+=' L'+x+' '+(280+3.2*Math.sin(x*.9)+2*Math.sin(x*2.3+1));}
+  const fib=S('path',{d:q,fill:'none',stroke:C('rose'),'stroke-width':'2.5px',pathLength:1,'stroke-dasharray':'1','stroke-dashoffset':'1'},g);
+  const ann=S('g',{},g);for(let i=0;i<3;i++){const a=beats[i+1]+6,b=beats[i+2]+6;S('path',{d:'M'+a+' 214 v-6 H'+b+' v6',fill:'none',stroke:C('ink'),'stroke-width':'1.5px'},ann);}
+  R(576,326,d.noP||'',{'font-size':'11.5px','font-weight':'700',fill:C('rose')},ann);
+  const chips=(d.chips||[]).map((c,i)=>{const e=S('g',{},g),x=584-i*196;R(x,372,c.v,{class:'disp','font-size':'20px',fill:C(c.tone||'ink')},e);R(x,394,c.l,{'font-size':'11px',class:'mut'},e);return {e,at:c.at||.6};});
+  return t=>{set(sin,{'stroke-dashoffset':1-span(t,.02,.3)});set(fib,{'stroke-dashoffset':1-span(t,.12,.48)});op(ann,span(t,.46,.54));chips.forEach(c=>op(c.e,span(t,c.at-.02,c.at+.06)));};
+ },
+
+ chads(g,d){ // CHA2DS2-VASc builds up for one patient; the bar shows the yearly stroke rate at that score
+  const items=d.items||[],rows=items.map((it,i)=>{const y=70+i*34,e=S('g',{},g);
+   const box=S('rect',{x:338,y:y-16,width:252,height:28,rx:8,fill:C('bg'),stroke:C('line'),'stroke-width':'1.5px'},e);
+   N(574,y+3,it.k,{'font-size':'13px','font-weight':'800',fill:C('teal')},e);R(552,y+3,it.t,{'font-size':'12px'},e);N(354,y+3,'+'+it.p,{'font-size':'12.5px','font-weight':'700',fill:C('amber')},e);return {box,p:it.p};});
+  const rates=d.rates||[],X=i=>34+i*28,base=330,Hs=v=>v/16*190;
+  const bars=rates.map((v,i)=>{const b=S('rect',{x:X(i),y:base-Hs(v),width:22,height:Hs(v),rx:4,fill:C('line')},g);N(X(i)+11,base-Hs(v)-6,String(v),{'font-size':'9.5px',class:'mut'},g);N(X(i)+11,base+16,String(i),{'font-size':'11px','font-weight':'700'},g);return b;});
+  M(170,base+38,d.axis||'',{'font-size':'11px',class:'mut'},g);M(170,70,d.title||'',{'font-size':'13px','font-weight':'700'},g);M(170,90,d.sub||'',{'font-size':'11px',class:'mut'},g);
+  const sc=N(70,140,'0',{class:'disp','font-size':'40px'},g);
+  const vb=S('rect',{x:30,y:384,width:560,height:40,rx:20,fill:C('line')},g),vt=M(310,410,'',{'font-size':'13.5px','font-weight':'700'},g);
+  const on=d.on||[];
+  return t=>{const k=Math.min(on.length,Math.floor(lin(t,.06,.8)*on.length+1e-6));let s=0;rows.forEach(r=>set(r.box,{fill:C('bg'),stroke:C('line')}));
+   for(let i=0;i<k;i++){const r=rows[on[i]];s+=r.p;set(r.box,{fill:C('amber-soft'),stroke:C('amber')});}
+   set(sc,{text:String(s)});bars.forEach((b,i)=>set(b,{fill:i===s?C('rose'):C('line')}));
+   const v=(d.verdicts||[]).find(x=>s>=x.min&&s<=x.max);op(vb,k?1:0);op(vt,k?1:0);if(v){set(vt,{text:v.t});set(vb,{fill:C(v.tone+'-soft')});vt.style.fill=C(v.tone);}};
+ },
+
+ falls(g,d){ // 295 falls before the harm outweighs one prevented stroke
+  const n=d.n||295,dots=[];for(let i=0;i<300;i++){const c=i%20,r=Math.floor(i/20);dots.push(S('circle',{cx:44+c*14,cy:96+r*15,r:5,fill:C('line')},g));}
+  const big=N(170,370,'0',{class:'disp','font-size':'40px',fill:C('amber')},g);M(170,398,d.fallsLabel||'',{'font-size':'12px',class:'mut'},g);
+  const st=S('g',{},g);S('circle',{cx:470,cy:170,r:58,fill:C('rose-soft'),stroke:C('rose'),'stroke-width':'3px'},st);N(470,182,'1',{class:'disp','font-size':'40px',fill:C('rose')},st);M(470,256,d.stroke||'',{'font-size':'13px','font-weight':'700',fill:C('rose')},st);
+  const L=S('g',{},g);(d.lines||[]).forEach((l,i)=>R(590,300+i*24,l,{'font-size':'12.5px'},L));
+  M(170,72,d.title||'',{'font-size':'13px','font-weight':'700'},g);
+  return t=>{const k=Math.round(lin(t,.06,.6)*n);dots.forEach((c,i)=>set(c,{fill:i<k?C('amber'):C('line')}));set(big,{text:String(k)});op(st,span(t,.55,.65));op(L,span(t,.7,.8));};
+ },
+
+ crcl(g,d){ // kidney function falls; each DOAC dose follows it. Apixaban uses its own 2-of-3 rule
+  const X=c=>60+(110-c)/100*480;S('line',{x1:X(110),y1:92,x2:X(10),y2:92,stroke:C('line'),'stroke-width':'10px','stroke-linecap':'round'},g);
+  [100,80,60,50,30,15].forEach(c=>{S('line',{x1:X(c),y1:100,x2:X(c),y2:108,stroke:C('muted')},g);N(X(c),122,String(c),{'font-size':'10.5px',class:'mut'},g);});
+  R(590,60,d.axis||'',{'font-size':'12px','font-weight':'700'},g);const mk=S('circle',{cy:92,r:11,fill:C('amber'),stroke:C('bg'),'stroke-width':'3px'},g);const mv=N(0,74,'',{'font-size':'13px','font-weight':'700'},g);
+  const rows=(d.rows||[]).map((r,i)=>{const y=168+i*52,e=S('g',{},g);R(590,y+5,r.name,{'font-size':'13px','font-weight':'700'},e);
+   const b=S('rect',{x:200,y:y-16,width:250,height:32,rx:10,fill:C('bg'),stroke:C('line'),'stroke-width':'1.5px'},e);const tx=M(325,y+5,'',{'font-size':'12.5px','font-weight':'700'},e);return {r,b,tx};});
+  const ay=168+rows.length*52,ap=S('g',{},g);R(590,ay+5,d.apix.name,{'font-size':'13px','font-weight':'700'},ap);
+  const ab=S('rect',{x:200,y:ay-16,width:250,height:32,rx:10,fill:C('teal-soft'),stroke:C('teal'),'stroke-width':'1.5px'},ap),at=M(325,ay+5,d.apix.full,{'font-size':'12.5px','font-weight':'700'},ap);
+  const cr=(d.apix.crit||[]).map((c,i)=>{const e=S('g',{},g),x=520-i*170;const b=S('rect',{x:x-75,y:ay+30,width:150,height:28,rx:14,fill:C('bg'),stroke:C('line'),'stroke-width':'1.5px'},e);M(x,ay+49,c,{'font-size':'11.5px','font-weight':'700'},e);return {e,b};});
+  return t=>{const c=lerp(105,12,span(t,.04,.6));set(mk,{cx:X(c)});set(mv,{x:X(c),text:'CrCl '+Math.round(c)});
+   rows.forEach(o=>{const z=o.r.rules.find(z=>c>=z.min&&c<=z.max)||o.r.rules[0];set(o.tx,{text:z.dose});o.tx.style.fill=C(z.tone||'ink');set(o.b,{stroke:C(z.tone||'line'),fill:C((z.tone||'teal')+'-soft')});});
+   const k=Math.floor(lin(t,.66,.86)*(d.apix.on||2)+1e-6);cr.forEach((o,i)=>{const on=i<k;set(o.b,{fill:on?C('amber-soft'):C('bg'),stroke:on?C('amber'):C('line')});op(o.e,t>.62?1:.3);});
+   const red=k>=2;set(at,{text:red?d.apix.low:d.apix.full});set(ab,{fill:red?C('amber-soft'):C('teal-soft'),stroke:red?C('amber'):C('teal')});};
+ },
+
+ ratedial(g,d){ // heart-rate dial: emergency, rate control, lenient target
+  const cx=170,cy=270,r=130,mn=40,mx=180,A=v=>Math.PI*(1-(v-mn)/(mx-mn)),P=(v,q)=>[cx+q*Math.cos(A(v)),cy-q*Math.sin(A(v))];
+  (d.zones||[]).forEach(z=>{const a=P(z.from,r),b=P(z.to,r);S('path',{d:'M'+a[0]+' '+a[1]+' A'+r+' '+r+' 0 0 1 '+b[0]+' '+b[1],fill:'none',stroke:C(z.tone),'stroke-width':'22px',opacity:.55},g);
+   const m=P((z.from+z.to)/2,r+30);M(m[0],m[1]+4,z.label,{'font-size':'11px','font-weight':'700',fill:C(z.tone)},g);});
+  [40,80,110,150,180].forEach(v=>{const q=P(v,r-30);N(q[0],q[1]+4,String(v),{'font-size':'11px','font-weight':'700'},g);});
+  const nd=S('line',{x1:cx,y1:cy,stroke:C('ink'),'stroke-width':'4px','stroke-linecap':'round'},g);S('circle',{cx,cy,r:8,fill:C('ink')},g);
+  const hr=N(cx,cy+44,'',{class:'disp','font-size':'30px'},g),msg=M(cx,cy+72,'',{'font-size':'12.5px','font-weight':'700'},g);
+  const cards=(d.cards||[]).map((c,i)=>{const e=S('g',{},g),y=62+i*86;S('rect',{x:340,y,width:250,height:76,rx:12,fill:C((c.tone||'teal')+'-soft')},e);R(578,y+24,c.t,{'font-size':'13px','font-weight':'700',fill:C(c.tone||'teal')},e);(c.lines||[]).forEach((l,j)=>R(578,y+46+j*18,l,{'font-size':'11.5px'},e));return {e,at:c.at||.5};});
+  return t=>{const v=t<.5?lerp(172,124,span(t,.04,.4)):lerp(124,96,span(t,.55,.8));const q=P(v,r-16);set(nd,{x2:q[0],y2:q[1]});set(hr,{text:Math.round(v)+''});
+   const z=(d.zones||[]).find(z=>v>=z.from&&v<z.to);set(msg,{text:z?z.msg:''});msg.style.fill=z?C(z.tone):'';cards.forEach(c=>op(c.e,span(t,c.at-.02,c.at+.06)));};
+ },
+
+ cvclock(g,d){ // cardioversion: what comes before and after, by AF duration
+  const X=w=>560-(w+4)/8.5*510;S('line',{x1:X(-4),y1:84,x2:X(4.5),y2:84,stroke:C('muted'),'stroke-width':'1.5px'},g);
+  [-4,-3,-2,-1,0,1,2,3,4].forEach(w=>{S('line',{x1:X(w),y1:80,x2:X(w),y2:88,stroke:C('muted')},g);N(X(w),102,(w>0?'+':'')+w,{'font-size':'10.5px',class:'mut'},g);});
+  R(590,64,d.axis||'',{'font-size':'11.5px',class:'mut'},g);
+  S('line',{x1:X(0),y1:110,x2:X(0),y2:380,stroke:C('amber'),'stroke-width':'2.5px','stroke-dasharray':'5 4'},g);M(X(0),396,d.cv||'',{'font-size':'12px','font-weight':'700',fill:C('amber')},g);
+  const L=(d.lanes||[]).map((ln,i)=>{const y=140+i*84,e=S('g',{},g);R(590,y-14,ln.t,{'font-size':'12.5px','font-weight':'700',fill:C(ln.tone||'ink')},e);
+   ln.segs.forEach(s=>{S('rect',{x:X(s.to),y:y-2,width:X(s.from)-X(s.to),height:28,rx:8,fill:C((s.tone||'teal')+'-soft'),stroke:C(s.tone||'teal'),'stroke-width':'1.5px'},e);M((X(s.from)+X(s.to))/2,y+17,s.l,{'font-size':'11px','font-weight':'700'},e);});
+   return {e,at:ln.at||.1};});
+  const cur=S('line',{y1:110,y2:380,stroke:C('ink'),'stroke-width':'1.5px',opacity:.5},g);const note=R(590,428,d.note||'',{'font-size':'12px','font-weight':'700',fill:C('rose')},g);
+  return t=>{L.forEach(o=>op(o.e,span(t,o.at-.02,o.at+.06)));const w=lerp(-4,4.4,lin(t,.05,.85));set(cur,{x1:X(w),x2:X(w)});op(note,span(t,.86,.92));};
+ }
+});
+})();
+</script>
