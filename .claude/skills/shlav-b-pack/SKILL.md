@@ -41,6 +41,9 @@ The user chose a unique reel per topic. For each chapter, prefer a scene drawn f
 - Only draw findings the source states (lytes: the article text names T-wave flattening, QRS widening, bradycardia and junctional rhythm; it does not name peaked T waves, so they are not drawn).
 - Check visually before publishing: build, render every chapter at t≈0.45 and t≈0.92 with Playwright, look for clipped or overlapping text, fix, then rebuild. Custom code ships inside the app, so finish with: build → publish the app artifact (same file path) → upload the pack.
 
+## 3c. Narration (Hebrew voice-over for the reel)
+Write `shlav-b/narration/<topic-id>.json`: for each chapter, lines `[at, text]` whose `at` values are exactly 0, every point's `at`, and the pearl's `at`; spoken Hebrew, numbers and acronyms written as they are said. Generate with Pocket TTS (free, local; needs Hugging Face hosts allowed): from a checkout of `thewh1teagle/pocket-tts-onnx`, run `.venv/bin/python shlav-b/narration/pocket.py <topic-id> <out> --dry` to check phonemes, add fixes to `narration/lexicon.json`, then run without `--dry`. Upload the `<topic>-<chapter>.mp4` files as artifact assets, save the returned URLs in `narration/<topic-id>-urls.json`, copy the marks file to `narration/`, and run `narration/attach.py` before uploading the pack.
+
 ## 4. Validate
 `python3 shlav-b/engine/validate_pack.py shlav-b/packs/<id>.json` must print OK. Fix every ERROR; fix warnings unless there is a reason.
 
