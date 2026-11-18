@@ -52,6 +52,10 @@ A pack is one JSON object per topic. All user-facing text is Hebrew. The app ren
 }
 ```
 
+Optional mode `podcast` (פודקאסט ״הסבב״): written by `narration/attach_podcast.py` from a recorded episode, never by hand.
+`{"src": "/_blob/…", "title", "dur": seconds, "hosts": {"n": {"name", "role"}}, "segs": [[sec, id, title]], "lines": [[sec, who, text] | [sec, "pause", seconds, label]]}`.
+The script it is recorded from lives in `shlav-b/podcast/<id>.json`; how to write it is in `shlav-b/podcast/PROMPT.md`.
+
 IDs must be unique within a pack (drills, oral questions). Oral question ids feed spaced repetition: changing an id resets that question's history, so keep ids stable when updating a pack.
 
 Validate with `python3 shlav-b/engine/validate_pack.py <pack.json>`.

@@ -8,7 +8,7 @@ data = json.loads((root / 'data' / 'shlav-b-data.json').read_text(encoding='utf-
 builtin = {p: json.loads((root / 'packs' / f'{p}.json').read_text(encoding='utf-8')) for p in ['incont']}
 dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 data_block = f'<script>\nconst DATA={dump(data)};\nconst BUILTIN_PACKS={dump(builtin)};\n</script>\n'
-core = [(here / f).read_text(encoding='utf-8') for f in ('c-core.html', 'c2-srs.html', 'd-views.html', 'f-reel.html')]
+core = [(here / f).read_text(encoding='utf-8') for f in ('c-core.html', 'c2-srs.html', 'd-views.html', 'f-reel.html', 'h-podcast.html')]
 custom = [f.read_text(encoding='utf-8') for f in sorted((here / 'reels').glob('*.html'))]  # topic-specific reel scenes
 rest = [(here / f).read_text(encoding='utf-8') for f in ('g-game.html', 'e-player.html')]
 parts = [(here / 'a-head.html').read_text(encoding='utf-8'), data_block] + core + custom + rest

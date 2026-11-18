@@ -1,0 +1,121 @@
+<style>
+/* Podcast: ״הסבב״, a two-host audio episode per topic, with a live transcript and chapters (RTL) */
+.pod{display:flex;flex-direction:column;gap:14px}
+.pod .ptop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pod .hero{background:linear-gradient(135deg,var(--panel),var(--teal-soft));border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.pod .show{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;color:var(--teal)}
+.pod .hero h1{margin:0;font-weight:800;font-size:clamp(1.25rem,2.6vw,1.9rem);line-height:1.15;text-wrap:balance}
+.pod .hosts{display:flex;gap:8px;flex-wrap:wrap}
+.pod .host{display:flex;gap:6px;align-items:center;font-size:.82rem;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.pod .host i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.pod .who-n{color:var(--teal)}.pod .who-y{color:var(--amber)}
+.pod .host .dot-n{background:var(--teal)}.pod .host .dot-y{background:var(--amber)}
+.pod .now{min-height:3.2em;font-size:clamp(1rem,1.9vw,1.2rem);line-height:1.45;display:flex;gap:10px;align-items:flex-start}
+.pod .now b{font-size:.8rem;white-space:nowrap;padding-top:3px}
+.pod .now.stop{color:var(--rose);font-weight:700}
+.pod .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pod .pp{width:54px;height:54px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);display:grid;place-items:center;cursor:pointer}
+.pod .pp svg{width:20px;height:20px;fill:currentColor}
+.pod .skip{min-width:58px;font-variant-numeric:tabular-nums}
+.pod .rate.on{background:var(--ink);color:var(--bg)}
+.pod .clock{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);direction:ltr;unicode-bidi:isolate;margin-inline-start:auto}
+.pod .bar{position:relative;height:26px}
+.pod .bar input{position:absolute;inset:0;width:100%;margin:0;accent-color:var(--teal)}
+.pod .ticks{position:absolute;inset:0;pointer-events:none}
+.pod .ticks i{position:absolute;top:4px;bottom:4px;width:2px;background:var(--line);border-radius:2px}
+.pod .body{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:14px;align-items:start}
+.pod .segs{display:flex;flex-direction:column;gap:6px;position:sticky;top:8px}
+.pod .seg{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;text-align:start;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel);cursor:pointer;font:inherit;color:inherit}
+.pod .seg .n{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.pod .seg .d{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);direction:ltr}
+.pod .seg.cur{border-color:var(--teal);background:var(--teal-soft)}
+.pod .seg.done .n{color:var(--ok)}
+.pod .tx{max-height:min(62dvh,640px);overflow-y:auto;display:flex;flex-direction:column;gap:4px;padding:4px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.pod .tx h3{margin:12px 8px 2px;font-size:.8rem;color:var(--muted);font-weight:700}
+.pod .ln{display:grid;grid-template-columns:4.6em 1fr;gap:8px;padding:6px 8px;border-radius:8px;cursor:pointer;line-height:1.5;opacity:.72}
+.pod .ln:hover{background:var(--panel)}
+.pod .ln .w{font-size:.74rem;font-weight:700;padding-top:2px}
+.pod .ln.past{opacity:.55}
+.pod .ln.cur{opacity:1;background:var(--amber-soft)}
+.pod .ln.ps{grid-template-columns:1fr;opacity:1}
+.pod .ln.ps span{justify-self:start;font-size:.74rem;font-weight:700;color:var(--rose);background:var(--rose-soft);padding:2px 10px;border-radius:999px}
+.pod .ln.ps.mute span{color:var(--muted);background:var(--panel)}
+.pod .resume{font-size:.82rem;color:var(--muted)}
+@media (max-width:760px){.pod .body{grid-template-columns:minmax(0,1fr)}.pod .segs{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}.pod .seg{min-width:150px}.pod .tx{max-height:none}}
+</style>
+<script>
+/* ---------- podcast player ---------- */
+const POD=(()=>{
+const RATES=[.75,1,1.25,1.5,1.75,2];
+const mmss=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+const rateLbl=r=>String(r).replace(/^0/,'')+'×';
+function mount(host,pack,onExit){
+  const P=pack.podcast,id=pack.id,pk=PK(id),st=(pk.pod=pk.pod||{t:0,done:false});
+  const hosts=P.hosts||{},nm=k=>(hosts[k]||{}).name||k;
+  const aud=new Audio();aud.preload='metadata';aud.src=P.src;aud.preservesPitch=true;
+  let rate=1;try{const r=+localStorage.getItem('shlavb-prate');if(RATES.includes(r))rate=r;}catch(e){}
+  const applyRate=()=>{aud.defaultPlaybackRate=rate;aud.playbackRate=rate;};applyRate();
+  const root=h('section',{class:'pod'});
+  const pi=document.createElementNS('http://www.w3.org/2000/svg','svg');pi.setAttribute('viewBox','0 0 16 16');
+  const pp=h('button',{class:'pp','aria-label':'נגן'});pp.append(pi);
+  const back=h('button',{class:'btn small ghost skip','aria-label':'15 שניות אחורה'},'15 ↻'),fwd=h('button',{class:'btn small ghost skip','aria-label':'15 שניות קדימה'},'↺ 15');
+  const rb=h('button',{class:'btn small ghost rate',dir:'ltr','aria-label':'מהירות',title:'מהירות ( [ / ] במקלדת)'},rateLbl(rate));
+  const clock=h('span',{class:'clock'},'0:00 / '+mmss(P.dur));
+  const scrub=h('input',{type:'range',min:0,max:Math.round(P.dur*10),step:1,value:0,'aria-label':'מיקום בפרק'});
+  const ticks=h('div',{class:'ticks'});(P.segs||[]).forEach((s,i)=>{if(i)ticks.append(h('i',{style:'right:'+(s[0]/P.dur*100).toFixed(2)+'%'}));});
+  const now=h('div',{class:'now','aria-live':'polite'},h('span',{class:'note'},'לחצו ▶ כדי להתחיל.'));
+  const resumeNote=h('span',{class:'resume'});
+  root.append(
+    h('div',{class:'ptop'},h('button',{class:'btn small ghost',onclick:()=>{stop();onExit();}},'→ חזרה לנושא'),h('b',{},pack.title),h('span',{class:'sp'}),h('span',{class:'note'},'רווח לנגן · ← → 15 שניות · [ ] מהירות')),
+    h('div',{class:'hero'},h('span',{class:'show'},'הסבב · פודקאסט'),h('h1',{},P.title),
+      h('div',{class:'hosts'},Object.keys(hosts).map(k=>h('span',{class:'host'},h('i',{class:'dot-'+k}),h('b',{class:'who-'+k},nm(k)),h('span',{class:'note'},hosts[k].role||'')))),
+      now,h('div',{class:'ctl'},pp,back,fwd,rb,resumeNote,clock),h('div',{class:'bar'},ticks,scrub)));
+  const segBtns=(P.segs||[]).map((s,i)=>{const nx=(P.segs[i+1]||[P.dur])[0];const b=h('button',{class:'seg',onclick:()=>seek(s[0]+.01,true)},h('span',{class:'n'},String(i+1).padStart(2,'0')),h('span',{},s[2]),h('span',{class:'d'},mmss(nx-s[0])));return b;});
+  const tx=h('div',{class:'tx'});const lineEls=[];let si=0;
+  P.lines.forEach((l,i)=>{while(si<P.segs.length&&P.segs[si][0]<=l[0]+.01){tx.append(h('h3',{},P.segs[si][2]));si++;}
+    let el;if(l[1]==='pause')el=h('div',{class:'ln ps'+(l[3]?'':' mute')},h('span',{},'⏸ '+(l[3]||'רגע לחשוב')));
+    else el=h('div',{class:'ln'},h('span',{class:'w who-'+l[1]},nm(l[1])),h('span',{},l[2]));
+    el.onclick=()=>seek(l[0]+.01,true);tx.append(el);lineEls.push(el);});
+  root.append(h('div',{class:'body'},h('div',{class:'segs'},segBtns),tx));
+  host.replaceChildren(root);
+  let cur=-1,curSeg=-1,userScroll=0,lastSave=0,raf=0,failed=false;
+  tx.addEventListener('wheel',()=>userScroll=Date.now(),{passive:true});tx.addEventListener('touchmove',()=>userScroll=Date.now(),{passive:true});
+  const idxAt=t=>{let lo=0,hi=P.lines.length-1,r=-1;while(lo<=hi){const m=(lo+hi)>>1;if(P.lines[m][0]<=t+.05){r=m;lo=m+1;}else hi=m-1;}return r;};
+  function show(t){
+    const i=idxAt(t);if(i!==cur){if(cur>=0&&lineEls[cur])lineEls[cur].classList.remove('cur');lineEls.forEach((e,j)=>e.classList.toggle('past',j<i));cur=i;
+      if(i>=0){lineEls[i].classList.add('cur');if(Date.now()-userScroll>4000&&!aud.paused){const r=lineEls[i].offsetTop-tx.offsetTop-tx.clientHeight/2+lineEls[i].offsetHeight/2;tx.scrollTo({top:r,behavior:'smooth'});}
+        const l=P.lines[i];now.classList.toggle('stop',l[1]==='pause');
+        if(l[1]==='pause')now.replaceChildren(h('span',{},'⏸ '+(l[3]||'רגע לחשוב')+' · ענו בקול'));else now.replaceChildren(h('b',{class:'who-'+l[1]},nm(l[1])),h('span',{},l[2]));}}
+    if(P.lines[cur]&&P.lines[cur][1]==='pause'){const left=Math.ceil(P.lines[cur][0]+P.lines[cur][2]-t);const s=now.firstChild;if(s&&left>=0)s.textContent='⏸ '+(P.lines[cur][3]||'רגע לחשוב')+' · '+left;}
+    let k=0;(P.segs||[]).forEach((s,j)=>{if(s[0]<=t+.05)k=j;});if(k!==curSeg){curSeg=k;segBtns.forEach((b,j)=>{b.classList.toggle('cur',j===k);b.classList.toggle('done',j<k);});}
+    clock.textContent=mmss(t)+' / '+mmss(P.dur);if(document.activeElement!==scrub)scrub.value=Math.round(t*10);
+    if('mediaSession' in navigator&&navigator.mediaSession.setPositionState){try{navigator.mediaSession.setPositionState({duration:P.dur,position:Math.min(P.dur,t),playbackRate:rate});}catch(e){}}}
+  function keep(t,force){st.t=t;if(!st.done&&t>=P.dur*.92){st.done=true;const tp=T(id);if(tp.s===0){tp.s=1;tp.next=addDays(today(),3);}toast('האזנת לפודקאסט עד הסוף. עכשיו למשחק!');force=true;}
+    if(force||Date.now()-lastSave>5000){lastSave=Date.now();save();}}
+  function loop(){if(!root.isConnected){aud.pause();keep(aud.currentTime,true);return;}show(aud.currentTime);keep(aud.currentTime);if(!aud.paused)raf=requestAnimationFrame(loop);}
+  function icon(){const on=!aud.paused;pi.innerHTML=on?'<path d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/>':'<path d="M12 2.5v11L3 8z"/>';pp.setAttribute('aria-label',on?'השהה':'נגן');}
+  function play(){failed=false;applyRate();const pr=aud.play();if(pr&&pr.catch)pr.catch(()=>{icon();});}
+  function stop(){aud.pause();keep(aud.currentTime,true);icon();}
+  function seek(t,go){t=Math.max(0,Math.min(P.dur-.2,t));try{aud.currentTime=t;}catch(e){}userScroll=0;show(t);if(go&&aud.paused)play();}
+  function setRate(r){rate=r;try{localStorage.setItem('shlavb-prate',String(r));}catch(e){}rb.textContent=rateLbl(r);rb.classList.toggle('on',r!==1);applyRate();}
+  pp.onclick=()=>{if(aud.paused){if(aud.currentTime>=P.dur-.5)seek(0);play();}else stop();};
+  back.onclick=()=>seek(aud.currentTime-15);fwd.onclick=()=>seek(aud.currentTime+15);
+  rb.onclick=()=>setRate(RATES[(RATES.indexOf(rate)+1)%RATES.length]);rb.classList.toggle('on',rate!==1);
+  scrub.addEventListener('input',()=>seek(scrub.value/10));
+  aud.addEventListener('play',()=>{icon();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);});
+  aud.addEventListener('pause',()=>{icon();keep(aud.currentTime,true);});
+  aud.addEventListener('ended',()=>{icon();keep(P.dur,true);});
+  aud.addEventListener('error',()=>{failed=true;icon();now.replaceChildren(h('span',{class:'note'},'הקובץ לא נטען. בדקו את החיבור ולחצו ▶ שוב.'));});
+  aud.addEventListener('loadedmetadata',()=>{if(st.t>10&&st.t<P.dur-10&&aud.currentTime<1){try{aud.currentTime=st.t;}catch(e){}resumeNote.textContent='ממשיכים מ-'+mmss(st.t);show(st.t);}},{once:true});
+  if('mediaSession' in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:P.title,artist:'הסבב · מרכז ההכנה לשלב ב׳',album:pack.title});
+    navigator.mediaSession.setActionHandler('play',play);navigator.mediaSession.setActionHandler('pause',stop);
+    navigator.mediaSession.setActionHandler('seekbackward',()=>seek(aud.currentTime-15));navigator.mediaSession.setActionHandler('seekforward',()=>seek(aud.currentTime+15));
+    navigator.mediaSession.setActionHandler('seekto',e=>seek(e.seekTime));}catch(e){}}
+  PLAYER.keys=e=>{const k=e.key;if(k===' '){pp.click();return true;}if(k==='ArrowLeft'){seek(aud.currentTime+15);return true;}if(k==='ArrowRight'){seek(aud.currentTime-15);return true;}
+    if(k===']'||k==='['){const j=RATES.indexOf(rate)+(k===']'?1:-1);if(j>=0&&j<RATES.length)setRate(RATES[j]);return true;}};
+  if(st.t>10&&st.t<P.dur-10){resumeNote.textContent='ממשיכים מ-'+mmss(st.t);show(st.t);}else show(0);
+  icon();POD._aud=aud;
+}
+return {mount,mmss};
+})();
+</script>

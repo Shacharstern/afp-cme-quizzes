@@ -18,7 +18,7 @@ def check(p):
     for s in p.get('sources', []):
         if not {'label', 'kind', 'year'} <= set(s): E(f'source needs label, kind, year: {s}')
     if not HEB.search(p.get('title', '')): E('title must be Hebrew')
-    modes = [m for m in ('reel', 'summary', 'drills', 'pathway', 'oral') if p.get(m)]
+    modes = [m for m in ('reel', 'summary', 'drills', 'pathway', 'oral', 'podcast') if p.get(m)]
     if not modes: E('pack has no study modes')
 
     sm = p.get('summary')
@@ -103,6 +103,18 @@ def check(p):
             fu = q.get('fu')
             if fu and (not fu.get('q') or len(fu.get('p', [])) < 2): E(f'oral {q.get("id")}: follow-up needs q and 2+ points')
             if not fu: warn.append(f'oral {q.get("id")}: no follow-up')
+
+    pc = p.get('podcast')
+    if pc:
+        for k in ('src', 'title', 'dur', 'segs', 'lines'):
+            if not pc.get(k): E(f'podcast.{k} missing')
+        t = -1
+        for i, l in enumerate(pc.get('lines', [])):
+            if not isinstance(l, list) or len(l) < 3: E(f'podcast.lines[{i}] must be [sec, who, text]'); continue
+            if l[0] < t: E(f'podcast.lines[{i}] starts before the line above it')
+            t = l[0]
+            if l[1] != 'pause' and l[1] not in (pc.get('hosts') or {}): E(f'podcast.lines[{i}]: unknown speaker "{l[1]}"')
+        if pc.get('lines') and pc.get('dur') and pc['lines'][-1][0] > pc['dur']: E('podcast: a line starts after the end')
 
     size = len(json.dumps(p, ensure_ascii=False).encode())
     if size > 240_000: E(f'pack is {size} bytes; keep it under 240000')

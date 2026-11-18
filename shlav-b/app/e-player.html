@@ -5,6 +5,7 @@
 .mode b{font-size:1.25rem;font-weight:800}
 .mode.reel{background:linear-gradient(135deg,var(--panel),var(--teal-soft));border-color:var(--teal)}
 .mode.game{background:linear-gradient(135deg,var(--panel),var(--amber-soft));border-color:var(--amber)}
+.mode.pod{grid-column:1/-1;background:linear-gradient(135deg,var(--panel),var(--rose-soft));border-color:var(--rose)}
 .mode .note{line-height:1.4}
 .meter{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.meter i{display:block;height:100%;background:var(--amber)}
 .sum{display:flex;flex-direction:column;gap:12px}
@@ -36,12 +37,18 @@ function packCard(id){
       h('button',{class:'mode game',onclick:()=>runGame(id)},h('span',{class:'lbl',style:'color:var(--amber)'},'לשחק ולהיבחן'),h('b',{},'המשחק'),
         h('span',{class:'note'},[drills.length?'משמרות עם לבבות וקומבו':null,p.pathway?'מסלול מקרים':null,p.oral?'בחינה בעל פה עם שאלות המשך':null].filter(Boolean).join(' · ')),
         drills.length?h('div',{class:'meter'},h('i',{style:'width:'+Math.round(mast/drills.length*100)+'%'})):null,
-        h('span',{class:'note'},mast+'/'+drills.length+' עובדות בשליטה · '+stars+' כוכבים'))),
+        h('span',{class:'note'},mast+'/'+drills.length+' עובדות בשליטה · '+stars+' כוכבים')),
+      p.podcast?(()=>{const P=p.podcast,ps=(pk.pod||{}),pct=Math.min(100,Math.round((ps.t||0)/P.dur*100));
+        return h('button',{class:'mode pod',onclick:()=>runPodcast(id)},h('span',{class:'lbl',style:'color:var(--rose)'},'🎧 להאזין בדרך'),h('b',{},'פודקאסט · הסבב'),
+          h('span',{class:'note'},P.title+' · '+Math.round(P.dur/60)+' דקות · '+(P.segs||[]).length+' פרקים'),
+          ps.t?h('div',{class:'meter'},h('i',{style:'width:'+(ps.done?100:pct)+'%'})):null,
+          ps.t?h('span',{class:'note'},ps.done?'האזנת עד הסוף':'האזנת '+pct+'% · ממשיכים מ-'+POD.mmss(ps.t)):null);})():null),
     h('div',{class:'row'},p.summary?h('button',{class:'btn small ghost',onclick:()=>runSummary(id)},'דף סיכום'):null,h('span',{class:'sp'}),
       cn.total?h('span',{class:'note'},'חזרה מרווחת: '+cn.all+' להיום · '+cn.total+' כרטיסים · '+cn.mastered+' בשליטה'):null,
       cn.total?h('button',{class:'btn '+(cn.all?'rose':'ghost')+' small',onclick:()=>runDaily(id)},'חזרה בנושא הזה'):null));
 }
 function runReel(id){PLAYER.id=id;const box=stage();REEL.mount(box,PACKS[id],exitPlayer);}
+function runPodcast(id){PLAYER.id=id;const box=stage();POD.mount(box,PACKS[id],exitPlayer);}
 function runGame(id,start){PLAYER.id=id;const box=stage();GAME.open(box,id,exitPlayer,start);}
 function runSummary(id){
   PLAYER.id=id;const p=PACKS[id],box=stage();PLAYER.keys=null;const s=h('div',{class:'sum'});box.append(s);

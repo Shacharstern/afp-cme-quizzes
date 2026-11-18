@@ -46,6 +46,9 @@ Write `shlav-b/narration/<topic-id>.json`: for each chapter, lines `[at, text]` 
 
 **Pronunciation the user corrected (keep for every topic; all are in `lexicon.json`):** protein = פרוטאין (pro-te-ˈin); למנות = limnot; הישנות ends in -nut (hishanut); מבדלת = mavdelet; פקקת = pakeket; קומדין = kumadin; מקטע = mikta; לשבץ = leshavats. Before generating, scan the `--dry` output for these and for drug names, and add any new word the G2P gets wrong.
 
+## 3d. Podcast (״הסבב״, two-host audio episode)
+Write `shlav-b/podcast/<topic-id>.json` following `shlav-b/podcast/PROMPT.md` (the writing prompt: one patient thread, retrieval before explanation, 4–6 ״עצרו וענו״ pauses, exam traps, source conflicts said aloud, exam corner, patient talk, rapid round). Spoken text only: Hebrew letters, numbers as words. Check with `uv run python <repo>/shlav-b/narration/podcast.py <topic-id> <out> --dry` from the BlueTTS checkout (phonemes and word count), fix words in `narration/lexicon.json`, then record without `--dry` (voices from the script's `hosts`; sentences are cached by phonemes, so a re-record only synthesizes changed lines). Add new spoken→written terms to `podcast/display.json` (the transcript shows D-dimer, not די-דיימר). Upload `<topic>-podcast.mp4` as an artifact asset and run `python3 narration/attach_podcast.py packs/<id>.json <out>/<topic>-podcast-marks.json <asset url>` before uploading the pack.
+
 ## 4. Validate
 `python3 shlav-b/engine/validate_pack.py shlav-b/packs/<id>.json` must print OK. Fix every ERROR; fix warnings unless there is a reason.
 
