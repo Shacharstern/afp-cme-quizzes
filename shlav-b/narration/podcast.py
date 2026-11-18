@@ -43,6 +43,23 @@ def tone(sr, freqs, dur=0.5, amp=0.11):
     return np.concatenate(out).astype(np.float32)
 
 
+def trim(x, sr, lead=0.05, tail=0.12):
+    """Cut the silence the model leaves around a sentence, keeping a short natural margin."""
+    if not len(x):
+        return x
+    w = max(1, int(0.01 * sr))
+    n = len(x) // w
+    if n < 3:
+        return x
+    rms = np.sqrt(np.mean(x[:n * w].reshape(n, w) ** 2, axis=1))
+    on = np.where(rms > 0.08 * rms.max())[0]
+    if not len(on):
+        return x
+    a = max(0, on[0] * w - int(lead * sr))
+    b = min(len(x), (on[-1] + 1) * w + int(tail * sr))
+    return x[a:b]
+
+
 def level(x):
     r = float(np.sqrt(np.mean(x ** 2))) if len(x) else 0
     if r < 1e-4:
@@ -74,12 +91,13 @@ def main():
         f = os.path.join(cache, key + '.wav')
         if os.path.exists(f):
             x, _ = sf.read(f, dtype='float32')
+            return ph, trim(x, sr)
         else:
             x, _ = tts.synthesize(f'<he>{ph}</he>', lang='he', text_is_phonemes=True, normalize_text=False,
                                   style=styles[who])
             x = level(x.astype(np.float32))
             sf.write(f, x, sr)
-        return ph, x
+        return ph, trim(x, sr)
 
     parts, segs, lines, t, prev, words = [tone(sr, [659.3, 880.0])], [], [], 0.0, None, 0
     t += len(parts[0]) / sr + 0.3
@@ -91,7 +109,7 @@ def main():
                 parts.append(x)
                 t += len(x) / sr
             prev = None
-        segs.append([round(t, 2), seg['id'], seg['title']])
+        segs.append([round(t, 2), seg['id'], show(seg['title'])])
         for ln in seg['lines']:
             if ln[0] == 'pause':
                 lines.append([round(t, 2), 'pause', ln[1], ln[2] if len(ln) > 2 else ''])
@@ -128,7 +146,7 @@ def main():
     sf.write(wav, np.concatenate(parts), sr)
     dur = round(sum(len(p) for p in parts) / sr, 2)
     subprocess.check_call(['ffmpeg', '-loglevel', 'error', '-y', '-i', wav, '-af', 'loudnorm=I=-17:TP=-1.5',
-                           '-ac', '1', '-c:a', 'aac', '-b:a', '64k', '-ar', '44100', '-movflags', '+faststart',
+                           '-ac', '1', '-c:a', 'aac', '-b:a', '48k', '-ar', '44100', '-movflags', '+faststart',
                            os.path.join(out, f'{topic}-podcast.mp4')])
     marks = {'title': ep['title'], 'dur': dur, 'segs': segs, 'lines': lines,
              'hosts': {k: {'name': h['name'], 'role': h['role']} for k, h in hosts.items()},

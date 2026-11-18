@@ -16,13 +16,16 @@
 .pod .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .pod .pp{width:54px;height:54px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);display:grid;place-items:center;cursor:pointer}
 .pod .pp svg{width:20px;height:20px;fill:currentColor}
-.pod .skip{min-width:58px;font-variant-numeric:tabular-nums}
+.pod .skip{min-width:58px;font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
 .pod .rate.on{background:var(--ink);color:var(--bg)}
 .pod .clock{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);direction:ltr;unicode-bidi:isolate;margin-inline-start:auto}
-.pod .bar{position:relative;height:26px}
-.pod .bar input{position:absolute;inset:0;width:100%;margin:0;accent-color:var(--teal)}
+.pod .pbar{position:relative;height:26px}
+.pod .pbar input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.pod .trk{position:absolute;inset-inline:0;top:10px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.pod .fill{position:absolute;inset-block:0;inset-inline-start:0;width:0;background:var(--teal);border-radius:3px}
+.pod .knob{position:absolute;top:6px;width:14px;height:14px;margin-inline-start:-7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px var(--bg);pointer-events:none}
 .pod .ticks{position:absolute;inset:0;pointer-events:none}
-.pod .ticks i{position:absolute;top:4px;bottom:4px;width:2px;background:var(--line);border-radius:2px}
+.pod .ticks i{position:absolute;top:7px;height:12px;width:2px;background:var(--muted);opacity:.45;border-radius:2px}
 .pod .body{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:14px;align-items:start}
 .pod .segs{display:flex;flex-direction:column;gap:6px;position:sticky;top:8px}
 .pod .seg{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;text-align:start;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel);cursor:pointer;font:inherit;color:inherit}
@@ -58,18 +61,19 @@ function mount(host,pack,onExit){
   const root=h('section',{class:'pod'});
   const pi=document.createElementNS('http://www.w3.org/2000/svg','svg');pi.setAttribute('viewBox','0 0 16 16');
   const pp=h('button',{class:'pp','aria-label':'נגן'});pp.append(pi);
-  const back=h('button',{class:'btn small ghost skip','aria-label':'15 שניות אחורה'},'15 ↻'),fwd=h('button',{class:'btn small ghost skip','aria-label':'15 שניות קדימה'},'↺ 15');
+  const back=h('button',{class:'btn small ghost skip',dir:'ltr','aria-label':'15 שניות אחורה',title:'15 שניות אחורה'},'−15'),fwd=h('button',{class:'btn small ghost skip',dir:'ltr','aria-label':'15 שניות קדימה',title:'15 שניות קדימה'},'+15');
   const rb=h('button',{class:'btn small ghost rate',dir:'ltr','aria-label':'מהירות',title:'מהירות ( [ / ] במקלדת)'},rateLbl(rate));
   const clock=h('span',{class:'clock'},'0:00 / '+mmss(P.dur));
   const scrub=h('input',{type:'range',min:0,max:Math.round(P.dur*10),step:1,value:0,'aria-label':'מיקום בפרק'});
   const ticks=h('div',{class:'ticks'});(P.segs||[]).forEach((s,i)=>{if(i)ticks.append(h('i',{style:'right:'+(s[0]/P.dur*100).toFixed(2)+'%'}));});
+  const fill=h('i',{class:'fill'}),trk=h('div',{class:'trk'},fill),knob=h('i',{class:'knob'});
   const now=h('div',{class:'now','aria-live':'polite'},h('span',{class:'note'},'לחצו ▶ כדי להתחיל.'));
   const resumeNote=h('span',{class:'resume'});
   root.append(
     h('div',{class:'ptop'},h('button',{class:'btn small ghost',onclick:()=>{stop();onExit();}},'→ חזרה לנושא'),h('b',{},pack.title),h('span',{class:'sp'}),h('span',{class:'note'},'רווח לנגן · ← → 15 שניות · [ ] מהירות')),
     h('div',{class:'hero'},h('span',{class:'show'},'הסבב · פודקאסט'),h('h1',{},P.title),
       h('div',{class:'hosts'},Object.keys(hosts).map(k=>h('span',{class:'host'},h('i',{class:'dot-'+k}),h('b',{class:'who-'+k},nm(k)),h('span',{class:'note'},hosts[k].role||'')))),
-      now,h('div',{class:'ctl'},pp,back,fwd,rb,resumeNote,clock),h('div',{class:'bar'},ticks,scrub)));
+      now,h('div',{class:'ctl'},pp,back,fwd,rb,resumeNote,clock),h('div',{class:'pbar'},trk,ticks,knob,scrub)));
   const segBtns=(P.segs||[]).map((s,i)=>{const nx=(P.segs[i+1]||[P.dur])[0];const b=h('button',{class:'seg',onclick:()=>seek(s[0]+.01,true)},h('span',{class:'n'},String(i+1).padStart(2,'0')),h('span',{},s[2]),h('span',{class:'d'},mmss(nx-s[0])));return b;});
   const tx=h('div',{class:'tx'});const lineEls=[];let si=0;
   P.lines.forEach((l,i)=>{while(si<P.segs.length&&P.segs[si][0]<=l[0]+.01){tx.append(h('h3',{},P.segs[si][2]));si++;}
@@ -88,7 +92,7 @@ function mount(host,pack,onExit){
         if(l[1]==='pause')now.replaceChildren(h('span',{},'⏸ '+(l[3]||'רגע לחשוב')+' · ענו בקול'));else now.replaceChildren(h('b',{class:'who-'+l[1]},nm(l[1])),h('span',{},l[2]));}}
     if(P.lines[cur]&&P.lines[cur][1]==='pause'){const left=Math.ceil(P.lines[cur][0]+P.lines[cur][2]-t);const s=now.firstChild;if(s&&left>=0)s.textContent='⏸ '+(P.lines[cur][3]||'רגע לחשוב')+' · '+left;}
     let k=0;(P.segs||[]).forEach((s,j)=>{if(s[0]<=t+.05)k=j;});if(k!==curSeg){curSeg=k;segBtns.forEach((b,j)=>{b.classList.toggle('cur',j===k);b.classList.toggle('done',j<k);});}
-    clock.textContent=mmss(t)+' / '+mmss(P.dur);if(document.activeElement!==scrub)scrub.value=Math.round(t*10);
+    clock.textContent=mmss(t)+' / '+mmss(P.dur);const f=(Math.min(1,t/P.dur)*100).toFixed(2)+'%';fill.style.width=f;knob.style.insetInlineStart=f;if(document.activeElement!==scrub)scrub.value=Math.round(t*10);
     if('mediaSession' in navigator&&navigator.mediaSession.setPositionState){try{navigator.mediaSession.setPositionState({duration:P.dur,position:Math.min(P.dur,t),playbackRate:rate});}catch(e){}}}
   function keep(t,force){st.t=t;if(!st.done&&t>=P.dur*.92){st.done=true;const tp=T(id);if(tp.s===0){tp.s=1;tp.next=addDays(today(),3);}toast('האזנת לפודקאסט עד הסוף. עכשיו למשחק!');force=true;}
     if(force||Date.now()-lastSave>5000){lastSave=Date.now();save();}}
