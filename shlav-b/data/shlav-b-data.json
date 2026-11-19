@@ -2756,6 +2756,230 @@
     "date": "23.7.24",
     "stationType": "קצרה 5",
     "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5dayC230724examinees.pdf"
+   },
+   {
+    "id": "c47",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "25.2.24",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinical1largeexams.pdf"
+   },
+   {
+    "id": "c48",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "25.2.24",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinical2bigexams.pdf"
+   },
+   {
+    "id": "c49",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "25.2.24",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224clinicalshortness3examiners.pdf"
+   },
+   {
+    "id": "c50",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "25.2.24",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinicalshortness4examiners.pdf"
+   },
+   {
+    "id": "c51",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "25.2.24",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224clinicalshortness5examiners.pdf"
+   },
+   {
+    "id": "c52",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "26.2.24",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinicallargeexaminers.pdf"
+   },
+   {
+    "id": "c53",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "26.2.24",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinical2bigexams.pdf"
+   },
+   {
+    "id": "c54",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "26.2.24",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224clinicalshortness3examiners.pdf"
+   },
+   {
+    "id": "c55",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "26.2.24",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinicalshortness4examiners(1).pdf"
+   },
+   {
+    "id": "c56",
+    "sitting": "F23",
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "date": "26.2.24",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224clinicalshortness5examiners.pdf"
+   },
+   {
+    "id": "c57",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily01072023.pdf"
+   },
+   {
+    "id": "c58",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily02072023.pdf"
+   },
+   {
+    "id": "c59",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily03072023.pdf"
+   },
+   {
+    "id": "c60",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily04072023.pdf"
+   },
+   {
+    "id": "c61",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily05072023.pdf"
+   },
+   {
+    "id": "c62",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily06072023.pdf"
+   },
+   {
+    "id": "c63",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily07072023.pdf"
+   },
+   {
+    "id": "c64",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily08072023.pdf"
+   },
+   {
+    "id": "c65",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily09072023.pdf"
+   },
+   {
+    "id": "c66",
+    "sitting": "S23",
+    "sittingName": "אביב 2023",
+    "date": "",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily10072023.pdf"
+   },
+   {
+    "id": "c67",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily03022023.pdf"
+   },
+   {
+    "id": "c68",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "",
+    "stationType": "גדולה 1",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily04022023.pdf"
+   },
+   {
+    "id": "c69",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "יום ב׳",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily06022023.pdf"
+   },
+   {
+    "id": "c70",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "",
+    "stationType": "גדולה 2",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily07022023.pdf"
+   },
+   {
+    "id": "c71",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "יום ב׳",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily08022023.pdf"
+   },
+   {
+    "id": "c72",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "",
+    "stationType": "קצרה 3",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily09022023.pdf"
+   },
+   {
+    "id": "c73",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "יום ב׳",
+    "stationType": "קצרה 4",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily10022023.pdf"
+   },
+   {
+    "id": "c74",
+    "sitting": "F22",
+    "sittingName": "סתיו 2022",
+    "date": "יום ג׳",
+    "stationType": "קצרה 5",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily11022023.pdf"
    }
   ],
   "otherStations": [
@@ -2883,9 +3107,69 @@
     "sittingName": "אביב 2024",
     "station": "מר״מ 23.7",
     "pdf": "https://ima-contentfiles.s3.amazonaws.com/MrMStationDay372324examinees.pdf"
+   },
+   {
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "station": "משפחה זהה 25.2.24",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday2522024familysamequestionexaminers.pdf"
+   },
+   {
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "station": "ארגון הפרקטיקה 25.2.24",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday2522024practiceorganizatiexaminers.pdf"
+   },
+   {
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "station": "משפחה זהה 26.2.24",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday2622024FamilysamequestioUpdatedexaminers(1).pdf"
+   },
+   {
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "station": "ארגון הפרקטיקה 26.2.24 (1)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday2622024practiceorganizationexaminers.pdf"
+   },
+   {
+    "sittingName": "סתיו 2023 (פברואר 2024)",
+    "station": "ארגון הפרקטיקה 26.2.24 (2)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday2622024practiceorganizationexaminer(1).pdf"
+   },
+   {
+    "sittingName": "אביב 2023",
+    "station": "ארגון הפרקטיקה (1)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily11072023.pdf"
+   },
+   {
+    "sittingName": "אביב 2023",
+    "station": "ארגון הפרקטיקה (2)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily12072023.pdf"
+   },
+   {
+    "sittingName": "אביב 2023",
+    "station": "משפחה זהה (1)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily13072023.pdf"
+   },
+   {
+    "sittingName": "אביב 2023",
+    "station": "משפחה זהה (2)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily14072023.pdf"
+   },
+   {
+    "sittingName": "סתיו 2022",
+    "station": "ארגון הפרקטיקה (1)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily02022023.pdf"
+   },
+   {
+    "sittingName": "סתיו 2022",
+    "station": "ארגון הפרקטיקה (2)",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily01022023.pdf"
+   },
+   {
+    "sittingName": "סתיו 2022",
+    "station": "משפחה זהה יום ב׳",
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily05022023.pdf"
    }
   ],
-  "olderSittings": "סתיו 2022 עד פברואר 2024 בעמוד הספרות של הר״י."
+  "olderSittings": "המועדים מסתיו 2022 ואילך כאן. מועדים מוקדמים יותר: בעמוד הספרות של הר״י."
  },
  "todayLogic": {
   "phases": [
