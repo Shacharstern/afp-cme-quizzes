@@ -1,0 +1,136 @@
+{
+ "topic": "ed",
+ "sources": {
+  "confirmedAt": "2026-11-19",
+  "used": [
+   {
+    "label": "Goroll 8 ch. 132: Erectile dysfunction",
+    "file": "Erectile dysfunction Goroll8.pdf",
+    "kind": "Goroll"
+   },
+   {
+    "label": "AFP 2024: Testosterone Replacement Therapy for Male Hypogonadism",
+    "file": "Testosterone Replacement Therapy for Male Hypogonadism 2024.pdf",
+    "kind": "AFP"
+   }
+  ],
+  "rejected": [
+   {
+    "file": "Erectile dysfunction.pdf",
+    "reason": "AFP 2016, מחוץ לחלון החומר (החלטה שלך)"
+   }
+  ]
+ },
+ "sweep": {
+  "at": "2026-11-19",
+  "query": "fullText: 'erectile dysfunction' | 'erectile' | 'phosphodiesterase'",
+  "rule": "top 12 by Drive relevance, PDFs under \"שלב א\"",
+  "results": [
+   {
+    "rank": 1,
+    "file": "Erectile dysfunction.pdf",
+    "verdict": "not-needed",
+    "reason": "AFP 2016, מחוץ לחלון"
+   },
+   {
+    "rank": 2,
+    "file": "Erectile dysfunction Goroll8.pdf",
+    "verdict": "used",
+    "reason": "עוגן"
+   },
+   {
+    "rank": 3,
+    "file": "Female Sexual Dysfunction",
+    "verdict": "not-needed",
+    "reason": "הפרעה מינית באישה, נושא אחר"
+   },
+   {
+    "rank": 4,
+    "file": "Common Breast Problems.pdf",
+    "verdict": "not-needed",
+    "reason": "גינקומסטיה ותרופות, אזכור בלבד"
+   },
+   {
+    "rank": 5,
+    "file": "BPH_Medical_Management.pdf",
+    "verdict": "not-needed",
+    "reason": "מצגת NotebookLM, לא מקור"
+   },
+   {
+    "rank": 6,
+    "file": "benign-prostatic-hyperplasia.pdf",
+    "verdict": "pending",
+    "reason": "AFP BPH: tadalafil ל-LUTS עם ED; לשקול משפט אחד בחבילה"
+   },
+   {
+    "rank": 7,
+    "file": "Stimulant and Designer Drug Use- Primary Care Management.pdf",
+    "verdict": "not-needed",
+    "reason": "אזכור של חומרים כגורם"
+   },
+   {
+    "rank": 8,
+    "file": "Testosterone Replacement Therapy for Male Hypogonadism 2024.pdf",
+    "verdict": "used",
+    "reason": "מקור תומך"
+   },
+   {
+    "rank": 9,
+    "file": "מראה מקום 2023.pdf",
+    "verdict": "not-needed",
+    "reason": "מבחן קודם, לא מקור לימוד"
+   },
+   {
+    "rank": 10,
+    "file": "Infertility.pdf",
+    "verdict": "not-needed",
+    "reason": "אי-פוריות, אזכור בלבד"
+   },
+   {
+    "rank": 11,
+    "file": "מראה מקום מאי 2024.pdf",
+    "verdict": "not-needed",
+    "reason": "מבחן קודם"
+   },
+   {
+    "rank": 12,
+    "file": "Goroll BPH.pdf",
+    "verdict": "pending",
+    "reason": "Goroll 138: קשר BPH ו-ED ו-PDE-5 ל-LUTS; לשקול הפניה"
+   }
+  ]
+ },
+ "stamps": {
+  "visual": {
+   "at": "2026-11-19T16:46:51",
+   "fp": "9455777b27a0"
+  },
+  "narr": {
+   "at": "2026-11-19T16:46:51",
+   "chapters": {
+    "burden": "2be88ca4242c",
+    "physio": "2be88ca4242c",
+    "causes": "2be88ca4242c",
+    "drugs": "2be88ca4242c",
+    "history": "2be88ca4242c",
+    "exam": "2be88ca4242c",
+    "labs": "2be88ca4242c",
+    "testo": "2be88ca4242c",
+    "pde5": "2be88ca4242c",
+    "safety": "2be88ca4242c",
+    "trt": "2be88ca4242c",
+    "trtsafe": "2be88ca4242c",
+    "ladder": "2be88ca4242c",
+    "refer": "2be88ca4242c"
+   }
+  },
+  "podcast": {
+   "at": "2026-11-19T16:46:51",
+   "fp": "7e0d8d9b1fa8"
+  },
+  "upload": {
+   "at": "2026-11-19T16:46:51",
+   "fp": "2394f6276a47"
+  }
+ }
+}

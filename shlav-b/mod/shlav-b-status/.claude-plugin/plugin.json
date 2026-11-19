@@ -1,0 +1,1 @@
+{ "name": "shlav-b-status", "version": "0.1.0", "description": "Shlav B topic pipeline: live status of every topic and its steps, with checks that nothing was skipped", "types": "./types/index.d.ts" }

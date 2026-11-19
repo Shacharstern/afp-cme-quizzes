@@ -1,0 +1,164 @@
+<style>
+/* Extra podcasts per topic (NotebookLM and others): upload from the topic page, play in the podcast player */
+.xp{display:flex;flex-direction:column;gap:10px}
+.xp .ep{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.xp .ep .play{width:42px;height:42px;border-radius:50%;border:0;background:var(--rose);color:var(--bg);cursor:pointer;font-size:15px;display:grid;place-items:center}
+.xp .ep .t b{display:block;overflow-wrap:anywhere}
+.xp .up{display:flex;flex-direction:column;gap:8px;border:1px dashed var(--line);border-radius:12px;padding:12px}
+.xp .up input[type=text]{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--panel);min-width:0;width:100%;box-sizing:border-box}
+.xp .pbar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.xp .pbar i{display:block;height:100%;width:0;background:var(--rose);transition:width .2s}
+.xp .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.mode.pod.spx{grid-column:auto;cursor:default;padding:0;overflow:hidden;border-color:#1DB954;background:linear-gradient(135deg,var(--panel),var(--rose-soft))}
+.mode.spx .main{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:6px;padding:16px 16px 8px;cursor:pointer;width:100%}
+.mode.spx .main:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+.mode.spx .foot{display:flex;gap:8px;align-items:center;padding:0 16px 14px;flex-wrap:wrap}
+.mode.spx b{font-size:1.15rem}
+.sp-btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:.85rem;padding:5px 12px;border-radius:999px;background:#1DB954;color:#04120a;white-space:nowrap}
+.sp-btn svg{width:15px;height:15px;fill:currentColor}
+@media (max-width:560px){.xp .ep{grid-template-columns:auto minmax(0,1fr)}.xp .acts{grid-column:1/-1;justify-content:flex-start}}
+</style>
+<script>
+/* ---------- extra podcasts: shared "podcasts" collection + artifact assets ---------- */
+const EXTPOD=(()=>{
+const MUX='https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.js';
+const MAX=20*1024*1024,TARGET=19*1024*1024;
+const st={db:null,assets:null,eps:{},busy:{},draft:{}};
+const SPI='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm5 15.9a.7.7 0 0 1-.9.2c-2.6-1.6-5.8-1.9-9.6-1.1a.7.7 0 1 1-.3-1.3c4.2-.9 7.7-.5 10.6 1.3.3.2.4.6.2.9zm1.3-3a.9.9 0 0 1-1.2.3c-2.9-1.8-7.4-2.3-10.9-1.3a.9.9 0 1 1-.5-1.7c4-1.2 9-.6 12.3 1.5.4.3.6.8.3 1.2zm.1-3.1C14.9 8.7 9 8.5 5.6 9.5a1 1 0 1 1-.6-2c3.9-1.2 10.4-1 14.4 1.4a1 1 0 0 1-1 1.8z"/></svg>';
+const spBtn=(url,txt)=>{const a=h('a',{class:'sp-btn',href:url,target:'_blank',rel:'noopener'},txt);a.insertAdjacentHTML('afterbegin',SPI);return a;};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const inXp=()=>{const a=document.activeElement;return !!(a&&a.closest&&a.closest('.xp')&&a.tagName==='INPUT');};
+function refresh(force){if(PLAYER.active||!ROUTE.startsWith('t-'))return;if(!force&&inXp())return;render();}
+
+async function init(){
+  if(!window.claude||!claude.use)return;
+  try{
+    const [db,assets]=await Promise.all([claude.use('db'),claude.use('assets')]);
+    st.db=db;st.assets=assets;
+    if(db)db.collection('podcasts').onSnapshot(snap=>{
+      const m={};snap.docs.forEach(d=>{const x=d.data();if(x&&x.topic&&x.asset)(m[x.topic]=m[x.topic]||[]).push(Object.assign({},x,{_id:d.id}));});
+      Object.values(m).forEach(a=>a.sort((p,q)=>String(p.created||'').localeCompare(String(q.created||''))));
+      st.eps=m;refresh();
+    },()=>{});
+    if(assets)refresh();
+  }catch(e){}
+}
+
+function isBig(x,id){return x.source==='spotify'&&!!PACKS[id];}
+function big(id){
+  const pk=PK(id);
+  return (st.eps[id]||[]).filter(x=>isBig(x,id)).map(x=>{const ps=pk['x:'+x._id]||{},pct=x.dur?Math.min(100,Math.round((ps.t||0)/x.dur*100)):0,nl=(x.lines||[]).length,ns=(x.segs||[]).length;
+    return h('div',{class:'mode pod spx'},
+      h('button',{class:'main',onclick:()=>play(id,x)},h('span',{class:'lbl',style:'color:var(--rose)'},'🎧 להאזין בדרך · Spotify'),h('b',{},x.label||'פודקאסט'),
+        h('span',{class:'note'},[x.dur?Math.round(x.dur/60)+' דקות':null,ns?ns+' פרקים':null,nl?'עם תמליל':'בלי תמליל'].filter(Boolean).join(' · ')),
+        ps.t?h('div',{class:'meter'},h('i',{style:'width:'+(ps.done?100:pct)+'%'})):null,
+        ps.t?h('span',{class:'note'},ps.done?'האזנת עד הסוף':'האזנת '+pct+'% · ממשיכים מ-'+POD.mmss(ps.t)):null),
+      h('div',{class:'foot'},x.spotify?spBtn(x.spotify,'להאזין בספוטיפיי'):null));});
+}
+function card(id){
+  const eps=(st.eps[id]||[]).filter(x=>!isBig(x,id)),can=!!(st.assets&&st.db);
+  if(!eps.length&&!can)return null;
+  const pk=PK(id);
+  const rows=eps.map(x=>{const ps=pk['x:'+x._id]||{},pct=x.dur?Math.min(100,Math.round((ps.t||0)/x.dur*100)):0;
+    return h('div',{class:'ep'},
+      h('button',{class:'play','aria-label':'נגן: '+(x.label||'פודקאסט'),onclick:()=>play(id,x)},'▶'),
+      h('div',{class:'t'},h('b',{},x.label||'פודקאסט'),
+        h('span',{class:'note'},[x.dur?(x.dur<90?'דקה':Math.round(x.dur/60)+' דקות'):null,(x.lines&&x.lines.length)?'עם תמליל':'בלי תמליל',ps.t?(ps.done?'האזנת עד הסוף':'האזנת '+pct+'%'):null].filter(Boolean).join(' · '))),
+      h('div',{class:'acts'},x.spotify?spBtn(x.spotify,'בספוטיפיי'):null,can&&x.source!=='spotify'?h('button',{class:'btn small ghost',onclick:()=>del(x)},'מחיקה'):null));});
+  const show=((st.eps[id]||[]).find(x=>x.showUrl)||{}).showUrl;
+  const kids=[h('div',{class:'row'},h('h3',{},'פודקאסטים נוספים'),h('span',{class:'sp'}),show?spBtn(show,'התכנית בספוטיפיי'):h('span',{class:'note'},'NotebookLM ופרקים אחרים')),rows];
+  if(!eps.length)kids.push(h('div',{class:'empty'},'עוד אין כאן פרקים. הורידו את ה-Audio Overview מ-NotebookLM והעלו אותו כאן.'));
+  if(can)kids.push(uploader(id));
+  return h('div',{class:'card xp'},kids);
+}
+
+function uploader(id){
+  const b=st.busy[id];
+  const lab=h('input',{type:'text',list:'xp-sugg','aria-label':'שם הפרק',placeholder:'שם הפרק, למשל: NotebookLM · פרומפט בלבד',value:st.draft[id]||'',disabled:!!b,oninput:e=>{st.draft[id]=e.target.value;}});
+  const dl=h('datalist',{id:'xp-sugg'},h('option',{value:'NotebookLM · פרומפט בלבד'}),h('option',{value:'NotebookLM · עם תסריט'}));
+  const file=h('input',{type:'file',accept:'audio/*,video/mp4,video/webm,.m4a,.mp4,.mp3,.wav,.webm',style:'display:none',onchange:e=>{const f=e.target.files&&e.target.files[0];e.target.value='';if(f)upload(id,f,lab.value.trim());}});
+  const pick=h('button',{class:'btn small',disabled:!!b,onclick:()=>file.click()},b?'מעלה…':'＋ העלאת פרק');
+  const msg=h('span',{class:'note',id:'xp-msg-'+id},b?b.msg:'M4A או MP4 עד 20MB עולים כמו שהם. WAV, MP3 או קובץ גדול יותר נדחסים בדפדפן לפני ההעלאה.');
+  const bar=h('div',{class:'pbar',id:'xp-bar-'+id,style:b?null:'display:none'},h('i',{style:'width:'+(b?b.pct:0)+'%'}));
+  return h('div',{class:'up'},h('b',{},'הוספת פרק'),lab,dl,h('div',{class:'row'},pick,file,msg),bar);
+}
+function status(id,msg,pct){st.busy[id]={msg,pct};const m=document.getElementById('xp-msg-'+id),b=document.getElementById('xp-bar-'+id);if(m)m.textContent=msg;if(b){b.style.display='';b.firstChild.style.width=pct+'%';}}
+
+function probe(blob){return new Promise(res=>{const a=new Audio(),u=URL.createObjectURL(blob);let done=false;
+  const fin=v=>{if(done)return;done=true;try{a.removeAttribute('src');a.load();}catch(e){}URL.revokeObjectURL(u);res(v);};
+  a.preload='metadata';a.onloadedmetadata=()=>fin(isFinite(a.duration)&&a.duration>0?a.duration:0);a.onerror=()=>fin(0);setTimeout(()=>fin(0),15000);a.src=u;});}
+
+let muxP=null;
+function loadMuxer(){if(window.Mp4Muxer)return Promise.resolve();
+  return muxP||(muxP=new Promise((res,rej)=>{const s=document.createElement('script');s.src=MUX;s.async=true;
+    s.onload=()=>window.Mp4Muxer?res():(muxP=null,rej({code:'lib'}));s.onerror=()=>{muxP=null;rej({code:'lib'});};document.head.append(s);}));}
+
+async function transcode(f,cb){
+  if(!('AudioEncoder' in window)||!('OfflineAudioContext' in window))throw {code:'no_encoder'};
+  cb(4,'טוען את כלי הדחיסה…');await loadMuxer();
+  cb(8,'קורא את הקובץ…');const buf=await f.arrayBuffer();
+  cb(12,'מפענח את השמע…');
+  const AC=window.AudioContext||window.webkitAudioContext,ac=new AC();
+  let audio;try{audio=await ac.decodeAudioData(buf);}catch(e){throw {code:'decode'};}finally{try{ac.close();}catch(e){}}
+  const dur=audio.duration;if(!(dur>0))throw {code:'decode'};
+  const br=Math.max(24000,Math.min(64000,Math.floor(TARGET*8/dur/1000)*1000));
+  const tries=[['mp4a.40.2','aac',44100],['mp4a.40.2','aac',48000],['opus','opus',48000]];let cfg=null;
+  for(const [codec,mux,sr] of tries){try{const s=await AudioEncoder.isConfigSupported({codec,sampleRate:sr,numberOfChannels:1,bitrate:br});if(s&&s.supported){cfg={codec,mux,sr};break;}}catch(e){}}
+  if(!cfg)throw {code:'no_encoder'};
+  cb(18,'ממיר למונו…');
+  const off=new OfflineAudioContext(1,Math.ceil(dur*cfg.sr),cfg.sr),src=off.createBufferSource();src.buffer=audio;src.connect(off.destination);src.start();
+  const pcm=(await off.startRendering()).getChannelData(0);audio=null;
+  const M=window.Mp4Muxer,target=new M.ArrayBufferTarget();
+  const muxer=new M.Muxer({target,audio:{codec:cfg.mux,numberOfChannels:1,sampleRate:cfg.sr},fastStart:'in-memory'});
+  let err=null;const enc=new AudioEncoder({output:(c,m)=>{try{muxer.addAudioChunk(c,m);}catch(e){err=e;}},error:e=>{err=e;}});
+  enc.configure({codec:cfg.codec,sampleRate:cfg.sr,numberOfChannels:1,bitrate:br});
+  const N=cfg.sr,total=pcm.length;let k=0;
+  for(let i=0;i<total;i+=N){
+    if(err)throw {code:'encode'};
+    const n=Math.min(N,total-i);
+    const ad=new AudioData({format:'f32-planar',sampleRate:cfg.sr,numberOfFrames:n,numberOfChannels:1,timestamp:Math.round(i/cfg.sr*1e6),data:pcm.slice(i,i+n)});
+    enc.encode(ad);ad.close();
+    while(enc.encodeQueueSize>8)await sleep(4);
+    if(++k%20===0){cb(20+Math.round(i/total*68),'דוחס… '+Math.round(i/total*100)+'%');await sleep(0);}
+  }
+  await enc.flush();enc.close();if(err)throw {code:'encode'};
+  muxer.finalize();
+  return {blob:new Blob([target.buffer],{type:'video/mp4'}),dur,type:'video/mp4'};
+}
+
+const ERR={too_large:'הקובץ גדול מ-20MB גם אחרי דחיסה. נסו פרק קצר יותר.',unsupported_type:'סוג הקובץ לא נתמך.',no_encoder:'הדפדפן הזה לא יודע לדחוס שמע. נסו מ-Chrome במחשב, או קובץ M4A עד 20MB.',
+  lib:'לא הצלחתי לטעון את כלי הדחיסה. בדקו את החיבור ונסו שוב.',decode:'לא הצלחתי לקרוא את הקובץ. ודאו שזה קובץ שמע.',encode:'הדחיסה נכשלה. נסו שוב, או מ-Chrome במחשב.',
+  quota_or_state:'נגמר המקום באחסון של האפליקציה.',not_granted:'אין לכם הרשאה להעלות קבצים לאפליקציה.',rate_limited:'יותר מדי ניסיונות. נסו שוב בעוד דקה.',store_unavailable:'האחסון לא זמין כרגע. נסו שוב.'};
+const errMsg=e=>ERR[e&&e.code]||'ההעלאה נכשלה. נסו שוב.';
+
+async function upload(id,f,label){
+  if(st.busy[id])return;
+  if(!st.assets||!st.db){toast('העלאה זמינה רק למי שיכול לערוך את האפליקציה.');return;}
+  label=label||f.name.replace(/\.[^.]+$/,'')||'פודקאסט';
+  st.busy[id]={msg:'בודק את הקובץ…',pct:2};refresh(true);
+  try{
+    const ext=(f.name.split('.').pop()||'').toLowerCase();
+    const webm=/webm/.test(f.type)||ext==='webm',mp4=!webm&&(/mp4|m4a|aac/.test(f.type)||['m4a','mp4','m4b'].includes(ext));
+    let blob=f,type=webm?'video/webm':'video/mp4',dur=0;
+    if((mp4||webm)&&f.size<=MAX)dur=await probe(f);
+    if(!dur)({blob,dur,type}=await transcode(f,(p,m)=>status(id,m,p)));
+    if(blob.size>MAX)throw {code:'too_large'};
+    status(id,'מעלה '+(blob.size/1048576).toFixed(1)+'MB…',92);
+    let r;try{r=await st.assets.upload(blob,{type});}catch(e){if(e&&e.code==='store_unavailable'){await sleep(1500);r=await st.assets.upload(blob,{type});}else throw e;}
+    status(id,'שומר…',98);
+    await st.db.collection('podcasts').doc(id+'-'+r.id).set({topic:id,label,asset:r.id,type:r.contentType,size:r.sizeBytes,dur:Math.round(dur*100)/100,created:new Date().toISOString(),fileName:f.name});
+    delete st.busy[id];st.draft[id]='';toast('הפרק נוסף: '+label);refresh(true);
+  }catch(e){delete st.busy[id];refresh(true);toast(errMsg(e));}
+}
+
+async function del(x){
+  if(!confirm('למחוק את ״'+(x.label||'הפרק')+'״? הקובץ יימחק לצמיתות.'))return;
+  try{await st.db.collection('podcasts').doc(x._id).delete();try{await st.assets.delete(x.asset);}catch(e){}toast('הפרק נמחק');}catch(e){toast('המחיקה נכשלה. נסו שוב.');}
+}
+
+function play(id,x){PLAYER.id=id;const box=stage();
+  POD.mount(box,{id,title:(PACKS[id]&&PACKS[id].title)||TOPIC[id].name,podcast:{src:'/_blob/'+x.asset,title:x.label||'פודקאסט',dur:x.dur||1,hosts:x.hosts||{},segs:x.segs||[],lines:x.lines||[],key:'x:'+x._id,show:x.show||'פודקאסט נוסף'}},exitPlayer);}
+
+return {init,card,big};
+})();
+</script>

@@ -460,7 +460,8 @@
    ],
    "anchorSources": [
     "AFP VTE 2017/2022",
-    "Goroll 22"
+    "Goroll 22",
+    "Goroll 20"
    ]
   },
   {
@@ -1067,6 +1068,19 @@
    "anchorSources": [
     "Goroll 120",
     "AFP 2023"
+   ]
+  },
+  {
+   "id": "ed",
+   "name": "הפרעה בזקפה (ED)",
+   "domain": "renal",
+   "domainName": "כליה ודרכי שתן",
+   "tier": "B",
+   "hits": 0,
+   "sittings": [],
+   "anchorSources": [
+    "Goroll 132",
+    "AFP 2024 (TRT)"
    ]
   },
   {

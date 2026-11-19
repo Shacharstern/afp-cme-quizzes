@@ -42,7 +42,8 @@ function packCard(id){
         return h('button',{class:'mode pod',onclick:()=>runPodcast(id)},h('span',{class:'lbl',style:'color:var(--rose)'},'🎧 להאזין בדרך'),h('b',{},'פודקאסט · הסבב'),
           h('span',{class:'note'},P.title+' · '+Math.round(P.dur/60)+' דקות · '+(P.segs||[]).length+' פרקים'),
           ps.t?h('div',{class:'meter'},h('i',{style:'width:'+(ps.done?100:pct)+'%'})):null,
-          ps.t?h('span',{class:'note'},ps.done?'האזנת עד הסוף':'האזנת '+pct+'% · ממשיכים מ-'+POD.mmss(ps.t)):null);})():null),
+          ps.t?h('span',{class:'note'},ps.done?'האזנת עד הסוף':'האזנת '+pct+'% · ממשיכים מ-'+POD.mmss(ps.t)):null);})():null,
+      EXTPOD.big(id)),
     h('div',{class:'row'},p.summary?h('button',{class:'btn small ghost',onclick:()=>runSummary(id)},'דף סיכום'):null,h('span',{class:'sp'}),
       cn.total?h('span',{class:'note'},'חזרה מרווחת: '+cn.all+' להיום · '+cn.total+' כרטיסים · '+cn.mastered+' בשליטה'):null,
       cn.total?h('button',{class:'btn '+(cn.all?'rose':'ghost')+' small',onclick:()=>runDaily(id)},'חזרה בנושא הזה'):null));
@@ -61,5 +62,5 @@ function startGlobalReview(){runDaily(null);}
 
 /* ---------- start ---------- */
 document.body.append(fx);sizeFx();addEventListener('resize',sizeFx);
-route();boot();
+route();boot();EXTPOD.init();
 </script>

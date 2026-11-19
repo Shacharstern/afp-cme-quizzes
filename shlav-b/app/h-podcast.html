@@ -53,7 +53,7 @@ const RATES=[.75,1,1.25,1.5,1.75,2];
 const mmss=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
 const rateLbl=r=>String(r).replace(/^0/,'')+'×';
 function mount(host,pack,onExit){
-  const P=pack.podcast,id=pack.id,pk=PK(id),st=(pk.pod=pk.pod||{t:0,done:false});
+  const P=Object.assign({segs:[],lines:[]},pack.podcast),id=pack.id,pk=PK(id),sk=P.key||'pod',st=(pk[sk]=pk[sk]||{t:0,done:false});
   const hosts=P.hosts||{},nm=k=>(hosts[k]||{}).name||k;
   const aud=new Audio();aud.preload='metadata';aud.src=P.src;aud.preservesPitch=true;
   let rate=1;try{const r=+localStorage.getItem('shlavb-prate');if(RATES.includes(r))rate=r;}catch(e){}
@@ -71,7 +71,7 @@ function mount(host,pack,onExit){
   const resumeNote=h('span',{class:'resume'});
   root.append(
     h('div',{class:'ptop'},h('button',{class:'btn small ghost',onclick:()=>{stop();onExit();}},'→ חזרה לנושא'),h('b',{},pack.title),h('span',{class:'sp'}),h('span',{class:'note'},'רווח לנגן · ← → 15 שניות · [ ] מהירות')),
-    h('div',{class:'hero'},h('span',{class:'show'},'הסבב · פודקאסט'),h('h1',{},P.title),
+    h('div',{class:'hero'},h('span',{class:'show'},P.show||'הסבב · פודקאסט'),h('h1',{},P.title),
       h('div',{class:'hosts'},Object.keys(hosts).map(k=>h('span',{class:'host'},h('i',{class:'dot-'+k}),h('b',{class:'who-'+k},nm(k)),h('span',{class:'note'},hosts[k].role||'')))),
       now,h('div',{class:'ctl'},pp,back,fwd,rb,resumeNote,clock),h('div',{class:'pbar'},trk,ticks,knob,scrub)));
   const segBtns=(P.segs||[]).map((s,i)=>{const nx=(P.segs[i+1]||[P.dur])[0];const b=h('button',{class:'seg',onclick:()=>seek(s[0]+.01,true)},h('span',{class:'n'},String(i+1).padStart(2,'0')),h('span',{},s[2]),h('span',{class:'d'},mmss(nx-s[0])));return b;});
@@ -80,6 +80,7 @@ function mount(host,pack,onExit){
     let el;if(l[1]==='pause')el=h('div',{class:'ln ps'+(l[3]?'':' mute')},h('span',{},'⏸ '+(l[3]||'רגע לחשוב')));
     else el=h('div',{class:'ln'},h('span',{class:'w who-'+l[1]},nm(l[1])),h('span',{},l[2]));
     el.onclick=()=>seek(l[0]+.01,true);tx.append(el);lineEls.push(el);});
+  if(!P.lines.length)tx.append(h('div',{class:'note',style:'padding:10px'},'לפרק הזה אין תמליל.'));
   root.append(h('div',{class:'body'},h('div',{class:'segs'},segBtns),tx));
   host.replaceChildren(root);
   let cur=-1,curSeg=-1,userScroll=0,lastSave=0,raf=0,failed=false;

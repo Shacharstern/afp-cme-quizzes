@@ -1,0 +1,160 @@
+{
+ "topic": "vte",
+ "sources": {
+  "confirmedAt": "2026-11-19",
+  "used": [
+   {
+    "label": "AFP 2025: Venous Thromboembolism: Diagnosis and Treatment",
+    "file": "Venous thromboembolism .pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2022: Recurrent Venous Thromboembolism",
+    "file": "Recurrent Venous Thromboembolism .pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "Goroll 8 ch. 20: Evaluation of Chest Pain (PE)",
+    "file": "Chest pain Goroll8.pdf",
+    "kind": "Goroll"
+   },
+   {
+    "label": "Goroll 8 ch. 22: Evaluation of Leg Edema",
+    "file": "Goroll8.pdf (אין קובץ נפרד)",
+    "kind": "Goroll"
+   },
+   {
+    "label": "Goroll 8 ch. 35: Peripheral Venous Disease",
+    "file": "Goroll8.pdf (אין קובץ נפרד)",
+    "kind": "Goroll"
+   },
+   {
+    "label": "Goroll 8 ch. 83: Outpatient Oral Anticoagulant Therapy",
+    "file": "Anticoagulation Goroll8.pdf",
+    "kind": "Goroll"
+   }
+  ],
+  "rejected": [
+   {
+    "file": "Venous Thromboembolism.pdf (Cardiovascular)",
+    "reason": "עותק של AFP 2022 בשם מטעה"
+   }
+  ]
+ },
+ "sweep": {
+  "at": "2026-11-19",
+  "query": "fullText: 'pulmonary embolism' | 'pulmonary embolization' | 'deep vein/venous thrombosis' | 'venous thromboembolism'",
+  "rule": "top 12 by Drive relevance, PDFs under \"שלב א\"",
+  "results": [
+   {
+    "rank": 1,
+    "file": "Venous thromboembolism .pdf",
+    "verdict": "used",
+    "reason": "עוגן"
+   },
+   {
+    "rank": 2,
+    "file": "Recurrent Venous Thromboembolism .pdf",
+    "verdict": "used",
+    "reason": "עוגן"
+   },
+   {
+    "rank": 3,
+    "file": "Venous Thromboembolism.pdf",
+    "verdict": "not-needed",
+    "reason": "עותק של 2022"
+   },
+   {
+    "rank": 4,
+    "file": "Venous Ulcers.pdf",
+    "verdict": "not-needed",
+    "reason": "PTS ופצעים ורידיים, נושא אחר"
+   },
+   {
+    "rank": 5,
+    "file": "Pulmonary hypertension.pdf",
+    "verdict": "pending",
+    "reason": "CTEPH אחרי PE; לשקול משפט במעקב אחרי PE"
+   },
+   {
+    "rank": 6,
+    "file": "Anticoagulation Goroll8.pdf",
+    "verdict": "used",
+    "reason": "עוגן"
+   },
+   {
+    "rank": 7,
+    "file": "Chest pain Goroll8.pdf",
+    "verdict": "used",
+    "reason": "נוסף אחרי שזוהה כחסר"
+   },
+   {
+    "rank": 8,
+    "file": "Initiating hormonal contraceptives.pdf",
+    "verdict": "not-needed",
+    "reason": "סיכון VTE בגלולות; כבר בגורמי הסיכון"
+   },
+   {
+    "rank": 9,
+    "file": "Provision of Quality Contraceptive Services.pdf",
+    "verdict": "not-needed",
+    "reason": "כנ״ל"
+   },
+   {
+    "rank": 10,
+    "file": "Hemoptysis.pdf",
+    "verdict": "not-needed",
+    "reason": "PE באבחנה מבדלת של המופטיזיס"
+   },
+   {
+    "rank": 11,
+    "file": "Chronic Wounds.pdf",
+    "verdict": "not-needed",
+    "reason": "פצעים, נושא אחר"
+   },
+   {
+    "rank": 12,
+    "file": "Chronic_Wounds_A_Family_Physicians_Guide.pdf",
+    "verdict": "not-needed",
+    "reason": "מצגת, לא מקור"
+   }
+  ]
+ },
+ "stamps": {
+  "visual": {
+   "at": "2026-11-19T16:46:51",
+   "fp": "bb15344bcf17"
+  },
+  "narr": {
+   "at": "2026-11-19T16:46:51",
+   "chapters": {
+    "burden": "4dc1502e6b63",
+    "risk": "c5dd19eb86b5",
+    "wells": "91759c97def0",
+    "dvtflow": "01f735926774",
+    "cus": "82e53fcd5459",
+    "clotmap": "abeeb12b34ef",
+    "ddimer": "95964d05b3b1",
+    "perc": "7444ad33c549",
+    "peflow": "730bd76f44bc",
+    "scan": "6e0196495e6f",
+    "versus": "080b6ad481fe",
+    "setting": "0e54be7697d0",
+    "phases": "0b0c181341a6",
+    "dodont": "330e17ab98fd",
+    "svt": "bc096d4580b2",
+    "recur": "217c77af809b",
+    "duration": "376ca724789e",
+    "recap": "1e6bc8cf2c42"
+   }
+  },
+  "podcast": {
+   "at": "2026-11-19T16:46:51",
+   "fp": "93bc861f0236"
+  },
+  "upload": {
+   "at": "2026-11-19T16:46:51",
+   "fp": "e00a14407392"
+  }
+ }
+}
