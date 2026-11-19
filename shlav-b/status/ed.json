@@ -116,22 +116,22 @@
    "fp": "9455777b27a0"
   },
   "narr": {
-   "at": "2026-11-19T16:46:51",
+   "at": "2026-11-19T18:05:51",
    "chapters": {
-    "burden": "2be88ca4242c",
-    "physio": "2be88ca4242c",
-    "causes": "2be88ca4242c",
-    "drugs": "2be88ca4242c",
-    "history": "2be88ca4242c",
-    "exam": "2be88ca4242c",
-    "labs": "2be88ca4242c",
-    "testo": "2be88ca4242c",
-    "pde5": "2be88ca4242c",
-    "safety": "2be88ca4242c",
-    "trt": "2be88ca4242c",
-    "trtsafe": "2be88ca4242c",
-    "ladder": "2be88ca4242c",
-    "refer": "2be88ca4242c"
+    "burden": "8065a01188d3",
+    "physio": "b5b130e86683",
+    "causes": "b82b60634bdc",
+    "drugs": "3f6fe878d4e2",
+    "history": "fad17791f548",
+    "exam": "cd0b54446535",
+    "labs": "05358e4dc10e",
+    "testo": "c25bed4c1691",
+    "pde5": "8017b96e2f1d",
+    "safety": "e2e529bd577d",
+    "trt": "9f17eedda726",
+    "trtsafe": "e6f0a926bfd7",
+    "ladder": "3fad4de732dc",
+    "refer": "f3f77e265817"
    }
   },
   "podcast": {
@@ -139,8 +139,8 @@
    "fp": "7e0d8d9b1fa8"
   },
   "upload": {
-   "at": "2026-11-19T16:54:18",
-   "fp": "5e1a91c9d2f9"
+   "at": "2026-11-19T18:05:51",
+   "fp": "3c7a2c0ad051"
   }
  }
 }
