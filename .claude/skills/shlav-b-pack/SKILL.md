@@ -59,3 +59,12 @@ Write `shlav-b/podcast/<topic-id>.json` following `shlav-b/podcast/PROMPT.md` (t
 
 ## 6. Report to the user (in Hebrew)
 Which sources were read (title, year, Drive folder), what is missing or out of window, the conflicts found, and the pack size (drills, cases, oral questions). Name anything in the pack that rests on clinical reasoning rather than an explicit source statement.
+
+## 7. Spotify episodes (״הסבב״ on Spotify)
+The user publishes episodes (NotebookLM and others) to the Spotify show; the app keeps a copy of each, with a button back to Spotify. State: `shlav-b/podcast/spotify.json` (show link, RSS, and every imported episode by guid). When the user asks to sync the podcasts:
+1. `python3 shlav-b/podcast/spotify_sync.py <scratch>/sync` (needs anchor.fm and d3ctxlq1ktw2nl.cloudfront.net allowed) downloads only new episodes and re-encodes them to mono AAC 64 kbps MP4 (under 20 MB).
+2. Pick each episode's topic id from its title and description; ask the user if unclear.
+3. Upload the files with the Artifact tool (`asset: true`, the app's url), then write one `podcasts` document per episode with `ArtifactData` (batch): `{topic, label: title, asset, type: "video/mp4", size, dur, created: pub, source: "spotify", guid, spotify, showUrl, show: "הסבב · Spotify"}`, doc id `<topic>-sp-<first 8 chars of guid>`.
+4. `spotify` is the episode's open.spotify.com link. The newest episode's id is in `https://open.spotify.com/embed/show/<show id>` (`spotify:episode:<id>`); older ones need the user's share link. Until known, use the show link.
+5. Append the episodes to `spotify.json` and commit. The app picks the documents up live; no republish.
+Transcripts (optional): `lines: [[sec, who, text]]`, `segs`, `hosts` on the document turn on the player's live transcript.

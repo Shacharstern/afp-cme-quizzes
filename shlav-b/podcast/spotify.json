@@ -1,0 +1,38 @@
+{
+ "show": "https://open.spotify.com/show/2FWCaEYTMcvsvhn3RfrHxC",
+ "rss": "https://anchor.fm/s/11a5bc104/podcast/rss",
+ "episodes": [
+  {
+   "guid": "7dc663fc-113d-4dd0-8882-c5ff0e79b0d0",
+   "title": "הפרעה בזקפה",
+   "topic": "ed",
+   "doc": "ed-sp-7dc663fc",
+   "asset": "705ab563179fbe354ebe81e70e4ed5d8",
+   "spotifyEpisode": "https://open.spotify.com/episode/7zHvB8CS0KmV2y3wG9RFdP"
+  },
+  {
+   "guid": "b2f107ae-656f-487b-8f4d-9455e6117be8",
+   "title": "הפרעה בזקפה (קצר)",
+   "topic": "ed",
+   "doc": "ed-sp-b2f107ae",
+   "asset": "d4845e8e3f9a73706760f4844740eb8a",
+   "spotifyEpisode": null
+  },
+  {
+   "guid": "5a01488b-4435-4fe5-a48b-906045547d2a",
+   "title": "DVT ו-PE קצר",
+   "topic": "vte",
+   "doc": "vte-sp-5a01488b",
+   "asset": "1b1f9cfefacc06ed22b44f3900fea80a",
+   "spotifyEpisode": null
+  },
+  {
+   "guid": "38c2a786-a0f3-4b09-a90d-1f489411250d",
+   "title": "DVT ו-PE",
+   "topic": "vte",
+   "doc": "vte-sp-38c2a786",
+   "asset": "df7b7028786f04c923ff6ae4de11f3af",
+   "spotifyEpisode": null
+  }
+ ]
+}
