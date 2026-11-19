@@ -20,6 +20,14 @@ Use the Google Drive connector. The source root is the user's folder titled **ש
 - **IMA guidelines:** `הנחיות הרי מבוגרים`, `הנחיות הרי - ילדים`; society guidelines: `הנחיות איגודים`. Ignore `איגודים לא למבחן`.
 - Read every anchor source in full with `read_file_content`. If an anchor source is missing, look for the newest in-window version; if none exists, continue with what exists and list the gap.
 
+## 2b. Source sweep (mandatory: no relevant chapter may be missed)
+The anchor sources in `shlav-b-data.json` are a starting point, not the list. A topic's material often sits in a chapter named for a symptom (PE is taught in Goroll ch. 20, Chest Pain), so search by content, not by title:
+1. Write the topic's keywords in English as the sources say them: the disease, its synonyms and its key terms (vte: `pulmonary embolism`, `pulmonary embolization`, `deep vein thrombosis`, `deep venous thrombosis`, `venous thromboembolism`).
+2. One Drive search over the folder: `'<שלב א id>' in ancestors and mimeType = 'application/pdf' and (fullText contains '<k1>' or fullText contains '<k2>' ...)`, ordered by relevance (no `orderBy`), `pageSize` 12 or more.
+3. Every one of the top 12 results gets a verdict in `shlav-b/status/<id>.json` under `sweep.results`: `used`, `not-needed` with a one-line reason, or `pending` for the user to decide. A Goroll chapter or an in-window AFP review in the top 12 is `used` unless there is a stated reason.
+4. While reading each source, note every "see Chapter N" it cites; a cited Goroll chapter on the topic's own subject is checked the same way.
+5. Show the user the sweep together with the source list when asking to confirm sources (the rule above: always confirm before writing). Then record: `sources.used`, `sources.rejected` and `python3 shlav-b/engine/status.py --stamp <id> sources`.
+
 **Window and version rules:** AFP and guidelines from about mid-2019 to spring 2026 only; always the newest AFP version of a topic; Goroll edition 8. A source outside the window may be used only as background and must be named as such in `sources` with `"outOfWindow": true`.
 
 ## 3. Write the pack
@@ -68,3 +76,6 @@ The user publishes episodes (NotebookLM and others) to the Spotify show; the app
 4. `spotify` is the episode's open.spotify.com link. The newest episode's id is in `https://open.spotify.com/embed/show/<show id>` (`spotify:episode:<id>`); older ones need the user's share link. Until known, use the show link.
 5. Append the episodes to `spotify.json` and commit. The app picks the documents up live; no republish.
 Transcripts (optional): `lines: [[sec, who, text]]`, `segs`, `hosts` on the document turn on the player's live transcript.
+
+## 8. Status and stamps (the shlav-b-status pane reads these)
+`python3 shlav-b/engine/status.py <id>` lists every step with its state; before reporting a topic as done it must show no `fail`, and every `warn` is either fixed or named to the user. After each step, stamp it so later edits show as stale: `--stamp <id> visual` (after the Playwright check), `narr` (after recording and attaching narration), `podcast` (after recording the podcast), `upload` (after the ArtifactData set), `app` (after publishing the app). Long jobs write progress lines to `/tmp/shlav-b-jobs/<id>-<step>.log` (last line `done ...` when finished) so the pane shows them live. The pane itself: `shlav-b/mod/shlav-b-status` (`claude --plugin-dir shlav-b/mod/shlav-b-status`, command `/shlav-b-status`).
