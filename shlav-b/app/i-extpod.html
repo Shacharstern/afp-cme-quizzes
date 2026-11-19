@@ -9,8 +9,13 @@
 .xp .pbar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
 .xp .pbar i{display:block;height:100%;width:0;background:var(--rose);transition:width .2s}
 .xp .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.xp .sp-btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:.85rem;padding:5px 12px;border-radius:999px;background:#1DB954;color:#04120a;white-space:nowrap}
-.xp .sp-btn svg{width:15px;height:15px;fill:currentColor}
+.mode.spx{grid-column:auto;cursor:default;padding:0;overflow:hidden;border-color:#1DB954;background:linear-gradient(135deg,var(--panel),var(--rose-soft))}
+.mode.spx .main{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:6px;padding:16px 16px 8px;cursor:pointer;width:100%}
+.mode.spx .main:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+.mode.spx .foot{display:flex;gap:8px;align-items:center;padding:0 16px 14px;flex-wrap:wrap}
+.mode.spx b{font-size:1.15rem}
+.sp-btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:.85rem;padding:5px 12px;border-radius:999px;background:#1DB954;color:#04120a;white-space:nowrap}
+.sp-btn svg{width:15px;height:15px;fill:currentColor}
 @media (max-width:560px){.xp .ep{grid-template-columns:auto minmax(0,1fr)}.xp .acts{grid-column:1/-1;justify-content:flex-start}}
 </style>
 <script>
@@ -39,8 +44,19 @@ async function init(){
   }catch(e){}
 }
 
+function isBig(x,id){return x.source==='spotify'&&!!PACKS[id];}
+function big(id){
+  const pk=PK(id);
+  return (st.eps[id]||[]).filter(x=>isBig(x,id)).map(x=>{const ps=pk['x:'+x._id]||{},pct=x.dur?Math.min(100,Math.round((ps.t||0)/x.dur*100)):0,nl=(x.lines||[]).length,ns=(x.segs||[]).length;
+    return h('div',{class:'mode pod spx'},
+      h('button',{class:'main',onclick:()=>play(id,x)},h('span',{class:'lbl',style:'color:var(--rose)'},'🎧 להאזין בדרך · Spotify'),h('b',{},x.label||'פודקאסט'),
+        h('span',{class:'note'},[x.dur?Math.round(x.dur/60)+' דקות':null,ns?ns+' פרקים':null,nl?'עם תמליל':'בלי תמליל'].filter(Boolean).join(' · ')),
+        ps.t?h('div',{class:'meter'},h('i',{style:'width:'+(ps.done?100:pct)+'%'})):null,
+        ps.t?h('span',{class:'note'},ps.done?'האזנת עד הסוף':'האזנת '+pct+'% · ממשיכים מ-'+POD.mmss(ps.t)):null),
+      h('div',{class:'foot'},x.spotify?spBtn(x.spotify,'להאזין בספוטיפיי'):null));});
+}
 function card(id){
-  const eps=st.eps[id]||[],can=!!(st.assets&&st.db);
+  const eps=(st.eps[id]||[]).filter(x=>!isBig(x,id)),can=!!(st.assets&&st.db);
   if(!eps.length&&!can)return null;
   const pk=PK(id);
   const rows=eps.map(x=>{const ps=pk['x:'+x._id]||{},pct=x.dur?Math.min(100,Math.round((ps.t||0)/x.dur*100)):0;
@@ -49,7 +65,7 @@ function card(id){
       h('div',{class:'t'},h('b',{},x.label||'פודקאסט'),
         h('span',{class:'note'},[x.dur?(x.dur<90?'דקה':Math.round(x.dur/60)+' דקות'):null,(x.lines&&x.lines.length)?'עם תמליל':'בלי תמליל',ps.t?(ps.done?'האזנת עד הסוף':'האזנת '+pct+'%'):null].filter(Boolean).join(' · '))),
       h('div',{class:'acts'},x.spotify?spBtn(x.spotify,'בספוטיפיי'):null,can&&x.source!=='spotify'?h('button',{class:'btn small ghost',onclick:()=>del(x)},'מחיקה'):null));});
-  const show=(eps.find(x=>x.showUrl)||{}).showUrl;
+  const show=((st.eps[id]||[]).find(x=>x.showUrl)||{}).showUrl;
   const kids=[h('div',{class:'row'},h('h3',{},'פודקאסטים נוספים'),h('span',{class:'sp'}),show?spBtn(show,'התכנית בספוטיפיי'):h('span',{class:'note'},'NotebookLM ופרקים אחרים')),rows];
   if(!eps.length)kids.push(h('div',{class:'empty'},'עוד אין כאן פרקים. הורידו את ה-Audio Overview מ-NotebookLM והעלו אותו כאן.'));
   if(can)kids.push(uploader(id));
@@ -143,6 +159,6 @@ async function del(x){
 function play(id,x){PLAYER.id=id;const box=stage();
   POD.mount(box,{id,title:(PACKS[id]&&PACKS[id].title)||TOPIC[id].name,podcast:{src:'/_blob/'+x.asset,title:x.label||'פודקאסט',dur:x.dur||1,hosts:x.hosts||{},segs:x.segs||[],lines:x.lines||[],key:'x:'+x._id,show:x.show||'פודקאסט נוסף'}},exitPlayer);}
 
-return {init,card};
+return {init,card,big};
 })();
 </script>
