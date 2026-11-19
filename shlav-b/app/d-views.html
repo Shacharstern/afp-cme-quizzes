@@ -144,7 +144,7 @@ function viewTopic(id){
       x.next?[h('b',{},'חזרה הבאה'),h('span',{},fmtD(x.next)+(x.next<=today()?' (הגיע המועד)':''))]:null,
       x.rc?[h('b',{},'שליפה אחרונה'),h('span',{},x.rc.pct+'% ב-'+fmtD(x.rc.d))]:null),
     h('div',{class:'lbl'},'סטטוס'),stBtns,notes);
-  return h('section',{class:'view'},head,packCard(id));
+  return h('section',{class:'view'},head,packCard(id),EXTPOD.card(id));
 }
 
 /* ---------- Past exams ---------- */
