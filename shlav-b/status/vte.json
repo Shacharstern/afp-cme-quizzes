@@ -32,6 +32,11 @@
     "label": "Goroll 8 ch. 83: Outpatient Oral Anticoagulant Therapy",
     "file": "Anticoagulation Goroll8.pdf",
     "kind": "Goroll"
+   },
+   {
+    "label": "AFP 2024: Pulmonary Hypertension",
+    "file": "Pulmonary hypertension.pdf",
+    "kind": "AFP"
    }
   ],
   "rejected": [
@@ -73,8 +78,8 @@
    {
     "rank": 5,
     "file": "Pulmonary hypertension.pdf",
-    "verdict": "pending",
-    "reason": "CTEPH אחרי PE; לשקול משפט במעקב אחרי PE"
+    "verdict": "used",
+    "reason": "נוסף משפט לחבילה (החלטה שלך)"
    },
    {
     "rank": 6,
@@ -153,8 +158,8 @@
    "fp": "93bc861f0236"
   },
   "upload": {
-   "at": "2026-11-19T16:46:51",
-   "fp": "e00a14407392"
+   "at": "2026-11-19T16:54:18",
+   "fp": "5855808d9171"
   }
  }
 }

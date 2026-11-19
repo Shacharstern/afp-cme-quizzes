@@ -12,6 +12,16 @@
     "label": "AFP 2024: Testosterone Replacement Therapy for Male Hypogonadism",
     "file": "Testosterone Replacement Therapy for Male Hypogonadism 2024.pdf",
     "kind": "AFP"
+   },
+   {
+    "label": "AFP 2023: Benign Prostatic Hyperplasia",
+    "file": "benign-prostatic-hyperplasia.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "Goroll 8 ch. 138: BPH",
+    "file": "Goroll BPH.pdf",
+    "kind": "Goroll"
    }
   ],
   "rejected": [
@@ -59,8 +69,8 @@
    {
     "rank": 6,
     "file": "benign-prostatic-hyperplasia.pdf",
-    "verdict": "pending",
-    "reason": "AFP BPH: tadalafil ל-LUTS עם ED; לשקול משפט אחד בחבילה"
+    "verdict": "used",
+    "reason": "נוסף משפט לחבילה (החלטה שלך)"
    },
    {
     "rank": 7,
@@ -95,8 +105,8 @@
    {
     "rank": 12,
     "file": "Goroll BPH.pdf",
-    "verdict": "pending",
-    "reason": "Goroll 138: קשר BPH ו-ED ו-PDE-5 ל-LUTS; לשקול הפניה"
+    "verdict": "used",
+    "reason": "נוסף משפט לחבילה (החלטה שלך)"
    }
   ]
  },
@@ -129,8 +139,8 @@
    "fp": "7e0d8d9b1fa8"
   },
   "upload": {
-   "at": "2026-11-19T16:46:51",
-   "fp": "2394f6276a47"
+   "at": "2026-11-19T16:54:18",
+   "fp": "5e1a91c9d2f9"
   }
  }
 }
