@@ -1,0 +1,149 @@
+{
+ "topic": "af",
+ "sources": {
+  "used": [
+   {
+    "label": "AFP 2024: Atrial Fibrillation: Common Questions and Answers About Diagnosis and Treatment",
+    "file": "Atrial Fibrillation- Common Questions.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2025: Management of Atrial Fibrillation: Guidelines From the ACC/AHA",
+    "file": "Management of Atrial Fibrillation.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "Goroll 8 ch. 83: Outpatient Oral Anticoagulant Therapy",
+    "file": "Anticoagulation Goroll8.pdf",
+    "kind": "Goroll"
+   },
+   {
+    "label": "Goroll 8 ch. 28: Outpatient Management of Atrial Fibrillation",
+    "file": "Goroll8.pdf (אין קובץ נפרד)",
+    "kind": "Goroll"
+   }
+  ],
+  "rejected": [
+   {
+    "file": "Atrial Fibrillation- Common Questions and Answers About Diagnosis and Treatment.pdf",
+    "reason": "עותק של AFP 2024 בתיקייה אחרת"
+   },
+   {
+    "file": "AFP נוגדי קרישה 2023 (עוגן ב-shlav-b-data)",
+    "reason": "לא קיים בתיקייה; התוכן מכוסה ב-AFP 2024 וב-AFP 2025"
+   }
+  ],
+  "note": "לפי בקשת המשתמש: הסתמכות בעיקר על AFP; גורול רק להבדלים",
+  "confirmedAt": "2026-11-19T18:48:54"
+ },
+ "sweep": {
+  "at": "2026-11-19",
+  "query": "fullText: 'atrial fibrillation' | 'anticoagulation' | 'direct oral anticoagulant' | 'warfarin' | 'CHA2DS2-VASc'; and titles: Atrial, Anticoag, DOAC, Arrhythm, פרפור, קרישה",
+  "rule": "top 12 by Drive relevance, PDFs under \"שלב א\"",
+  "results": [
+   {
+    "rank": 1,
+    "file": "Atrial Fibrillation- Common Questions.pdf",
+    "verdict": "used",
+    "reason": "עוגן, AFP 2024"
+   },
+   {
+    "rank": 2,
+    "file": "Atrial Fibrillation- Common Questions and Answers About Diagnosis and Treatment.pdf",
+    "verdict": "not-needed",
+    "reason": "עותק של AFP 2024"
+   },
+   {
+    "rank": 3,
+    "file": "Anticoagulation Goroll8.pdf",
+    "verdict": "used",
+    "reason": "Goroll פרק 83"
+   },
+   {
+    "rank": 4,
+    "file": "Management of Atrial Fibrillation.pdf",
+    "verdict": "used",
+    "reason": "AFP 2025, ACC/AHA 2023"
+   },
+   {
+    "rank": 5,
+    "file": "Recurrent Venous Thromboembolism .pdf",
+    "verdict": "not-needed",
+    "reason": "VTE, נושא אחר (חבילת vte)"
+   },
+   {
+    "rank": 6,
+    "file": "Venous Thromboembolism.pdf",
+    "verdict": "not-needed",
+    "reason": "VTE, נושא אחר"
+   },
+   {
+    "rank": 7,
+    "file": "Venous thromboembolism .pdf",
+    "verdict": "not-needed",
+    "reason": "VTE, נושא אחר"
+   },
+   {
+    "rank": 8,
+    "file": "Facial swelling goroll.pdf",
+    "verdict": "not-needed",
+    "reason": "אזכור אגבי של נוגדי קרישה"
+   },
+   {
+    "rank": 9,
+    "file": "Upper Gastrointestinal Bleeding.pdf",
+    "verdict": "not-needed",
+    "reason": "דימום GI; ניהול נוגדי קרישה בדימום מכוסה במקורות AF"
+   },
+   {
+    "rank": 10,
+    "file": "Abnormal Uterine Bleeding in Premenopausal Women 2019.pdf",
+    "verdict": "not-needed",
+    "reason": "אזכור אגבי"
+   },
+   {
+    "rank": 11,
+    "file": "Acute Coronary Syndrome.pdf",
+    "verdict": "not-needed",
+    "reason": "ACS; DOAC + P2Y12 אחרי PCI מכוסה ב-AFP 2025"
+   },
+   {
+    "rank": 12,
+    "file": "Primary Aldosteronism 2023.pdf",
+    "verdict": "not-needed",
+    "reason": "אזכור אגבי של AF"
+   }
+  ]
+ },
+ "stamps": {
+  "visual": {
+   "at": "2026-11-19T18:49:45",
+   "fp": "18ce6306f74f"
+  },
+  "narr": {
+   "at": "2026-11-19T18:49:45",
+   "chapters": {
+    "ecg": "3fa0ddaa5a80",
+    "workup": "3ba66b65c12d",
+    "triage": "ab93ed273734",
+    "chads": "40642206c74f",
+    "threshold": "2938a79856b3",
+    "bleed": "33e61b68b6d5",
+    "doac": "172c6089a98d",
+    "which": "c73ffc863185",
+    "rate": "3ba0e7f0151b",
+    "rhythm": "9f1f8b53f64d",
+    "cardiovert": "025b6520d76c",
+    "aad": "baabdcf15695",
+    "ablation": "7febdfd664c6",
+    "special": "c0bafb653c31",
+    "lifestyle": "8af8afdcd06a",
+    "recap": "a33f39faaa4c"
+   }
+  },
+  "upload": {
+   "at": "2026-11-19T18:50:00",
+   "fp": "9a2a58238aaf"
+  }
+ }
+}
