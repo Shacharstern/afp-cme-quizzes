@@ -45,9 +45,9 @@ export const register: Register = on => {
   })
 
   on('command.run', { command: 'shlav-b-status' }, async $ => {
-    await $.ui.open({ id: PANE, title: TITLE })
+    const o = await $.ui.open({ id: PANE, title: TITLE, focus: true })
     await refresh($)
-    return { text: 'נפתח חלון הסטטוס של שלב ב׳.' }
+    return { text: o?.isPlaced ? 'נפתח חלון הסטטוס של שלב ב׳.' : 'החלון לא הוצג (isPlaced=false): ' + JSON.stringify(o) }
   })
 
   on('tool.call', async ($, e, next) => {
