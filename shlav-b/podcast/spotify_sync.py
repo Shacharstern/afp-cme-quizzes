@@ -21,7 +21,7 @@ NS = {'itunes': 'http://www.itunes.com/dtds/podcast-1.0.dtd'}
 
 
 def get(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 shlav-b-sync'})
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 shlav-b-sync', 'Cache-Control': 'no-cache'})
     with urllib.request.urlopen(req, timeout=300) as r:
         return r.read()
 

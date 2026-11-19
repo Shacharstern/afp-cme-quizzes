@@ -33,6 +33,22 @@
    "doc": "vte-sp-38c2a786",
    "asset": "df7b7028786f04c923ff6ae4de11f3af",
    "spotifyEpisode": null
+  },
+  {
+   "guid": "a53af057-33d3-4a35-b9ef-87f564137b82",
+   "title": "פרפור פרוזדורים ונוגדי קרישה",
+   "topic": "af",
+   "doc": "af-sp-a53af057",
+   "asset": "77cf50d9f6ffd6aefd9ea33b97a08d71",
+   "spotifyEpisode": "https://open.spotify.com/episode/28OaiJndIUqfMsi52ZfZx4"
+  },
+  {
+   "guid": "e1bc5837-3b7f-4a7b-bc6c-a2bdeada649e",
+   "title": "פרפור פרוזדורים ונוגדי קרישה (קצר)",
+   "topic": "af",
+   "doc": "af-sp-e1bc5837",
+   "asset": "6a325e1216d4e47a34316468af0efe1c",
+   "spotifyEpisode": null
   }
  ]
 }
