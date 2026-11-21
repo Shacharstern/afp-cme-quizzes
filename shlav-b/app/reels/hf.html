@@ -1,0 +1,57 @@
+<script>
+/* Topic-specific reel scenes: heart failure (AFP 2023, Practice Guidelines on AHA/ACC/HFSA 2022: Figure 1 and Table 1). */
+(()=>{
+const {S,set,lerp,span,C,R,M}=REEL.kit;
+const N=(x,y,text,o={},p)=>S('text',Object.assign({x,y,text,direction:'ltr','text-anchor':'middle'},o),p);
+const op=(el,v)=>{el.style.opacity=v;};
+
+REEL.custom('hf',{
+ hfstages(g,d){ // Figure 1: stages A–D climb as a staircase; NYHA classes appear under C and D only
+  const st=d.stages||[],W=128,G=10;
+  const steps=st.map((s,i)=>{const x=590-(i+1)*W-i*G,h=70+i*46,y=300-h,e=S('g',{},g);
+   S('rect',{x,y,width:W,height:h,rx:12,fill:C((s.tone||'teal')+'-soft'),stroke:C(s.tone||'teal'),'stroke-width':'2px'},e);
+   N(x+W/2,y+34,s.k,{class:'disp','font-size':'30px',fill:C(s.tone||'teal')},e);
+   M(x+W/2,y+58,s.t,{'font-size':'12.5px','font-weight':'700'},e);
+   if(s.s)M(x+W/2,y+76,s.s,{'font-size':'10.5px',class:'mut'},e);
+   return {e,at:s.at||.1*(i+1)};});
+  const brace=S('g',{},g);const bx1=590-2*W-G,bx0=590-4*W-3*G;
+  S('path',{d:'M'+bx0+' 312 v8 H'+bx1+' v-8',fill:'none',stroke:C('ink'),'stroke-width':'1.5px'},brace);
+  M((bx0+bx1)/2,338,d.bridge||'',{'font-size':'12px','font-weight':'700'},brace);
+  const ny=(d.nyha||[]).map((c,i)=>{const e=S('g',{},g),x=520-i*150;
+   S('rect',{x:x-66,y:356,width:132,height:58,rx:10,fill:C('bg'),stroke:C('line'),'stroke-width':'1.5px'},e);
+   N(x,378,c.k,{'font-size':'14px','font-weight':'800',fill:C('amber')},e);M(x,400,c.t,{'font-size':'10.5px'},e);return {e,at:c.at||.7};});
+  const ab=S('g',{},g);const ax0=590-2*W-G;M((590+ax0)/2,338,d.atRisk||'',{'font-size':'12px','font-weight':'700',fill:C('teal')},ab);
+  S('path',{d:'M'+(ax0+4)+' 312 v8 H586 v-8',fill:'none',stroke:C('teal'),'stroke-width':'1.5px'},ab);
+  return t=>{steps.forEach(s=>op(s.e,span(t,s.at-.04,s.at+.05)));op(ab,span(t,.3,.38));op(brace,span(t,.5,.58));ny.forEach(c=>op(c.e,span(t,c.at-.03,c.at+.05)));};
+ },
+
+ efscale(g,d){ // LVEF scale with the three bands; a patient's EF rises above 40 and becomes ״improved״, not ״preserved״
+  const X=v=>40+v/75*520;
+  (d.zones||[]).forEach(z=>{S('rect',{x:X(z.from),y:150,width:X(z.to)-X(z.from),height:46,rx:6,fill:C(z.tone+'-soft'),stroke:C(z.tone),'stroke-width':'1.5px'},g);
+   M((X(z.from)+X(z.to))/2,178,z.label,{'font-size':'13px','font-weight':'800',fill:C(z.tone)},g);
+   M((X(z.from)+X(z.to))/2,218,z.sub||'',{'font-size':'10.5px',class:'mut'},g);});
+  (d.ticks||[]).forEach(v=>{S('line',{x1:X(v),y1:198,x2:X(v),y2:206,stroke:C('muted')},g);N(X(v),140,v+'%',{'font-size':'11px',class:'mut'},g);});
+  M(300,96,d.title||'',{'font-size':'13.5px','font-weight':'700'},g);
+  const mk=S('g',{},g);const pin=S('path',{d:'M0 0 l-9 -16 h18 z',fill:C('ink')},mk);const mv=N(0,-22,'',{'font-size':'12.5px','font-weight':'800'},mk);
+  const imp=S('g',{},g);S('rect',{x:120,y:250,width:360,height:40,rx:20,fill:C('amber-soft'),stroke:C('amber'),'stroke-width':'1.5px'},imp);M(300,276,d.impLabel||'',{'font-size':'13px','font-weight':'700'},imp);
+  const rel=S('g',{},g);N(300,352,d.relapse&&d.relapse.v||'',{class:'disp','font-size':'38px',fill:C('rose')},rel);M(300,382,d.relapse&&d.relapse.l||'',{'font-size':'12px'},rel);
+  const a=(d.marker||{}).from||30,b=(d.marker||{}).to||55;
+  return t=>{const v=lerp(a,b,span(t,.4,.62));set(mk,{transform:'translate('+X(v)+',146)'});set(mv,{text:Math.round(v)+'%'});op(mk,span(t,.02,.08));
+   op(imp,span(t,.62,.7));op(rel,span(t,.76,.84));};
+ },
+
+ pillars(g,d){ // Table 1: the four components of GDMT in HFrEF rise one by one; together −73% all-cause mortality
+  const P=d.pillars||[],W=104,G=24,x0=590-(P.length*W+(P.length-1)*G);
+  S('rect',{x:x0-12,y:300,width:P.length*W+(P.length-1)*G+24,height:16,rx:6,fill:C('ink')},g);
+  const cols=P.map((p,i)=>{const x=590-(i+1)*W-i*G,e=S('g',{},g);
+   const r=S('rect',{x,y:300,width:W,height:0,rx:10,fill:C((p.tone||'teal')+'-soft'),stroke:C(p.tone||'teal'),'stroke-width':'2px'},e);
+   const k=N(x+W/2,0,p.k,{'font-size':'13px','font-weight':'800',fill:C(p.tone||'teal')},e);
+   const s=M(x+W/2,0,p.t,{'font-size':'10.5px'},e);return {r,k,s,x,at:p.at||.15*(i+1)};});
+  M(300,70,d.title||'',{'font-size':'13.5px','font-weight':'700'},g);
+  const tot=S('g',{},g);const big=N(300,370,'0%',{class:'disp','font-size':'40px',fill:C('rose')},tot);M(300,400,(d.total||{}).l||'',{'font-size':'12px'},tot);
+  return t=>{cols.forEach(c=>{const h=180*span(t,c.at-.06,c.at+.06),y=300-h;set(c.r,{y,height:h});set(c.k,{y:y+30});set(c.s,{y:y+52});op(c.k,h>60?1:0);op(c.s,h>60?1:0);});
+   const v=Math.round(((d.total||{}).v||0)*span(t,.7,.86));set(big,{text:'−'+v+'%'});op(tot,span(t,.66,.72));};
+ }
+});
+})();
+</script>

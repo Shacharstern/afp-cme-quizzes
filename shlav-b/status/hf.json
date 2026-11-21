@@ -1,0 +1,227 @@
+{
+ "topic": "hf",
+ "sources": {
+  "used": [
+   {
+    "label": "AFP 2023: Management of Heart Failure: Updated Guidelines From the AHA/ACC",
+    "file": "Management of Heart Failure.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2024: Noninvasive Cardiac Testing (משני)",
+    "file": "Noninvasive Cardiac Testing .pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "Goroll 8 ch. 32: Approach to the Patient with Chronic Congestive Heart Failure",
+    "file": "Goroll8_Ch32_Approach_to_Chronic_Congestive_Heart_Failure.pdf (Goroll 8 - פרקים נבחרים)",
+    "kind": "Goroll"
+   }
+  ],
+  "rejected": [
+   {
+    "file": "Pulmonary hypertension.pdf",
+    "reason": "לא נבחר בידי המשתמש"
+   },
+   {
+    "file": "אי ספיקת לב - רותי חספר - 12.2024.pdf",
+    "reason": "לא נבחר; מחוץ לתיקייה"
+   }
+  ],
+  "note": "לפי המשתמש: שני מאמרי ה-AFP וגורול, הדגש על ה-AFP העיקרי; Goroll 32 נוסף מהתיקייה הייעודית (21.11) – מינונים, אבחנה קלינית והבדלים",
+  "confirmedAt": "2026-11-21"
+ },
+ "sweep": {
+  "at": "2026-11-21",
+  "query": "fullText: 'heart failure' | 'ejection fraction' | 'HFrEF' | 'HFpEF' | 'natriuretic peptide'; titles: Heart, Cardi, Goroll, אי ספיקת",
+  "rule": "top 12 by Drive relevance, PDFs under \"שלב א\"",
+  "results": [
+   {
+    "rank": 1,
+    "file": "Management of Heart Failure.pdf",
+    "verdict": "used",
+    "reason": "עוגן: AFP 2023 Practice Guideline (AHA/ACC/HFSA 2022), Figure 1 + Table 1"
+   },
+   {
+    "rank": 2,
+    "file": "Heart Murmurs in Children.pdf",
+    "verdict": "not-needed",
+    "reason": "ילדים, אזכור אגבי"
+   },
+   {
+    "rank": 3,
+    "file": "Paget Disease of Bone for Primary Care 2020.pdf",
+    "verdict": "not-needed",
+    "reason": "אזכור אגבי"
+   },
+   {
+    "rank": 4,
+    "file": "Noninvasive Cardiac Testing .pdf",
+    "verdict": "used",
+    "reason": "משני: התוויות והתוויות נגד לבדיקות מאמץ באי ספיקת לב"
+   },
+   {
+    "rank": 5,
+    "file": "chronic-kidney-disease.pdf",
+    "verdict": "not-needed",
+    "reason": "CKD"
+   },
+   {
+    "rank": 6,
+    "file": "Diabetic Kidney Disease.pdf",
+    "verdict": "not-needed",
+    "reason": "SGLT2 בכליה, לא HF"
+   },
+   {
+    "rank": 7,
+    "file": "Management of Atrial Fibrillation.pdf",
+    "verdict": "not-needed",
+    "reason": "AF ב-HFrEF מכוסה בחבילת af"
+   },
+   {
+    "rank": 8,
+    "file": "celiac guidelines",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 9,
+    "file": "Celiac_Disease_A_Family_Physician_s_Guide.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 10,
+    "file": "Vascular_Detective_PAD_Guide.pdf",
+    "verdict": "not-needed",
+    "reason": "מצגת NotebookLM, לא מקור"
+   },
+   {
+    "rank": 11,
+    "file": "Dental_Problems.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 12,
+    "file": "Common Breast Problems.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 13,
+    "file": "Pulmonary hypertension.pdf",
+    "verdict": "not-needed",
+    "reason": "המשתמש לא בחר"
+   },
+   {
+    "rank": 14,
+    "file": "Syncope.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   }
+  ],
+  "gaps": [
+   "Goroll 8 פרק 32 (CHF): אין קובץ נפרד, רק בתוך Goroll8.pdf (67MB)",
+   "אין הנחיה ישראלית ל-HF בתיקייה",
+   "AFP 2023 לא נותן מינונים"
+  ],
+  "outsideFolder": [
+   "אי ספיקת לב - רותי חספר - 12.2024.pdf (הרצאה, מחוץ לשלב א)",
+   "Management of Heart Failure - AAFP 2023.pdf (כנראה עותק)"
+  ]
+ },
+ "afpVisuals": [
+  {
+   "source": "AFP 2023 Management of Heart Failure",
+   "kind": "figure",
+   "n": 1,
+   "title": "Classification schema: stages A–D, NYHA I–IV, LVEF categories",
+   "usedIn": [
+    "pathway",
+    "reel",
+    "summary",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 Management of Heart Failure",
+   "kind": "table",
+   "n": 1,
+   "title": "Pharmacologic Management of Heart Failure (by stage, LVEF, NYHA)",
+   "usedIn": [
+    "reel",
+    "summary",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2024 Noninvasive Cardiac Testing",
+   "kind": "table",
+   "n": 1,
+   "title": "Clinical Indications (CAD in HF without angina)",
+   "usedIn": [
+    "summary",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2024 Noninvasive Cardiac Testing",
+   "kind": "table",
+   "n": 2,
+   "title": "Contraindications (decompensated HF)",
+   "usedIn": [
+    "summary",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2024 Noninvasive Cardiac Testing",
+   "kind": "other",
+   "n": "T3, F1, F2",
+   "title": "Test accuracy table and chest pain algorithms",
+   "usedIn": [],
+   "reason": "נושא CAD, לא אי ספיקת לב"
+  }
+ ],
+ "stamps": {
+  "visual": {
+   "at": "2026-11-21T16:36:06",
+   "fp": "0c00a357e7ed"
+  },
+  "narr": {
+   "at": "2026-11-21T16:35:37",
+   "chapters": {
+    "burden": "cc695c743edd",
+    "dx": "ce42eee610aa",
+    "bnp": "f80f4e851dc3",
+    "stages": "f6dd168940ee",
+    "ef": "ebcbd89d12f3",
+    "stageab": "7a74cff3e6f4",
+    "gdmt": "892035bd2e1f",
+    "safety": "6d58d3b989c3",
+    "sglt2": "21a676f75e94",
+    "byef": "5bf9a3cade78",
+    "devices": "c80f47588540",
+    "inpatient": "cfe9cfd7ea59",
+    "team": "f67f90484d7a",
+    "recap": "11404eb3defa"
+   }
+  },
+  "podcast": {
+   "at": "2026-11-21T16:35:37",
+   "fp": "f7512491250c"
+  },
+  "upload": {
+   "at": "2026-11-21T16:36:12",
+   "fp": "b2dda02dd930"
+  }
+ },
+ "approvedExtras": [],
+ "clinicalReasoning": [
+  "אבחנה מבדלת לקוצר נשימה בשאלת בעל פה ho1a",
+  "דגלים אדומים והפניה דחופה בשאלת בעל פה ho1a ובפודקאסט"
+ ]
+}

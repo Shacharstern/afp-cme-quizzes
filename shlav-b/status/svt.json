@@ -1,0 +1,95 @@
+{
+ "topic": "svt",
+ "sources": {
+  "used": [],
+  "rejected": [],
+  "note": "ממתין לאישור המשתמש"
+ },
+ "sweep": {
+  "at": "2026-11-21",
+  "query": "fullText: 'supraventricular tachycardia' | 'palpitations' | 'Wolff-Parkinson-White' | 'preexcitation' | 'adenosine' | 'vagal maneuver'",
+  "rule": "top 12 by Drive relevance, PDFs under \"שלב א\"",
+  "results": [
+   {
+    "rank": 1,
+    "file": "Atrial Fibrillation- Common Questions.pdf",
+    "verdict": "not-needed",
+    "reason": "AF, חבילת af"
+   },
+   {
+    "rank": 2,
+    "file": "Atrial Fibrillation- Common Questions and Answers...pdf",
+    "verdict": "not-needed",
+    "reason": "עותק"
+   },
+   {
+    "rank": 3,
+    "file": "Management of Atrial Fibrillation.pdf",
+    "verdict": "pending",
+    "reason": "AF עם preexcitation/WPW אם מוזכר"
+   },
+   {
+    "rank": 4,
+    "file": "Syncope.pdf",
+    "verdict": "pending",
+    "reason": "פלפיטציות לפני סינקופה כדגל אדום"
+   },
+   {
+    "rank": 5,
+    "file": "hyperthyroidism .pdf",
+    "verdict": "not-needed",
+    "reason": "טריגר בלבד"
+   },
+   {
+    "rank": 6,
+    "file": "מראה מקום 2025.pdf",
+    "verdict": "not-needed",
+    "reason": "רשימת ספרות"
+   },
+   {
+    "rank": 7,
+    "file": "Primary Aldosteronism 2023.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 8,
+    "file": "Heart Murmurs in Children.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 9,
+    "file": "Hyperthyroidism Goroll8.pdf",
+    "verdict": "not-needed",
+    "reason": "טריגר בלבד"
+   },
+   {
+    "rank": 10,
+    "file": "Upper Gastrointestinal Bleeding.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 11,
+    "file": "Pulmonary hypertension.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   },
+   {
+    "rank": 12,
+    "file": "Anticoagulation Goroll8.pdf",
+    "verdict": "not-needed",
+    "reason": "אגבי"
+   }
+  ],
+  "gaps": [
+   "אין מאמר AFP על SVT בתיקיית שלב א",
+   "Goroll 8 פרק 25 (Palpitations): רק בתוך Goroll8.pdf",
+   "AHA 2020 (עוגן) לא נמצא"
+  ],
+  "outsideFolder": [
+   "supraventricular-tachycardia.pdf = AFP 2023;107(6):631-641, Nasir et al. (בתיקייה אחרת ב-Drive)"
+  ]
+ }
+}
