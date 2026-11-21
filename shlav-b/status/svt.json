@@ -1,9 +1,35 @@
 {
  "topic": "svt",
  "sources": {
-  "used": [],
-  "rejected": [],
-  "note": "ממתין לאישור המשתמש"
+  "used": [
+   {
+    "label": "AFP 2023: Common Types of Supraventricular Tachycardia: Diagnosis and Management",
+    "file": "supraventricular-tachycardia.pdf (מחוץ לתיקיית שלב א)",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2023: Syncope: Evaluation and Differential Diagnosis (ניטור ודגלים)",
+    "file": "Syncope.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "Goroll 8 ch. 25: Evaluation of Palpitations (+ נספח 25-1)",
+    "file": "Goroll8_Ch25_Evaluation_of_Palpitations.pdf (Goroll 8 - פרקים נבחרים)",
+    "kind": "Goroll"
+   }
+  ],
+  "rejected": [
+   {
+    "file": "Management of Atrial Fibrillation.pdf",
+    "reason": "אושר, אבל נבדק: לא עוסק ב-WPW או ב-preexcitation"
+   },
+   {
+    "file": "AHA 2020 (עוגן בנתוני האפליקציה)",
+    "reason": "לא נמצא בתיקייה"
+   }
+  ],
+  "note": "לפי המשתמש: כל ארבעת המקורות, דגש על AFP",
+  "confirmedAt": "2026-11-21"
  },
  "sweep": {
   "at": "2026-11-21",
@@ -25,14 +51,14 @@
    {
     "rank": 3,
     "file": "Management of Atrial Fibrillation.pdf",
-    "verdict": "pending",
-    "reason": "AF עם preexcitation/WPW אם מוזכר"
+    "verdict": "not-needed",
+    "reason": "נבדק: אין התייחסות ל-WPW"
    },
    {
     "rank": 4,
     "file": "Syncope.pdf",
-    "verdict": "pending",
-    "reason": "פלפיטציות לפני סינקופה כדגל אדום"
+    "verdict": "used",
+    "reason": "ניטור (טבלה 6) ודגלים (טבלה 4)"
    },
    {
     "rank": 5,
@@ -91,5 +117,197 @@
   "outsideFolder": [
    "supraventricular-tachycardia.pdf = AFP 2023;107(6):631-641, Nasir et al. (בתיקייה אחרת ב-Drive)"
   ]
- }
+ },
+ "stamps": {
+  "visual": {
+   "at": "2026-11-21T16:39:45",
+   "fp": "d2bd45944bf1"
+  },
+  "narr": {
+   "at": "2026-11-21T16:39:45",
+   "chapters": {
+    "palp": "5cd6e4c49076",
+    "flags": "61ffec957efe",
+    "workup": "98f7a3a18e5e",
+    "monitor": "15a40771865a",
+    "types": "3d091da57eb9",
+    "ddx": "a66888b785ed",
+    "wpw": "258e42df4fd2",
+    "algo": "3f0cec41f954",
+    "vagal": "6a655b7d3bda",
+    "drugs": "0515324ed3f3",
+    "wide": "3659c1f10a91",
+    "longterm": "1f1ef636c598",
+    "refer": "41f6e4f3f6ce",
+    "recap": "c17781606241"
+   }
+  }
+ },
+ "afpVisuals": [
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "figure",
+   "n": 1,
+   "title": "Types of PSVT (sinus, AVNRT, AVRT, AT)",
+   "usedIn": [
+    "reel:types (circuits)",
+    "summary",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "figure",
+   "n": 2,
+   "title": "Preexcitation: short PR, delta wave",
+   "usedIn": [
+    "reel:wpw (delta)",
+    "summary",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "figure",
+   "n": 3,
+   "title": "Short-term management algorithm",
+   "usedIn": [
+    "reel:algo (flow)",
+    "pathway",
+    "summary",
+    "drills",
+    "oral",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 1,
+   "title": "Triggers",
+   "usedIn": [
+    "reel:types",
+    "summary",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 2,
+   "title": "Symptoms (instability marked)",
+   "usedIn": [
+    "reel:flags",
+    "summary",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 3,
+   "title": "Differential diagnosis of narrow complex tachycardia",
+   "usedIn": [
+    "reel:ddx",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 4,
+   "title": "Evaluation",
+   "usedIn": [
+    "reel:workup",
+    "summary",
+    "oral",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 5,
+   "title": "Vagal maneuvers",
+   "usedIn": [
+    "reel:vagal",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 6,
+   "title": "Medications and doses",
+   "usedIn": [
+    "reel:drugs",
+    "summary",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 7,
+   "title": "Brugada criteria",
+   "usedIn": [
+    "reel:wide",
+    "summary",
+    "drills",
+    "oral",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 SVT",
+   "kind": "table",
+   "n": 8,
+   "title": "Indications for cardiology referral",
+   "usedIn": [
+    "reel:refer",
+    "summary",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 Syncope",
+   "kind": "table",
+   "n": 6,
+   "title": "Prolonged ECG monitoring options",
+   "usedIn": [
+    "reel:monitor",
+    "summary",
+    "drills",
+    "podcast"
+   ]
+  },
+  {
+   "source": "AFP 2023 Syncope",
+   "kind": "table",
+   "n": 4,
+   "title": "Higher-risk ECG findings (short PR + delta)",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2023 Syncope",
+   "kind": "other",
+   "n": "T1-3, T5, T7, F1",
+   "title": "Syncope classification, CSRS, algorithm",
+   "usedIn": [],
+   "reason": "נושא סינקופה, לא בחבילה זו"
+  }
+ ],
+ "approvedExtras": [],
+ "clinicalReasoning": [
+  "oral so2a: כשירות לנהיגה (פקודת התעבורה) – מרשימת החוקים בנתוני הבחינה, לא מהמאמר",
+  "שיחה עם מטופלת: ״ברוב המקרים, בלב בריא, לא מסוכן״ – ניסוח של AFP (לרוב בלי מחלה מבנית) וגורול (SVT פחות מדאיגות)"
+ ]
 }

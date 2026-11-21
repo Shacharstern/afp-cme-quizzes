@@ -1,0 +1,56 @@
+<script>
+/* Topic-specific reel scenes: palpitations, SVT and WPW (AFP 2023 SVT: Figures 1A–D and 2; Goroll 8 ch. 25). */
+(()=>{
+const {S,set,lerp,span,C,R,M}=REEL.kit;
+const N=(x,y,text,o={},p)=>S('text',Object.assign({x,y,text,direction:'ltr','text-anchor':'middle'},o),p);
+const op=(el,v)=>{el.style.opacity=v;};
+
+REEL.custom('svt',{
+ circuits(g,d){ // Figure 1B–D: where each reentry circuit runs; the active type lights up and its loop runs
+  const hx=170;
+  S('path',{d:'M70 90 Q170 40 270 90 L270 190 L70 190 Z',fill:C('teal-soft'),stroke:C('teal'),'stroke-width':'2px',opacity:.6},g);
+  S('path',{d:'M70 200 L270 200 L250 330 Q170 400 90 330 Z',fill:C('rose-soft'),stroke:C('rose'),'stroke-width':'2px',opacity:.6},g);
+  M(170,72,d.atria||'',{'font-size':'11px',class:'mut'},g);M(170,360,d.ventricles||'',{'font-size':'11px',class:'mut'},g);
+  S('circle',{cx:240,cy:105,r:8,fill:C('amber')},g);M(240,128,d.sa||'',{'font-size':'10px'},g);
+  S('circle',{cx:hx,cy:195,r:10,fill:C('ink')},g);M(hx+44,199,d.av||'',{'font-size':'10px'},g);
+  const loops={
+   avnrt:S('path',{d:'M'+(hx-14)+' 195 a14 22 0 1 1 28 0 a14 22 0 1 1 -28 0',fill:'none',stroke:C('rose'),'stroke-width':'4px','stroke-dasharray':'10 8'},g),
+   avrt:S('path',{d:'M'+hx+' 195 L'+hx+' 300 L84 300 L84 120 L'+hx+' 120 Z',fill:'none',stroke:C('rose'),'stroke-width':'4px','stroke-dasharray':'10 8'},g),
+   at:S('g',{},g)};
+  [14,28,42].forEach(r=>S('circle',{cx:110,cy:120,r,fill:'none',stroke:C('rose'),'stroke-width':'3px'},loops.at));S('circle',{cx:110,cy:120,r:6,fill:C('rose')},loops.at);
+  const acc=S('g',{},g);S('rect',{x:78,y:186,width:12,height:18,rx:3,fill:C('amber')},acc);R(66,199,'',{},acc);
+  const rows=(d.types||[]).map((x,i)=>{const y=110+i*86,e=S('g',{},g);
+   const b=S('rect',{x:330,y:y-34,width:250,height:72,rx:12,fill:C('bg'),stroke:C('line'),'stroke-width':'1.5px'},e);
+   R(566,y-8,x.t,{'font-size':'13.5px','font-weight':'800'},e);R(566,y+14,x.s||'',{'font-size':'11px',class:'mut'},e);
+   N(372,y+8,x.pct,{class:'disp','font-size':'24px',fill:C(x.tone||'teal')},e);return {x,b,e};});
+  return t=>{let cur=null;rows.forEach(r=>{const on=t>=r.x.at;op(r.e,on?1:0);if(on)cur=r;set(r.b,{stroke:C('line'),fill:C('bg')});});
+   if(cur)set(cur.b,{stroke:C(cur.x.tone||'teal'),fill:C((cur.x.tone||'teal')+'-soft')});
+   const k=cur&&cur.x.loop;Object.entries(loops).forEach(([n,el])=>op(el,n===k?1:0));op(acc,k==='avrt'?1:0);
+   const off=-(t*600)%36;['avnrt','avrt'].forEach(n=>set(loops[n],{'stroke-dashoffset':off}));};
+ },
+
+ delta(g,d){ // Figure 2: the same beat morphs from normal conduction to preexcitation (short PR, delta wave, wide QRS)
+  const base=230,x0=60;
+  M(300,70,d.title||'',{'font-size':'13.5px','font-weight':'700'},g);
+  S('line',{x1:40,y1:base,x2:570,y2:base,stroke:C('line'),'stroke-width':'1px'},g);
+  const beat=S('path',{fill:'none',stroke:C('ink'),'stroke-width':'3px'},g);
+  const pr=S('path',{fill:'none',stroke:C('amber'),'stroke-width':'2px'},g),prT=N(0,base+44,'',{'font-size':'12px','font-weight':'700',fill:C('amber')},g);
+  const dl=S('g',{},g);const dlT=N(0,0,d.deltaLabel||'',{'font-size':'12.5px','font-weight':'800',fill:C('rose')},dl);
+  const qr=S('path',{fill:'none',stroke:C('teal'),'stroke-width':'2px'},g),qrT=N(0,base+70,'',{'font-size':'12px','font-weight':'700',fill:C('teal')},g);
+  const lab=M(300,110,'',{'font-size':'14px','font-weight':'800'},g);
+  const chips=(d.chips||[]).map((c,i)=>{const e=S('g',{},g),x=500-i*190;N(x,360,c.v,{class:'disp','font-size':'22px',fill:C(c.tone||'ink')},e);M(x,384,c.l,{'font-size':'11px'},e);return {e,at:c.at||.7};});
+  return t=>{const m=span(t,.12,.5);const P=x0+40,pEnd=P+50,prLen=lerp(120,46,m),qStart=pEnd+prLen;
+   const slur=lerp(0,34,m),qW=lerp(36,70,m);
+   const p=['M'+x0+' '+base,'L'+P+' '+base,'Q'+(P+25)+' '+(base-30)+' '+pEnd+' '+base,'L'+qStart+' '+base,
+    'L'+(qStart+slur)+' '+(base-lerp(0,40,m)),'L'+(qStart+slur+qW*.35)+' '+(base-150),'L'+(qStart+slur+qW*.7)+' '+(base+30),'L'+(qStart+slur+qW)+' '+base,
+    'L'+(qStart+slur+qW+50)+' '+base,'Q'+(qStart+slur+qW+90)+' '+(base-55)+' '+(qStart+slur+qW+130)+' '+base,'L570 '+base].join(' ');
+   set(beat,{d:p});
+   set(pr,{d:'M'+P+' '+(base+22)+' H'+qStart});set(prT,{x:(P+qStart)/2,text:m<.5?(d.prNormal||''):(d.prShort||'')});
+   set(dlT,{x:qStart+slur/2-6,y:base-58});op(dl,span(t,.4,.5));
+   set(qr,{d:'M'+qStart+' '+(base+48)+' H'+(qStart+slur+qW)});set(qrT,{x:qStart+(slur+qW)/2,text:m<.5?(d.qrsNormal||''):(d.qrsWide||'')});
+   set(lab,{text:m<.5?(d.normal||''):(d.pre||'')});lab.style.fill=m<.5?C('teal'):C('rose');
+   chips.forEach(c=>op(c.e,span(t,c.at-.03,c.at+.05)));};
+ }
+});
+})();
+</script>
