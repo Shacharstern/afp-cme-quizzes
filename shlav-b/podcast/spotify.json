@@ -49,6 +49,38 @@
    "doc": "af-sp-e1bc5837",
    "asset": "6a325e1216d4e47a34316468af0efe1c",
    "spotifyEpisode": null
+  },
+  {
+   "guid": "b9d2259b-0471-4e49-9ac8-d6d7abdc3839",
+   "title": "פלפיטציות, SVT ו-WPW (קצר)",
+   "topic": "svt",
+   "doc": "svt-sp-b9d2259b",
+   "asset": "a07830d34f4d239e3c936d262787fc72",
+   "spotifyEpisode": "https://open.spotify.com/episode/4jQpKFO8bG6UQkcWsNRV6k"
+  },
+  {
+   "guid": "81d4c094-d0df-49c5-9bf6-8305fd8c5341",
+   "title": "פלפיטציות, SVT ו-WPW",
+   "topic": "svt",
+   "doc": "svt-sp-81d4c094",
+   "asset": "1796457cc4aea95bb2886739c79e7d75",
+   "spotifyEpisode": null
+  },
+  {
+   "guid": "c3657783-a1e9-4183-9a75-cf34c8f1b4dd",
+   "title": "אי ספיקת לב",
+   "topic": "hf",
+   "doc": "hf-sp-c3657783",
+   "asset": "4d8892d5f9815b4f3fbcd3878033f02b",
+   "spotifyEpisode": null
+  },
+  {
+   "guid": "bca46fb3-ae80-49a6-91c9-00e920a6bc16",
+   "title": "אי ספיקת לב (קצר)",
+   "topic": "hf",
+   "doc": "hf-sp-bca46fb3",
+   "asset": "801ec87cfa3affd48c09c1515fb3dbba",
+   "spotifyEpisode": null
   }
  ]
 }
