@@ -2379,7 +2379,7 @@
   }
  ],
  "pastStations": {
-  "note": "תחנות קליניות בגרסת הבוחנים (עם מחוון). להציג רק מועד, סוג תחנה, תאריך ו-PDF. לא להציג תוכן, נושאים או תקציר: המשתמש שומר אותן לתרגול.",
+  "note": "תחנות קליניות בגרסת הבוחנים (עם מחוון). כל שאלה מתויגת לפי תחום (qs: n מספר שאלה, d תחומים, t נושא קצר). הנושא מוסתר כברירת מחדל ונחשף רק בלחיצה, כדי לא לחשוף את התוכן לפני התרגול.",
   "clinical": [
    {
     "id": "c0",
@@ -2387,7 +2387,18 @@
     "sittingName": "אביב 2026",
     "date": "27.4.26",
     "stationType": "גדולה + EBM",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=0cad76a2-a39b-46d8-ad77-dfbd412fb26d"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=0cad76a2-a39b-46d8-ad77-dfbd412fb26d",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "psych",
+       "ent",
+       "core"
+      ],
+      "t": "עייפות, דיכאון ואובדנות, ירידה בראייה"
+     }
+    ]
    },
    {
     "id": "c1",
@@ -2395,7 +2406,17 @@
     "sittingName": "אביב 2026",
     "date": "28.4.26",
     "stationType": "גדולה + EBM",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=f0288b21-8c23-4df6-9701-5ed44b107b86"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=f0288b21-8c23-4df6-9701-5ed44b107b86",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "renal"
+      ],
+      "t": "אי ספיקת לב כרונית"
+     }
+    ]
    },
    {
     "id": "c2",
@@ -2403,7 +2424,18 @@
     "sittingName": "אביב 2026",
     "date": "27.4.26",
     "stationType": "גדולה 2",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=ff673774-949f-43c7-b576-7f6e3b6485f0"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=ff673774-949f-43c7-b576-7f6e3b6485f0",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "msk",
+       "heme",
+       "renal"
+      ],
+      "t": "נפילה ושבר ירך בקשישה, אי נקיטת שתן"
+     }
+    ]
    },
    {
     "id": "c3",
@@ -2411,7 +2443,18 @@
     "sittingName": "אביב 2026",
     "date": "28.4.26",
     "stationType": "גדולה 2",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=9387137f-e9a9-476d-ba44-9bb800d3860e"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=9387137f-e9a9-476d-ba44-9bb800d3860e",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "gi",
+       "psych",
+       "wom"
+      ],
+      "t": "עצירות, הפרעות אכילה, גוש באגן"
+     }
+    ]
    },
    {
     "id": "c4",
@@ -2419,7 +2462,42 @@
     "sittingName": "אביב 2026",
     "date": "27.4.26",
     "stationType": "קצרה 3",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=e1909477-2719-4fe7-818d-fa8f8530ce44"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=e1909477-2719-4fe7-818d-fa8f8530ce44",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "msk",
+       "neuro"
+      ],
+      "t": "תסמונת התעלה הקרפלית וגנגליון"
+     },
+     {
+      "n": 2,
+      "d": [
+       "id",
+       "peds",
+       "ent"
+      ],
+      "t": "דלקת לוע סטרפטוקוקלית ושנית"
+     },
+     {
+      "n": 3,
+      "d": [
+       "card",
+       "heme"
+      ],
+      "t": "Sinus node dysfunction והמוכרומטוזיס"
+     },
+     {
+      "n": 4,
+      "d": [
+       "renal",
+       "peds"
+      ],
+      "t": "כאב וגוש באשך"
+     }
+    ]
    },
    {
     "id": "c5",
@@ -2427,7 +2505,39 @@
     "sittingName": "אביב 2026",
     "date": "27.4.26",
     "stationType": "קצרה 4",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=b48c2055-384d-4756-8c2b-ca0ebb055480"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=b48c2055-384d-4756-8c2b-ca0ebb055480",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "ent"
+      ],
+      "t": "דלקת אוזן תיכונה ועיכוב שפה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "msk",
+       "neuro"
+      ],
+      "t": "CRPS"
+     },
+     {
+      "n": 3,
+      "d": [
+       "pulm"
+      ],
+      "t": "COPD והפסקת עישון"
+     },
+     {
+      "n": 4,
+      "d": [
+       "derm"
+      ],
+      "t": "אקנה והידרדניטיס"
+     }
+    ]
    },
    {
     "id": "c6",
@@ -2435,7 +2545,40 @@
     "sittingName": "אביב 2026",
     "date": "28.4.26",
     "stationType": "קצרה 3",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=ba79948c-b2ae-4c14-bf31-34c147aa5282"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=ba79948c-b2ae-4c14-bf31-34c147aa5282",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "psych"
+      ],
+      "t": "SVT ופלפיטציות"
+     },
+     {
+      "n": 2,
+      "d": [
+       "peds",
+       "psych"
+      ],
+      "t": "FASD"
+     },
+     {
+      "n": 3,
+      "d": [
+       "neuro"
+      ],
+      "t": "רעד ופרקינסון"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk",
+       "endo"
+      ],
+      "t": "כתף קפואה"
+     }
+    ]
    },
    {
     "id": "c7",
@@ -2443,7 +2586,41 @@
     "sittingName": "אביב 2026",
     "date": "28.4.26",
     "stationType": "קצרה 4",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=61a139f0-5375-4637-a84d-c1ccd7887eb8"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=61a139f0-5375-4637-a84d-c1ccd7887eb8",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "pulm"
+      ],
+      "t": "פיברוזיס ריאתית והפסקת עישון"
+     },
+     {
+      "n": 2,
+      "d": [
+       "endo",
+       "renal"
+      ],
+      "t": "סוכרת לא מאוזנת וסיבוכים"
+     },
+     {
+      "n": 3,
+      "d": [
+       "gi",
+       "derm"
+      ],
+      "t": "קוליטיס כיבית"
+     },
+     {
+      "n": 4,
+      "d": [
+       "peds",
+       "pulm",
+       "id"
+      ],
+      "t": "דלקת ריאות בילד ו-CF"
+     }
+    ]
    },
    {
     "id": "c8",
@@ -2451,7 +2628,18 @@
     "sittingName": "אביב 2026",
     "date": "27.4.26",
     "stationType": "משפחה זהה",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=0620d6cb-ffcb-4f5e-8975-e898609ee1c6"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=0620d6cb-ffcb-4f5e-8975-e898609ee1c6",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "core",
+       "wom",
+       "card"
+      ],
+      "t": "משפחה: הריון, רעלת ויל״ד"
+     }
+    ]
    },
    {
     "id": "c9",
@@ -2459,7 +2647,17 @@
     "sittingName": "אביב 2026",
     "date": "27.4.26",
     "stationType": "מר״מ",
-    "pdf": "https://www.ima.org.il/File.aspx?usf=123eae3e-0a5a-4c27-b77b-2543904267ec"
+    "pdf": "https://www.ima.org.il/File.aspx?usf=123eae3e-0a5a-4c27-b77b-2543904267ec",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "core",
+       "gi"
+      ],
+      "t": "מר״מ: כבד שומני ומטפלת עיקרית"
+     }
+    ]
    },
    {
     "id": "c10",
@@ -2467,7 +2665,17 @@
     "sittingName": "סתיו 2025",
     "date": "17.11.25",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayon1711examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayon1711examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "wom",
+       "endo"
+      ],
+      "t": "פוריות וגלקטוריאה"
+     }
+    ]
    },
    {
     "id": "c11",
@@ -2475,7 +2683,18 @@
     "sittingName": "סתיו 2025",
     "date": "17.11.25",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2dayson1711examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2dayson1711examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "renal",
+       "derm"
+      ],
+      "t": "IgA vasculitis ו-FMF"
+     }
+    ]
    },
    {
     "id": "c12",
@@ -2483,7 +2702,18 @@
     "sittingName": "סתיו 2025",
     "date": "18.11.25",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayTue1811examinees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayTue1811examinees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "neuro",
+       "heme"
+      ],
+      "t": "TIA, היצרות קרוטיד, נוגדי קרישה"
+     }
+    ]
    },
    {
     "id": "c13",
@@ -2491,7 +2721,18 @@
     "sittingName": "סתיו 2025",
     "date": "18.11.25",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical21811examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical21811examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "id",
+       "msk"
+      ],
+      "t": "חצבת וחיסונים, JIA, זהות מגדרית"
+     }
+    ]
    },
    {
     "id": "c14",
@@ -2499,7 +2740,38 @@
     "sittingName": "סתיו 2025",
     "date": "17.11.25",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short3dayclinicalon1711forexaminers.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short3dayclinicalon1711forexaminers.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "כאב בחזה וקרדיומיופתיה מורחבת"
+     },
+     {
+      "n": 2,
+      "d": [
+       "gi"
+      ],
+      "t": "שלשול כרוני וקוליטיס כיבית"
+     },
+     {
+      "n": 3,
+      "d": [
+       "wom"
+      ],
+      "t": "אנדומטריוזיס וגלולות"
+     },
+     {
+      "n": 4,
+      "d": [
+       "derm",
+       "heme"
+      ],
+      "t": "מלנומה"
+     }
+    ]
    },
    {
     "id": "c15",
@@ -2507,7 +2779,41 @@
     "sittingName": "סתיו 2025",
     "date": "17.11.25",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short4dayclinicalon1711examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short4dayclinicalon1711examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "endo",
+       "renal"
+      ],
+      "t": "יל״ד ואלדוסטרוניזם"
+     },
+     {
+      "n": 2,
+      "d": [
+       "ent"
+      ],
+      "t": "ירידה בשמיעה וכולסטאטומה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "core",
+       "peds",
+       "derm"
+      ],
+      "t": "מתבגר ללא הורים, כינים וגרדת"
+     },
+     {
+      "n": 4,
+      "d": [
+       "card"
+      ],
+      "t": "דיסליפידמיה"
+     }
+    ]
    },
    {
     "id": "c16",
@@ -2515,7 +2821,39 @@
     "sittingName": "סתיו 2025",
     "date": "18.11.25",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical31811examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical31811examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "heme"
+      ],
+      "t": "אנמיה ולוקמיה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "peds",
+       "gi"
+      ],
+      "t": "עיכוב גדילה וצליאק"
+     },
+     {
+      "n": 3,
+      "d": [
+       "ent"
+      ],
+      "t": "אוטוסקלרוזיס"
+     },
+     {
+      "n": 4,
+      "d": [
+       "endo",
+       "gi"
+      ],
+      "t": "השמנה וניתוח בריאטרי"
+     }
+    ]
    },
    {
     "id": "c17",
@@ -2523,7 +2861,41 @@
     "sittingName": "סתיו 2025",
     "date": "18.11.25",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical41811examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical41811examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "פריקרדיטיס"
+     },
+     {
+      "n": 2,
+      "d": [
+       "endo",
+       "neuro"
+      ],
+      "t": "סוכרת, היפוגליקמיה ונוירופתיה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "core",
+       "endo"
+      ],
+      "t": "עייפות כרונית"
+     },
+     {
+      "n": 4,
+      "d": [
+       "peds",
+       "id",
+       "derm"
+      ],
+      "t": "אבעבועות רוח"
+     }
+    ]
    },
    {
     "id": "c18",
@@ -2531,7 +2903,18 @@
     "sittingName": "אביב 2025",
     "date": "5.5.25",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayon050525orexaminees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayon050525orexaminees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "heme",
+       "neuro"
+      ],
+      "t": "קשיש עם דמנציה ו-PAD"
+     }
+    ]
    },
    {
     "id": "c19",
@@ -2539,7 +2922,17 @@
     "sittingName": "אביב 2025",
     "date": "5.5.25",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2dayson050525examinees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2dayson050525examinees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "neuro",
+       "psych"
+      ],
+      "t": "כאב כרוני וקנאביס"
+     }
+    ]
    },
    {
     "id": "c20",
@@ -2547,7 +2940,18 @@
     "sittingName": "אביב 2025",
     "date": "6.5.25",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayTue060525examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical1dayTue060525examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "endo",
+       "psych"
+      ],
+      "t": "פרפור עליות, יתר פעילות התריס, דיכאון"
+     }
+    ]
    },
    {
     "id": "c21",
@@ -2555,7 +2959,18 @@
     "sittingName": "אביב 2025",
     "date": "6.5.25",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2DayTue6525Examinees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Clinical2DayTue6525Examinees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "msk",
+       "derm",
+       "id"
+      ],
+      "t": "פריחה וכאבי מפרקים, סיפיליס"
+     }
+    ]
    },
    {
     "id": "c22",
@@ -2563,7 +2978,39 @@
     "sittingName": "אביב 2025",
     "date": "5.5.25",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short3-dayclinicalon050525examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short3-dayclinicalon050525examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "renal"
+      ],
+      "t": "CKD"
+     },
+     {
+      "n": 2,
+      "d": [
+       "wom",
+       "endo"
+      ],
+      "t": "אמנוריאה משנית"
+     },
+     {
+      "n": 3,
+      "d": [
+       "derm"
+      ],
+      "t": "אטופיק דרמטיטיס"
+     },
+     {
+      "n": 4,
+      "d": [
+       "peds",
+       "pulm"
+      ],
+      "t": "ברונכיוליטיס"
+     }
+    ]
    },
    {
     "id": "c23",
@@ -2571,7 +3018,39 @@
     "sittingName": "אביב 2025",
     "date": "5.5.25",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short%204-dayclinicalon050525examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short%204-dayclinicalon050525examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "endo"
+      ],
+      "t": "השמנה במתבגרים"
+     },
+     {
+      "n": 2,
+      "d": [
+       "ent",
+       "neuro"
+      ],
+      "t": "TMJ, טריגמינל ניוראלגיה, כאב אוזן"
+     },
+     {
+      "n": 3,
+      "d": [
+       "gi"
+      ],
+      "t": "שלשול ו-IBS"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "כאב ירך"
+     }
+    ]
    },
    {
     "id": "c24",
@@ -2579,7 +3058,38 @@
     "sittingName": "אביב 2025",
     "date": "5.5.25",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short5-dayclinicalon050525examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Short5-dayclinicalon050525examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "ent"
+      ],
+      "t": "הפרעות טעם וריח"
+     },
+     {
+      "n": 2,
+      "d": [
+       "card"
+      ],
+      "t": "מחלה מסתמית ונוגדי קרישה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "peds",
+       "msk"
+      ],
+      "t": "ירך וצוואר בילדים"
+     },
+     {
+      "n": 4,
+      "d": [
+       "renal"
+      ],
+      "t": "BPH"
+     }
+    ]
    },
    {
     "id": "c25",
@@ -2587,7 +3097,41 @@
     "sittingName": "אביב 2025",
     "date": "6.5.25",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3daysTue060525examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3daysTue060525examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "gi"
+      ],
+      "t": "גסטרואנטריטיס בילדים"
+     },
+     {
+      "n": 2,
+      "d": [
+       "wom",
+       "derm"
+      ],
+      "t": "גרד בפות"
+     },
+     {
+      "n": 3,
+      "d": [
+       "endo",
+       "msk",
+       "wom"
+      ],
+      "t": "אוסטאופורוזיס"
+     },
+     {
+      "n": 4,
+      "d": [
+       "derm"
+      ],
+      "t": "פסוריאזיס"
+     }
+    ]
    },
    {
     "id": "c26",
@@ -2595,7 +3139,40 @@
     "sittingName": "אביב 2025",
     "date": "6.5.25",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4daysTue060525examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4daysTue060525examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "renal",
+       "id",
+       "wom"
+      ],
+      "t": "זיהום בדרכי השתן"
+     },
+     {
+      "n": 2,
+      "d": [
+       "card"
+      ],
+      "t": "תסמונת כלילית חריפה ומניעה שניונית"
+     },
+     {
+      "n": 3,
+      "d": [
+       "peds",
+       "heme"
+      ],
+      "t": "הפרעות דימום ומילה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "pulm"
+      ],
+      "t": "שיעול כרוני"
+     }
+    ]
    },
    {
     "id": "c27",
@@ -2603,7 +3180,39 @@
     "sittingName": "אביב 2025",
     "date": "6.5.25",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5daysTue060525examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5daysTue060525examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "דיסליפידמיה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "neuro"
+      ],
+      "t": "תלונה נוירולוגית מוקדית"
+     },
+     {
+      "n": 3,
+      "d": [
+       "msk"
+      ],
+      "t": "מרפק ופרק כף היד, גידים"
+     },
+     {
+      "n": 4,
+      "d": [
+       "peds",
+       "derm",
+       "id"
+      ],
+      "t": "אקזמה וזיהום עור חיידקי"
+     }
+    ]
    },
    {
     "id": "c28",
@@ -2611,7 +3220,18 @@
     "sittingName": "סתיו 2024",
     "date": "22.12.24",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202404.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202404.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "heme",
+       "card",
+       "renal"
+      ],
+      "t": "כאב סרטני ופליאציה, סינקופה, AKI"
+     }
+    ]
    },
    {
     "id": "c29",
@@ -2619,7 +3239,17 @@
     "sittingName": "סתיו 2024",
     "date": "22.12.24",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202405.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202405.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "gi"
+      ],
+      "t": "FPIES ואלרגיה למזון בתינוק"
+     }
+    ]
    },
    {
     "id": "c30",
@@ -2627,7 +3257,17 @@
     "sittingName": "סתיו 2024",
     "date": "23.12.24",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202409.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202409.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "msk",
+       "endo"
+      ],
+      "t": "גאוט והיפרפאראתירואידיזם"
+     }
+    ]
    },
    {
     "id": "c31",
@@ -2635,7 +3275,16 @@
     "sittingName": "סתיו 2024",
     "date": "23.12.24",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202410.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202410.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "neuro"
+      ],
+      "t": "פרקינסון"
+     }
+    ]
    },
    {
     "id": "c32",
@@ -2643,7 +3292,40 @@
     "sittingName": "סתיו 2024",
     "date": "22.12.24",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202411.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202411.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "endo",
+       "derm"
+      ],
+      "t": "השימוטו וויטיליגו"
+     },
+     {
+      "n": 2,
+      "d": [
+       "heme",
+       "endo"
+      ],
+      "t": "היפרקלצמיה בסרטן ריאה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "neuro"
+      ],
+      "t": "פרקינסון ורעד"
+     },
+     {
+      "n": 4,
+      "d": [
+       "pulm",
+       "psych"
+      ],
+      "t": "דום נשימה בשינה ושיעול כרוני"
+     }
+    ]
    },
    {
     "id": "c33",
@@ -2651,7 +3333,37 @@
     "sittingName": "סתיו 2024",
     "date": "22.12.24",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202412.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202412.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "neuro"
+      ],
+      "t": "כאב ראש"
+     },
+     {
+      "n": 2,
+      "d": [
+       "derm"
+      ],
+      "t": "Pityriasis rosea"
+     },
+     {
+      "n": 3,
+      "d": [
+       "id"
+      ],
+      "t": "HIV ו-PrEP"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "כאב צוואר"
+     }
+    ]
    },
    {
     "id": "c34",
@@ -2659,7 +3371,39 @@
     "sittingName": "סתיו 2024",
     "date": "22.12.24",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202413.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202413.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "בצקת ברגל, DVT ו-PE"
+     },
+     {
+      "n": 2,
+      "d": [
+       "endo",
+       "wom"
+      ],
+      "t": "הירסוטיזם"
+     },
+     {
+      "n": 3,
+      "d": [
+       "heme",
+       "card"
+      ],
+      "t": "תת לחץ דם תנוחתי ונפילות"
+     },
+     {
+      "n": 4,
+      "d": [
+       "psych"
+      ],
+      "t": "חרדה, נדודי שינה ו-PTSD"
+     }
+    ]
    },
    {
     "id": "c35",
@@ -2667,7 +3411,40 @@
     "sittingName": "סתיו 2024",
     "date": "23.12.24",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202406.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202406.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "psych",
+       "derm"
+      ],
+      "t": "חרדה ונשירת שיער"
+     },
+     {
+      "n": 2,
+      "d": [
+       "pulm"
+      ],
+      "t": "הפסקת עישון"
+     },
+     {
+      "n": 3,
+      "d": [
+       "peds",
+       "psych"
+      ],
+      "t": "גמגום וחרדה בילדים"
+     },
+     {
+      "n": 4,
+      "d": [
+       "card",
+       "renal"
+      ],
+      "t": "יל״ד והפרעות אשלגן"
+     }
+    ]
    },
    {
     "id": "c36",
@@ -2675,7 +3452,32 @@
     "sittingName": "סתיו 2024",
     "date": "23.12.24",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202407.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/FamilyExamFall202407.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "pulm",
+       "card"
+      ],
+      "t": "שיעול, המופטיזיס ו-VTE"
+     },
+     {
+      "n": 3,
+      "d": [
+       "ent",
+       "id"
+      ],
+      "t": "כאב עיניים והרפס זוסטר"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "כף רגל וקרסול"
+     }
+    ]
    },
    {
     "id": "c37",
@@ -2683,7 +3485,17 @@
     "sittingName": "אביב 2024",
     "date": "22.7.24",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinical1daexaminees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinical1daexaminees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "neuro",
+       "heme"
+      ],
+      "t": "דמנציה"
+     }
+    ]
    },
    {
     "id": "c38",
@@ -2691,7 +3503,18 @@
     "sittingName": "אביב 2024",
     "date": "22.7.24",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Large2-dayclinicalexaminees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Large2-dayclinicalexaminees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "renal",
+       "id"
+      ],
+      "t": "זיהום בדרכי השתן בילדים"
+     }
+    ]
    },
    {
     "id": "c39",
@@ -2699,7 +3522,17 @@
     "sittingName": "אביב 2024",
     "date": "23.7.24",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinical1day230724examinees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinical1day230724examinees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "card"
+      ],
+      "t": "מתבגרת: קוואסאקי, דיסליפידמיה"
+     }
+    ]
    },
    {
     "id": "c40",
@@ -2707,7 +3540,17 @@
     "sittingName": "אביב 2024",
     "date": "23.7.24",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinicalday2230724examinees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Largeclinicalday2230724examinees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "wom",
+       "card"
+      ],
+      "t": "הריון ויל״ד"
+     }
+    ]
    },
    {
     "id": "c41",
@@ -2715,7 +3558,40 @@
     "sittingName": "אביב 2024",
     "date": "22.7.24",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3daysexaminees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3daysexaminees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "endo",
+       "renal",
+       "card"
+      ],
+      "t": "סוכרת, CKD ויל״ד"
+     },
+     {
+      "n": 2,
+      "d": [
+       "card"
+      ],
+      "t": "פלפיטציות"
+     },
+     {
+      "n": 3,
+      "d": [
+       "peds",
+       "id"
+      ],
+      "t": "יד-פה-רגל"
+     },
+     {
+      "n": 4,
+      "d": [
+       "gi"
+      ],
+      "t": "כאב בטן ודיברטיקולוזיס"
+     }
+    ]
    },
    {
     "id": "c42",
@@ -2723,7 +3599,39 @@
     "sittingName": "אביב 2024",
     "date": "22.7.24",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4daysexaminees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4daysexaminees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "id",
+       "gi"
+      ],
+      "t": "הפטיטיס A ומניעה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "neuro",
+       "ent"
+      ],
+      "t": "טרשת נפוצה וירידה בראייה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "ent"
+      ],
+      "t": "ירידה בשמיעה ושעווה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "גאוט"
+     }
+    ]
    },
    {
     "id": "c43",
@@ -2731,7 +3639,40 @@
     "sittingName": "אביב 2024",
     "date": "22.7.24",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5daysexaminees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5daysexaminees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "endo",
+       "wom"
+      ],
+      "t": "טרום סוכרת ו-PCOS"
+     },
+     {
+      "n": 2,
+      "d": [
+       "derm",
+       "id"
+      ],
+      "t": "הרפס ואריתמה מולטיפורמה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "pulm",
+       "card"
+      ],
+      "t": "COPD ואי ספיקת לב"
+     },
+     {
+      "n": 4,
+      "d": [
+       "psych"
+      ],
+      "t": "חרדה כללית ופאניקה"
+     }
+    ]
    },
    {
     "id": "c44",
@@ -2739,7 +3680,40 @@
     "sittingName": "אביב 2024",
     "date": "23.7.24",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3day3230724examinees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical3day3230724examinees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "endo"
+      ],
+      "t": "Sinus node dysfunction וכף רגל סוכרתית"
+     },
+     {
+      "n": 2,
+      "d": [
+       "peds",
+       "gi"
+      ],
+      "t": "קדחות מחזוריות וכאב בטן חוזר"
+     },
+     {
+      "n": 3,
+      "d": [
+       "peds",
+       "endo"
+      ],
+      "t": "הפרעת גדילה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "כאב ברך"
+     }
+    ]
    },
    {
     "id": "c45",
@@ -2747,7 +3721,37 @@
     "sittingName": "אביב 2024",
     "date": "23.7.24",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4day3230724forexaminees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical4day3230724forexaminees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "renal"
+      ],
+      "t": "אבנים בכליות"
+     },
+     {
+      "n": 2,
+      "d": [
+       "heme"
+      ],
+      "t": "פוליציתמיה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "wom"
+      ],
+      "t": "מנופאוזה ודיספרוניה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "pulm"
+      ],
+      "t": "אסטמה"
+     }
+    ]
    },
    {
     "id": "c46",
@@ -2755,7 +3759,40 @@
     "sittingName": "אביב 2024",
     "date": "23.7.24",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5dayC230724examinees.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Shortclinical5dayC230724examinees.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "אי ספיקת לב"
+     },
+     {
+      "n": 2,
+      "d": [
+       "peds",
+       "msk"
+      ],
+      "t": "כאב גב בילדים"
+     },
+     {
+      "n": 3,
+      "d": [
+       "ent"
+      ],
+      "t": "עין אדומה וגלאוקומה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "heme",
+       "renal",
+       "psych"
+      ],
+      "t": "דליריום ואצירת שתן בקשיש"
+     }
+    ]
    },
    {
     "id": "c47",
@@ -2763,7 +3800,17 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "25.2.24",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinical1largeexams.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinical1largeexams.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "psych"
+      ],
+      "t": "אוושה סיסטולית ובדיקת מצב נפשי"
+     }
+    ]
    },
    {
     "id": "c48",
@@ -2771,7 +3818,18 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "25.2.24",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinical2bigexams.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinical2bigexams.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "pulm",
+       "card",
+       "core"
+      ],
+      "t": "המופטיזיס וברונכיאקטזיות, AF, זכויות"
+     }
+    ]
    },
    {
     "id": "c49",
@@ -2779,7 +3837,40 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "25.2.24",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224clinicalshortness3examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224clinicalshortness3examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "wom",
+       "endo"
+      ],
+      "t": "סוכרת הריון"
+     },
+     {
+      "n": 2,
+      "d": [
+       "derm"
+      ],
+      "t": "זיהומי פטריה בעור"
+     },
+     {
+      "n": 3,
+      "d": [
+       "psych",
+       "gi"
+      ],
+      "t": "שיהוקים וחרדה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "endo",
+       "msk"
+      ],
+      "t": "אוסטאופורוזיס ושבר רדיוס"
+     }
+    ]
    },
    {
     "id": "c50",
@@ -2787,7 +3878,38 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "25.2.24",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinicalshortness4examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224Clinicalshortness4examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "יל״ד"
+     },
+     {
+      "n": 2,
+      "d": [
+       "neuro"
+      ],
+      "t": "דמנציה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "id",
+       "gi"
+      ],
+      "t": "הפטיטיס C"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "מרפק ופרק כף היד"
+     }
+    ]
    },
    {
     "id": "c51",
@@ -2795,7 +3917,40 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "25.2.24",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224clinicalshortness5examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Sunday25224clinicalshortness5examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "מחלת עורקים היקפית"
+     },
+     {
+      "n": 2,
+      "d": [
+       "peds",
+       "neuro",
+       "ent"
+      ],
+      "t": "פרכוס חום ודלקת אוזן"
+     },
+     {
+      "n": 3,
+      "d": [
+       "msk",
+       "peds"
+      ],
+      "t": "כאב ברך"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "תלונות רב-מפרקיות"
+     }
+    ]
    },
    {
     "id": "c52",
@@ -2803,7 +3958,17 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "26.2.24",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinicallargeexaminers.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinicallargeexaminers.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "id"
+      ],
+      "t": "חום ופריחה בילד"
+     }
+    ]
    },
    {
     "id": "c53",
@@ -2811,7 +3976,17 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "26.2.24",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinical2bigexams.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinical2bigexams.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "id",
+       "gi"
+      ],
+      "t": "IBS, יבלות וסיפיליס"
+     }
+    ]
    },
    {
     "id": "c54",
@@ -2819,7 +3994,40 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "26.2.24",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224clinicalshortness3examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224clinicalshortness3examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "endo",
+       "renal"
+      ],
+      "t": "סוכרת ו-CKD"
+     },
+     {
+      "n": 2,
+      "d": [
+       "wom",
+       "peds"
+      ],
+      "t": "הנקה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "pulm",
+       "heme"
+      ],
+      "t": "קשריות ריאה וסרטן ריאה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "msk"
+      ],
+      "t": "כאב ברך"
+     }
+    ]
    },
    {
     "id": "c55",
@@ -2827,7 +4035,38 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "26.2.24",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinicalshortness4examiners(1).pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224Clinicalshortness4examiners(1).pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "סינקופה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "psych"
+      ],
+      "t": "הפרעות אכילה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "gi"
+      ],
+      "t": "צהבת"
+     },
+     {
+      "n": 4,
+      "d": [
+       "id",
+       "derm"
+      ],
+      "t": "הרפס זוסטר"
+     }
+    ]
    },
    {
     "id": "c56",
@@ -2835,7 +4074,40 @@
     "sittingName": "סתיו 2023 (פברואר 2024)",
     "date": "26.2.24",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224clinicalshortness5examiners.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/Monday26224clinicalshortness5examiners.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "msk",
+       "card"
+      ],
+      "t": "תלונות מפרקים וקרדיומיופתיה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "derm",
+       "heme"
+      ],
+      "t": "גוש בירך וסרטן עור"
+     },
+     {
+      "n": 3,
+      "d": [
+       "peds",
+       "pulm"
+      ],
+      "t": "אסטמה בילדים"
+     },
+     {
+      "n": 4,
+      "d": [
+       "endo"
+      ],
+      "t": "תת פעילות התריס"
+     }
+    ]
    },
    {
     "id": "c57",
@@ -2843,7 +4115,18 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily01072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily01072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "wom",
+       "psych",
+       "card"
+      ],
+      "t": "אחרי לידה: עייפות, דיכאון, דימום"
+     }
+    ]
    },
    {
     "id": "c58",
@@ -2851,7 +4134,17 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily02072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily02072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card",
+       "msk"
+      ],
+      "t": "דיסליפידמיה וליפופרוטאין a, גאוט"
+     }
+    ]
    },
    {
     "id": "c59",
@@ -2859,7 +4152,18 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily03072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily03072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "psych",
+       "card"
+      ],
+      "t": "ADHD, יל״ד בילדים, אטופיק"
+     }
+    ]
    },
    {
     "id": "c60",
@@ -2867,7 +4171,16 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily04072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily04072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "psych"
+      ],
+      "t": "אובדנות והפרעת אישיות"
+     }
+    ]
    },
    {
     "id": "c61",
@@ -2875,7 +4188,37 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily05072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily05072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "תסמונת כלילית חריפה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "wom"
+      ],
+      "t": "דימום וגינלי חריג"
+     },
+     {
+      "n": 3,
+      "d": [
+       "gi"
+      ],
+      "t": "בחילות, כיב פפטי והליקובקטר"
+     },
+     {
+      "n": 4,
+      "d": [
+       "derm"
+      ],
+      "t": "כוויות"
+     }
+    ]
    },
    {
     "id": "c62",
@@ -2883,7 +4226,40 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily06072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily06072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "card"
+      ],
+      "t": "קרדיומיופתיה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "gi",
+       "ent"
+      ],
+      "t": "צרבת וצרידות"
+     },
+     {
+      "n": 3,
+      "d": [
+       "id",
+       "peds"
+      ],
+      "t": "HIV במתבגר"
+     },
+     {
+      "n": 4,
+      "d": [
+       "peds",
+       "psych"
+      ],
+      "t": "ADHD במתבגר"
+     }
+    ]
    },
    {
     "id": "c63",
@@ -2891,7 +4267,37 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily07072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily07072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "pulm"
+      ],
+      "t": "COPD"
+     },
+     {
+      "n": 2,
+      "d": [
+       "gi"
+      ],
+      "t": "דיספגיה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "ent"
+      ],
+      "t": "ירידה בראייה"
+     },
+     {
+      "n": 4,
+      "d": [
+       "derm"
+      ],
+      "t": "נגעים טבעתיים"
+     }
+    ]
    },
    {
     "id": "c64",
@@ -2899,7 +4305,38 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily08072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily08072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "pulm",
+       "card"
+      ],
+      "t": "קוצר נשימה ויתר לחץ דם ריאתי"
+     },
+     {
+      "n": 2,
+      "d": [
+       "gi"
+      ],
+      "t": "עצירות"
+     },
+     {
+      "n": 3,
+      "d": [
+       "msk"
+      ],
+      "t": "אוסטאוארתריטיס"
+     },
+     {
+      "n": 4,
+      "d": [
+       "ent"
+      ],
+      "t": "עין אדומה ומצבי חירום בעין"
+     }
+    ]
    },
    {
     "id": "c65",
@@ -2907,7 +4344,40 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily09072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily09072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "endo"
+      ],
+      "t": "סוכרת"
+     },
+     {
+      "n": 2,
+      "d": [
+       "renal",
+       "psych"
+      ],
+      "t": "CKD ודיכאון"
+     },
+     {
+      "n": 3,
+      "d": [
+       "neuro",
+       "derm"
+      ],
+      "t": "סחרחורת וסרטן עור"
+     },
+     {
+      "n": 4,
+      "d": [
+       "peds",
+       "renal"
+      ],
+      "t": "תסמונת נפרוטית בילד"
+     }
+    ]
    },
    {
     "id": "c66",
@@ -2915,7 +4385,38 @@
     "sittingName": "אביב 2023",
     "date": "",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily10072023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily10072023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "endo"
+      ],
+      "t": "סוכרת והיפוגליקמיה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "heme"
+      ],
+      "t": "אנמיה המוליטית ולימפומה"
+     },
+     {
+      "n": 3,
+      "d": [
+       "wom",
+       "id"
+      ],
+      "t": "סקר צוואר הרחם ו-HPV"
+     },
+     {
+      "n": 4,
+      "d": [
+       "peds"
+      ],
+      "t": "הרעלות"
+     }
+    ]
    },
    {
     "id": "c67",
@@ -2923,7 +4424,17 @@
     "sittingName": "סתיו 2022",
     "date": "",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily03022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily03022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "pulm",
+       "id"
+      ],
+      "t": "קוצר נשימה, שיעול וחיסונים"
+     }
+    ]
    },
    {
     "id": "c68",
@@ -2931,7 +4442,17 @@
     "sittingName": "סתיו 2022",
     "date": "",
     "stationType": "גדולה 1",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily04022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily04022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "core",
+       "card"
+      ],
+      "t": "עולה חדש קשיש"
+     }
+    ]
    },
    {
     "id": "c69",
@@ -2939,7 +4460,18 @@
     "sittingName": "סתיו 2022",
     "date": "יום ב׳",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily06022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily06022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "msk",
+       "psych"
+      ],
+      "t": "SCFE ואוטיזם"
+     }
+    ]
    },
    {
     "id": "c70",
@@ -2947,7 +4479,17 @@
     "sittingName": "סתיו 2022",
     "date": "",
     "stationType": "גדולה 2",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily07022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily07022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "renal",
+       "neuro"
+      ],
+      "t": "BPH וכאב כרוני"
+     }
+    ]
    },
    {
     "id": "c71",
@@ -2955,7 +4497,38 @@
     "sittingName": "סתיו 2022",
     "date": "יום ב׳",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily08022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily08022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "psych"
+      ],
+      "t": "חרדה ופאניקה"
+     },
+     {
+      "n": 2,
+      "d": [
+       "card"
+      ],
+      "t": "פרפור עליות"
+     },
+     {
+      "n": 3,
+      "d": [
+       "msk"
+      ],
+      "t": "תלונות רב-מפרקיות"
+     },
+     {
+      "n": 4,
+      "d": [
+       "neuro",
+       "renal"
+      ],
+      "t": "דמנציה וזיהום שתן בגבר"
+     }
+    ]
    },
    {
     "id": "c72",
@@ -2963,7 +4536,40 @@
     "sittingName": "סתיו 2022",
     "date": "",
     "stationType": "קצרה 3",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily09022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily09022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "wom",
+       "heme"
+      ],
+      "t": "סרטן רחם וצניחת אגן"
+     },
+     {
+      "n": 2,
+      "d": [
+       "card"
+      ],
+      "t": "חסם AV מלא"
+     },
+     {
+      "n": 3,
+      "d": [
+       "endo",
+       "wom"
+      ],
+      "t": "הירסוטיזם ו-PCOS"
+     },
+     {
+      "n": 4,
+      "d": [
+       "gi",
+       "heme"
+      ],
+      "t": "דימום ממערכת העיכול וסרטן מעי"
+     }
+    ]
    },
    {
     "id": "c73",
@@ -2971,7 +4577,40 @@
     "sittingName": "סתיו 2022",
     "date": "יום ב׳",
     "stationType": "קצרה 4",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily10022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily10022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "renal"
+      ],
+      "t": "אבנים בכליות"
+     },
+     {
+      "n": 2,
+      "d": [
+       "card",
+       "endo"
+      ],
+      "t": "קוצר נשימה בסוכרתי"
+     },
+     {
+      "n": 3,
+      "d": [
+       "heme",
+       "psych"
+      ],
+      "t": "נפילות ונדודי שינה בקשיש"
+     },
+     {
+      "n": 4,
+      "d": [
+       "ent",
+       "psych"
+      ],
+      "t": "טנטון ודיכאון"
+     }
+    ]
    },
    {
     "id": "c74",
@@ -2979,7 +4618,40 @@
     "sittingName": "סתיו 2022",
     "date": "יום ג׳",
     "stationType": "קצרה 5",
-    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily11022023.pdf"
+    "pdf": "https://ima-contentfiles.s3.amazonaws.com/ExamquesFamily11022023.pdf",
+    "qs": [
+     {
+      "n": 1,
+      "d": [
+       "peds",
+       "gi"
+      ],
+      "t": "גסטרואנטריטיס בילדים"
+     },
+     {
+      "n": 2,
+      "d": [
+       "card",
+       "heme"
+      ],
+      "t": "יל״ד בקשיש"
+     },
+     {
+      "n": 3,
+      "d": [
+       "peds",
+       "endo"
+      ],
+      "t": "גינקומסטיה ובגרות"
+     },
+     {
+      "n": 4,
+      "d": [
+       "pulm"
+      ],
+      "t": "המופטיזיס וקשרית ריאה"
+     }
+    ]
    }
   ],
   "otherStations": [

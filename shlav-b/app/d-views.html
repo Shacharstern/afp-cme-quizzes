@@ -148,6 +148,7 @@ function viewTopic(id){
 }
 
 /* ---------- Past exams ---------- */
+const EXF={dom:'',all:false,open:{}};
 function viewExams(){
   const P=DATA.pastStations;
   const scoreSel=(id)=>{const last=[...S.log].reverse().find(l=>l.id===id);
@@ -155,11 +156,30 @@ function viewExams(){
       h('option',{value:''},last?'תורגל '+fmtD(last.d)+' · '+last.score:'לא תורגל'),[0,1,2,3,4].map(n=>h('option',{value:n},'ציון '+n)));};
   const clin=h('table',{class:'tbl'},h('thead',{},h('tr',{},h('th',{},'מועד'),h('th',{},'תאריך'),h('th',{},'תחנה'),h('th',{},'קובץ'),h('th',{},'תרגול'))),
     h('tbody',{},P.clinical.map(s=>h('tr',{id:'row-'+s.id},h('td',{},s.sittingName),h('td',{class:'num'},s.date),h('td',{},s.stationType),h('td',{},h('a',{href:s.pdf,target:'_blank',rel:'noopener'},'PDF')),h('td',{},scoreSel(s.id))))));
+  // Topic view: every question in every clinical station is tagged by domain (qs[].d); the short topic (qs[].t) stays hidden until tapped.
+  const doms=DATA.domains,cnt={};P.clinical.forEach(s=>(s.qs||[]).forEach(q=>q.d.forEach(d=>cnt[d]=(cnt[d]||0)+1)));
+  const chips=h('div',{class:'filters'},h('button',{class:'chip','aria-pressed':String(!EXF.dom),onclick:()=>{EXF.dom='';render();}},'כל התחנות'),
+    Object.keys(doms).filter(d=>cnt[d]).map(d=>h('button',{class:'chip','aria-pressed':String(EXF.dom===d),onclick:()=>{EXF.dom=d;EXF.open={};render();}},doms[d]+' · '+cnt[d])));
+  let byDom=null;
+  if(EXF.dom){
+    const rows=[];P.clinical.forEach(s=>(s.qs||[]).forEach(q=>{if(q.d.includes(EXF.dom))rows.push([s,q]);}));
+    const key=(s,q)=>s.id+'.'+q.n;
+    byDom=h('div',{class:'card'},h('div',{class:'row'},h('h3',{},doms[EXF.dom]+': '+rows.length+' שאלות'),h('span',{class:'sp'}),
+        h('label',{class:'row note'},h('input',{type:'checkbox',checked:EXF.all,onchange:e=>{EXF.all=e.target.checked;render();}}),h('span',{},'הצג את כל הנושאים'))),
+      h('p',{class:'note',style:'margin:0'},'הנושא מוסתר כדי לא לחשוף את השאלה לפני התרגול. לחצו ״הצג״ כדי לראות אותו. השאלה נמצאת ב-PDF לפי מספר השאלה.'),
+      h('div',{class:'scroll'},h('table',{class:'tbl'},h('thead',{},h('tr',{},h('th',{},'מועד'),h('th',{},'תאריך'),h('th',{},'תחנה'),h('th',{},'שאלה'),h('th',{},'נושא'),h('th',{},'תחומים נוספים'),h('th',{},'קובץ'),h('th',{},'תרגול'))),
+        h('tbody',{},rows.map(([s,q])=>{const k=key(s,q),shown=EXF.all||EXF.open[k];
+          return h('tr',{},h('td',{},s.sittingName),h('td',{class:'num'},s.date),h('td',{},s.stationType),h('td',{class:'num'},q.n),
+            h('td',{},shown?q.t:h('button',{class:'chip',onclick:()=>{EXF.open[k]=1;render();}},'הצג')),
+            h('td',{class:'note'},q.d.filter(d=>d!==EXF.dom).map(d=>doms[d]).join(' · ')),
+            h('td',{},h('a',{href:s.pdf,target:'_blank',rel:'noopener'},'PDF')),h('td',{},scoreSel(s.id)));})))));
+  }
   const other=h('table',{class:'tbl'},h('thead',{},h('tr',{},h('th',{},'מועד'),h('th',{},'תחנה'),h('th',{},'קובץ'),h('th',{},'תרגול'))),
     h('tbody',{},P.otherStations.map((s,i)=>h('tr',{},h('td',{},s.sittingName),h('td',{},s.station),h('td',{},h('a',{href:s.pdf,target:'_blank',rel:'noopener'},'PDF')),h('td',{},scoreSel('o'+i))))));
   return h('section',{class:'view'},h('h2',{},'מבחנים קודמים'),
     h('p',{class:'note',style:'margin:0'},'גרסאות הבוחנים עם מחוון. מוצגים רק מועד, סוג תחנה ותאריך, כדי לא לחשוף את התוכן לפני התרגול. אחרי תרגול, בחרו ציון 0–4 והוא נכנס לסיכום השבועי.'),
-    h('div',{class:'card'},h('h3',{},'תחנות קליניות'),h('div',{class:'scroll'},clin)),
+    h('div',{class:'card'},h('h3',{},'לפי תחום'),chips),
+    byDom||h('div',{class:'card'},h('h3',{},'תחנות קליניות'),h('div',{class:'scroll'},clin)),
     h('div',{class:'card'},h('h3',{},'משפחה, ארגון פרקטיקה ומר״מ'),h('div',{class:'scroll'},other)),
     h('p',{class:'note'},'מועדים מוקדמים יותר: '+P.olderSittings));
 }
