@@ -13,3 +13,6 @@ replit.nix
 quartz/cli/tui/dist/
 __pycache__/
 .pub/
+
+# full source texts for the critic (copyrighted; never commit)
+shlav-b/review/sources/

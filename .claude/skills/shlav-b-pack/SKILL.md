@@ -70,13 +70,37 @@ Deliverables, as in `podcast/af-*` and `podcast/ed-*`:
 ## 4. Validate
 `python3 shlav-b/engine/validate_pack.py shlav-b/packs/<id>.json` must print OK. Fix every ERROR; fix warnings unless there is a reason.
 
+## 4b. Medical and factual review by a second model (mandatory; never skipped)
+One model writes, a second model critiques. The critic is Gemini through the Antigravity CLI (`agy`, signed in to the
+user's Google account, no API key), reached through the local MCP server `agy-review` (`shlav-b/review/agy_review_mcp.py`,
+registered in `.mcp.json`; `AGY_MODEL` must be set to a name from `agy models`). `agy` lives on the user's computer: from a
+cloud session, attach the user's checkout with Remote Control and run the review there (Bash with `_host`, using
+`python3 shlav-b/review/agy_review_mcp.py --cli review|reply ...`), or use the MCP tools when the session runs locally.
+1. **Sources for the critic.** Write the full text of every confirmed source to `shlav-b/review/sources/<id>/<short-name>.md`
+   (gitignored: the repo is public and the texts are copyrighted; never commit them). Name file, title and year at the top.
+2. **Open the review** after validation (step 4) and before upload (step 5): `review(files, instructions, session="<id>-pack")`
+   with files = the pack, the custom reel file(s) and every source extract; later products (narration, podcast script,
+   NotebookLM prompts) get their own sessions (`<id>-podcast`, ...). The instructions say: check every number, dose,
+   threshold, criterion and recommendation against the source files, not from memory; flag anything not in the sources,
+   medical errors, wrong attribution and missed conflicts between sources; read only, no writes, no shell.
+3. **Writer's turn.** Check each finding against the source yourself. Accept (fix the file) or reject with a quoted reason.
+   Then `reply(message, files, session)` answering point by point (`#3 accepted: fixed in drills[12]`; `#5 rejected: Goroll
+   ch. 20 p. 4 says ...`) with the changed files, and ask for a re-check.
+4. **Loop** until both sides are satisfied (`VERDICT: SATISFIED` and no finding you still dispute), at most 5 rounds.
+5. **Disagreements left** go to the user with both positions, each with its evidence; the user decides, and approves the
+   final result before upload. Record every round in `shlav-b/status/<id>.json` under `review` (`{session, rounds,
+   verdict, accepted: [...], rejected: [...], toUser: [...], userDecisions: [...]}`); the session log itself is kept in
+   `shlav-b/review/sessions/<session>.json`.
+6. **If a call fails** (agy missing, not signed in, empty response, timeout): stop and tell the user. Do not skip the review
+   and do not upload an unreviewed pack.
+
 ## 5. Save and upload
 1. Save to `shlav-b/packs/<id>.json`.
 2. Upload to the app's database with the `ArtifactData` tool: `action: "set"`, `url: "https://claude.ai/artifact/QmSkYmiFQTpwUvm1omtrGb"`, `collection: "packs"`, `doc_id: "<id>"`, `file_path: "shlav-b/packs/<id>.json"`. If the document exists, `get` it first and pass its `version` as `if_version`. The app picks the pack up live; no republish needed.
 3. Commit the pack on the working branch.
 
 ## 6. Report to the user (in Hebrew)
-Which sources were read (title, year, Drive folder), what is missing or out of window, the conflicts found, and the pack size (drills, cases, oral questions). Name anything in the pack that rests on clinical reasoning rather than an explicit source statement.
+Which sources were read (title, year, Drive folder), the Gemini review (rounds, what was accepted or rejected, what the user decided), what is missing or out of window, the conflicts found, and the pack size (drills, cases, oral questions). Name anything in the pack that rests on clinical reasoning rather than an explicit source statement.
 
 ## 7. Spotify episodes (״הסבב״ on Spotify)
 The user publishes episodes (NotebookLM and others) to the Spotify show; the app keeps a copy of each, with a button back to Spotify. State: `shlav-b/podcast/spotify.json` (show link, RSS, and every imported episode by guid). When the user asks to sync the podcasts:
