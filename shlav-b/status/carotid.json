@@ -1,0 +1,419 @@
+{
+ "topic": "carotid",
+ "sources": {
+  "confirmedAt": "2026-11-24T18:30:07",
+  "used": [
+   {
+    "label": "AFP 2023: Ischemic Stroke Management",
+    "file": "ischemic-stroke.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2022: Acute Stroke Diagnosis",
+    "file": "Acute Stroke Diagnosis.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2022: Secondary Prevention of Ischemic Stroke (AHA/ASA)",
+    "file": "Secondary Prevention of Ischemic Stroke.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2022: Arterial Atherosclerosis: Vascular Surgery Interventions",
+    "file": "Arterial Atherosclerosis- Vascular Surgery Interventions.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2019: Dual Antiplatelet Therapy for High-Risk TIA and Minor Stroke",
+    "file": "Dual Antiplatelet Therapy.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "Goroll 8 ch. 171: TIA and Asymptomatic Carotid Bruit",
+    "file": "Goroll8_Ch171_Management_of_TIA_and_Asymptomatic_Carotid_Bruit.pdf",
+    "kind": "Goroll"
+   },
+   {
+    "label": "הר\"י 2025: הנחיות טיפול בשבץ מוח",
+    "file": "הנחיות טיפול בשבץ מוח.pdf",
+    "kind": "IMA"
+   }
+  ],
+  "rejected": [
+   {
+    "file": "Anticoagulation Goroll8.pdf",
+    "reason": "החלטת המשתמש"
+   },
+   {
+    "file": "Eye Emergencies.pdf",
+    "reason": "החלטת המשתמש"
+   }
+  ],
+  "missing": [
+   "AFP 2021: Screening for Asymptomatic Carotid Artery Stenosis"
+  ]
+ },
+ "sweep": {
+  "at": "2026-11-24",
+  "query": "fullText: 'carotid stenosis' | 'transient ischemic attack' | 'ischemic stroke' | 'carotid endarterectomy'",
+  "rule": "top 12 by Drive relevance, PDFs under \"שלב א\"",
+  "results": [
+   {
+    "rank": 1,
+    "file": "ischemic-stroke.pdf",
+    "verdict": "used",
+    "reason": "AFP, עוגן"
+   },
+   {
+    "rank": 2,
+    "file": "Acute Stroke Diagnosis.pdf",
+    "verdict": "used",
+    "reason": "AFP"
+   },
+   {
+    "rank": 3,
+    "file": "Secondary Prevention of Ischemic Stroke.pdf",
+    "verdict": "used",
+    "reason": "AFP, תקציר הנחיית AHA/ASA"
+   },
+   {
+    "rank": 4,
+    "file": "Arterial Atherosclerosis- Vascular Surgery Interventions.pdf",
+    "verdict": "used",
+    "reason": "AFP, קרוטיד"
+   },
+   {
+    "rank": 5,
+    "file": "Dual Antiplatelet Therapy.pdf",
+    "verdict": "used",
+    "reason": "AFP 15 בספטמבר 2019, בתוך החלון (אמצע 2019)"
+   },
+   {
+    "rank": 6,
+    "file": "Management of Atrial Fibrillation.pdf",
+    "verdict": "not-needed",
+    "reason": "קיימת חבילת af"
+   },
+   {
+    "rank": 7,
+    "file": "Lower Extremity Peripheral Artery.pdf",
+    "verdict": "not-needed",
+    "reason": "PAD, נושא אחר"
+   },
+   {
+    "rank": 8,
+    "file": "Syncope.pdf",
+    "verdict": "not-needed",
+    "reason": "נושא אחר"
+   },
+   {
+    "rank": 9,
+    "file": "Atrial Fibrillation- Common Questions.pdf",
+    "verdict": "not-needed",
+    "reason": "קיימת חבילת af"
+   },
+   {
+    "rank": 10,
+    "file": "Atrial Fibrillation- Common Questions and Answers About Diagnosis and Treatment.pdf",
+    "verdict": "not-needed",
+    "reason": "לפי השם והגודל כנראה עותק"
+   },
+   {
+    "rank": 11,
+    "file": "Anticoagulation Goroll8.pdf",
+    "verdict": "not-needed",
+    "reason": "החלטת המשתמש: לא להשתמש"
+   },
+   {
+    "rank": 12,
+    "file": "Eye Emergencies.pdf",
+    "verdict": "not-needed",
+    "reason": "החלטת המשתמש: לא להשתמש"
+   }
+  ]
+ },
+ "stamps": {
+  "visual": {
+   "at": "2026-11-24T19:07:48",
+   "fp": "77c7b1d8ed2f"
+  },
+  "upload": {
+   "at": "2026-11-24T19:20:06",
+   "fp": "48baf292c962"
+  }
+ },
+ "review": [
+  {
+   "session": "carotid-pack",
+   "model": "gemini-4-carbon-high",
+   "rounds": 2,
+   "verdict": "SATISFIED",
+   "accepted": [
+    "#1 c4 bruit",
+    "#2 dissection",
+    "#3 BP diabetes",
+    "#4 age 70, CEA/CAS",
+    "#5 DAPT station",
+    "#6 triage flag",
+    "#7 BP qualifier",
+    "#8 NNT",
+    "#10 tPA contraindications",
+    "#11 aspirin load"
+   ],
+   "rejected": [
+    "#9 (partly): AFP gives no time unit for the 1%; critic conceded"
+   ],
+   "toUser": [
+    "ABCD2 > 60 / > 140/90 as printed in the AFP 2019 text extract; >= is the usual definition"
+   ],
+   "userDecisions": []
+  },
+  {
+   "session": "carotid-podcast",
+   "model": "gemini-4-carbon-high",
+   "rounds": 4,
+   "verdict": "SATISFIED",
+   "accepted": [
+    "#1",
+    "#2",
+    "#3",
+    "#4",
+    "#5",
+    "#6",
+    "#7",
+    "#8",
+    "#9",
+    "#10",
+    "expanded #1",
+    "expanded #2"
+   ],
+   "rejected": [],
+   "toUser": [],
+   "userDecisions": []
+  }
+ ],
+ "afpVisuals": [
+  {
+   "source": "AFP 2023",
+   "kind": "table",
+   "n": 1,
+   "title": "Risk factors",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2023",
+   "kind": "table",
+   "n": 2,
+   "title": "Poststroke evaluation",
+   "usedIn": [
+    "summary",
+    "reel workup"
+   ]
+  },
+  {
+   "source": "AFP 2023",
+   "kind": "table",
+   "n": 3,
+   "title": "Lifestyle",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2023",
+   "kind": "table",
+   "n": 4,
+   "title": "Complications",
+   "usedIn": [
+    "reel after",
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": 1,
+   "title": "Symptoms",
+   "usedIn": [
+    "reel terr",
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": 2,
+   "title": "NIHSS",
+   "usedIn": [
+    "summary"
+   ],
+   "reason": "רק דרגות החומרה; פריטי הסולם המלאים אינם מוקראים"
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": 3,
+   "title": "Mimics",
+   "usedIn": [
+    "reel mimics",
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": 4,
+   "title": "Initial workup",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": 5,
+   "title": "Radiologic studies",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": 6,
+   "title": "Posterior circulation",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": 7,
+   "title": "HINTS",
+   "usedIn": [
+    "reel hints",
+    "drills"
+   ]
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": "A",
+   "title": "rtPA",
+   "usedIn": [
+    "summary"
+   ],
+   "reason": "נבחרו פריטים מרכזיים"
+  },
+  {
+   "source": "AFP 2022 acute dx",
+   "kind": "table",
+   "n": "B",
+   "title": "EVT",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 secondary prevention",
+   "kind": "figure",
+   "n": 1,
+   "title": "Stroke subtypes",
+   "usedIn": [],
+   "reason": "אחוזי התרשים לא ניתנים לשיוך מהטקסט שחולץ"
+  },
+  {
+   "source": "AFP 2022 secondary prevention",
+   "kind": "table",
+   "n": 1,
+   "title": "CV risk reduction",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 secondary prevention",
+   "kind": "table",
+   "n": 2,
+   "title": "Etiologies",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 atherosclerosis",
+   "kind": "table",
+   "n": 1,
+   "title": "Guideline-directed therapy",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 atherosclerosis",
+   "kind": "figure",
+   "n": "1-2",
+   "title": "AAA/EVAR",
+   "usedIn": [],
+   "reason": "לא בנושא"
+  },
+  {
+   "source": "AFP 2022 atherosclerosis",
+   "kind": "figure",
+   "n": 3,
+   "title": "CEA plaque",
+   "usedIn": [],
+   "reason": "תמונה אילוסטרטיבית"
+  },
+  {
+   "source": "AFP 2022 atherosclerosis",
+   "kind": "figure",
+   "n": 4,
+   "title": "Stent angiogram",
+   "usedIn": [],
+   "reason": "תמונה אילוסטרטיבית"
+  },
+  {
+   "source": "AFP 2022 atherosclerosis",
+   "kind": "figure",
+   "n": 5,
+   "title": "TCAR",
+   "usedIn": [
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2022 atherosclerosis",
+   "kind": "figure",
+   "n": 6,
+   "title": "CLI",
+   "usedIn": [],
+   "reason": "לא בנושא"
+  },
+  {
+   "source": "AFP 2019 DAPT",
+   "kind": "table",
+   "n": 1,
+   "title": "ABCD2",
+   "usedIn": [
+    "reel abcd",
+    "drills"
+   ]
+  }
+ ],
+ "notebooklm": {
+  "notebook": "https://notebook.google.com/notebook/40a8d9d2-8b0a-48ca-8da0-dd4eda41c8fd",
+  "generated": "2026-11-24",
+  "A": "prompt only, 7 sources, 15:06",
+  "B": "script+prompt, 8 sources, 17:09",
+  "note": "Hebrew offers Short/Default only",
+  "spotifyDrafts": {
+   "A": "6wjWZcnyyNKuiNu6zjhzOa",
+   "B": "7zqqq8k55FpWz0C46zGOc5",
+   "state": "published 2026-11-24 (not by Claude); descriptions updated"
+  }
+ }
+}

@@ -1,0 +1,41 @@
+<script>
+/* Topic-specific reel scenes: carotid stenosis, TIA and stroke (AFP 2019-2023, Goroll 171, IMA 2025). Text and numbers come from the pack. */
+(()=>{
+const {S,set,lerp,span,C,R,M}=REEL.kit;
+const N=(x,y,text,o={},p)=>S('text',Object.assign({x,y,text,direction:'ltr','text-anchor':'middle'},o),p);
+const lin=(t,a,b)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+const op=(el,v)=>{el.style.opacity=v;};
+REEL.custom('carotid',{
+ abcd2(g,d){ // the score adds up item by item; the verdict follows the cut-off
+  const it=d.items||[];R(584,44,d.title||'',{'font-size':'18px','font-weight':'800'},g);
+  const rows=it.map((x,i)=>{const y=64+i*56,box=S('rect',{x:210,y,width:374,height:44,rx:10,fill:C('bg'),stroke:C('line'),'stroke-width':'1.5px'},g);
+   N(560,y+28,x.k,{class:'disp','font-size':'20px',fill:C('teal')},g);R(530,y+28,x.t,{'font-size':'14px'},g);N(236,y+28,'+'+x.p,{'font-size':'15px','font-weight':'700',fill:C('amber')},g);return box;});
+  S('circle',{cx:108,cy:190,r:74,fill:C('amber-soft')},g);const sc=N(108,210,'0',{class:'disp','font-size':'60px'},g);
+  const vb=S('rect',{x:100,y:372,width:400,height:44,rx:22,fill:C('line')},g),vt=M(300,400,'',{'font-size':'15px','font-weight':'700'},g);
+  return t=>{const k=Math.min(it.length,Math.floor(lin(t,.06,.8)*it.length+1e-6));let s=0;rows.forEach((b,i)=>{const on=i<k;if(on)s+=it[i].p;set(b,{fill:on?C('amber-soft'):C('bg'),stroke:on?C('amber'):C('line')});});
+   set(sc,{text:String(s)});const v=(d.verdicts||[]).find(z=>s>=z.min&&s<=z.max);op(vb,k?1:0);op(vt,k?1:0);if(v){set(vt,{text:v.t});set(vb,{fill:C(v.tone+'-soft')});vt.style.fill=C(v.tone);}};
+ },
+ windows(g,d){ // hours since last known well: each treatment window closes as the hand moves
+  const X=h=>570-h/d.max*440;R(584,46,d.unit||'',{'font-size':'13px','font-weight':'700'},g);
+  [0,4.5,9,24].forEach(h=>{S('line',{x1:X(h),y1:78,x2:X(h),y2:330,stroke:C('line'),'stroke-dasharray':'3 4'},g);N(X(h),68,String(h),{'font-size':'12px','font-weight':'700'},g);});
+  const bars=(d.rows||[]).map((r,i)=>{const y=110+i*76;R(584,y-8,r.l,{'font-size':'13px','font-weight':'700',fill:C(r.tone)},g);
+   const b=S('rect',{x:X(r.to),y,width:X(0)-X(r.to),height:34,rx:8,fill:C(r.tone)},g);return {r,b};});
+  const hand=S('line',{y1:74,y2:334,stroke:C('ink'),'stroke-width':'3px'},g),hv=N(0,358,'',{class:'disp','font-size':'24px'},g);
+  const note=M(300,408,d.note||'',{'font-size':'14px','font-weight':'700'},g);
+  return t=>{const h=lerp(0,d.max,lin(t,.08,.84));set(hand,{x1:X(h),x2:X(h)});set(hv,{x:X(h),text:h.toFixed(1)});bars.forEach(o=>op(o.b,h<=o.r.to?.85:.2));op(note,span(t,.8,.88));};
+ },
+ artery(g,d){ // the lumen narrows; management follows the percentage, then the NNT rises with delay
+  R(584,40,d.title||'',{'font-size':'16px','font-weight':'800'},g);
+  S('rect',{x:30,y:70,width:540,height:130,rx:26,fill:C('rose-soft'),stroke:C('rose'),'stroke-width':'2px'},g);
+  const top=S('path',{fill:C('amber')},g),bot=S('path',{fill:C('amber')},g);
+  const pct=N(300,245,'',{class:'disp','font-size':'38px'},g);
+  const vb=S('rect',{x:120,y:262,width:360,height:40,rx:20},g),vt=M(300,288,'',{'font-size':'15px','font-weight':'700'},g);
+  const nn=S('g',{},g);R(584,346,d.nntLabel||'',{'font-size':'15px','font-weight':'700'},nn);
+  (d.nnt||[]).forEach((x,i)=>{const cx=420-i*240;N(cx,374,x.v,{class:'disp','font-size':'34px',fill:C(x.tone)},nn);M(cx,400,x.l,{'font-size':'13px'},nn);});
+  return t=>{const p=lerp(10,85,span(t,.05,.6)),h=64*p/100;
+   set(top,{d:'M150 71 C220 71 240 '+(71+h)+' 300 '+(71+h)+' C360 '+(71+h)+' 380 71 450 71 Z'});set(bot,{d:'M150 199 C220 199 240 '+(199-h)+' 300 '+(199-h)+' C360 '+(199-h)+' 380 199 450 199 Z'});
+   set(pct,{text:Math.round(p)+'%'});const z=(d.zones||[]).find(z=>p>=z.min&&p<z.max);if(z){set(vt,{text:z.t});vt.style.fill=C(z.tone);set(vb,{fill:C(z.tone+'-soft')});}op(nn,span(t,.66,.76));};
+ }
+});
+})();
+</script>
