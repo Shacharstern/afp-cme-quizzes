@@ -1,0 +1,353 @@
+{
+ "topic": "chestpain",
+ "sources": {
+  "used": [
+   {
+    "label": "AFP 2024: Acute Coronary Syndrome",
+    "file": "Acute Coronary Syndrome.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2024: Noninvasive Cardiac Testing",
+    "file": "Noninvasive Cardiac Testing .pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "AFP 2024: Acute Pericarditis",
+    "file": "Acute Pericarditis.pdf",
+    "kind": "AFP"
+   },
+   {
+    "label": "Goroll 8 ch. 20: Evaluation of Chest Pain",
+    "file": "Goroll8_Ch20_Evaluation_of_Chest_Pain.pdf",
+    "kind": "Goroll"
+   },
+   {
+    "label": "Goroll 8 ch. 30: Chronic Stable Angina",
+    "file": "Goroll8_Ch30_Chronic_Stable_Angina.pdf",
+    "kind": "Goroll"
+   },
+   {
+    "label": "Goroll 8 ch. 31: Secondary Prevention after ACS",
+    "file": "Goroll8_Ch31_Secondary_Prevention_of_CHD_after_ACS.pdf",
+    "kind": "Goroll"
+   }
+  ],
+  "rejected": [],
+  "missing": [
+   "AFP 2020: Acute Chest Pain in Adults",
+   "AFP 2023: Chest Pain (AHA/ACC)",
+   "AFP 2024: Chronic Coronary Disease"
+  ],
+  "confirmedAt": "2026-11-24T18:38:08"
+ },
+ "sweep": {
+  "at": "2026-11-24",
+  "query": "fullText: 'chest pain' | 'acute coronary syndrome' | 'angina' | 'myocardial infarction' | 'coronary artery disease' | 'troponin'",
+  "rule": "top 12 by Drive relevance, PDFs under \"שלב א\"",
+  "results": [
+   {
+    "rank": 1,
+    "file": "Arterial Atherosclerosis- Vascular Surgery Interventions.pdf",
+    "verdict": "not-needed",
+    "reason": "קרוטיד, AAA ו-PAD"
+   },
+   {
+    "rank": 2,
+    "file": "Acute Stroke Diagnosis.pdf",
+    "verdict": "not-needed",
+    "reason": "שבץ"
+   },
+   {
+    "rank": 3,
+    "file": "Acute Coronary Syndrome.pdf",
+    "verdict": "used",
+    "reason": "AFP 2024, עוגן"
+   },
+   {
+    "rank": 4,
+    "file": "Noninvasive Cardiac Testing .pdf",
+    "verdict": "used",
+    "reason": "AFP דצמבר 2024"
+   },
+   {
+    "rank": 5,
+    "file": "Chest pain Goroll8.pdf",
+    "verdict": "not-needed",
+    "reason": "לפי השם אותו פרק 20; יש קובץ בתיקיית גורול"
+   },
+   {
+    "rank": 6,
+    "file": "Heart Murmurs in Children.pdf",
+    "verdict": "not-needed",
+    "reason": "נושא אחר"
+   },
+   {
+    "rank": 7,
+    "file": "Secondary Prevention of Ischemic Stroke.pdf",
+    "verdict": "not-needed",
+    "reason": "שבץ"
+   },
+   {
+    "rank": 8,
+    "file": "Management of Heart Failure.pdf",
+    "verdict": "not-needed",
+    "reason": "קיימת חבילת hf"
+   },
+   {
+    "rank": 9,
+    "file": "Lower Extremity Peripheral Artery.pdf",
+    "verdict": "not-needed",
+    "reason": "PAD"
+   },
+   {
+    "rank": 10,
+    "file": "ischemic-stroke.pdf",
+    "verdict": "not-needed",
+    "reason": "שבץ"
+   },
+   {
+    "rank": 11,
+    "file": "Acute Pericarditis.pdf",
+    "verdict": "used",
+    "reason": "AFP 2024, אבחנה מבדלת"
+   },
+   {
+    "rank": 12,
+    "file": "Acute Pericarditis- Rapid Evidence Review.pdf",
+    "verdict": "not-needed",
+    "reason": "לפי השם והגודל כנראה עותק"
+   }
+  ]
+ },
+ "stamps": {
+  "visual": {
+   "at": "2026-11-24T20:00:53",
+   "fp": "f8cf91bc37aa"
+  },
+  "narr": {
+   "at": "2026-11-24T20:00:53",
+   "chapters": {
+    "why": "1a4b75c48854",
+    "class": "3f7ee924a53d",
+    "kill": "7c2f76a96531",
+    "lr": "d3c86585533b",
+    "marburg": "d76cd086f45d",
+    "ecg": "4b5ba16f8afd",
+    "algo": "c8f935099ccf",
+    "pre": "6f196ad8dbc6",
+    "heart": "f9cdff6dc9a7",
+    "reperf": "d855e75a969c",
+    "meds": "05a284db9531",
+    "acute": "741295b5bf41",
+    "stable": "39df509bf238",
+    "tests": "220af047b0fd",
+    "peri": "3dc8e75c4232",
+    "periflow": "b4523a445cd4"
+   }
+  },
+  "upload": {
+   "at": "2026-11-24T20:00:53",
+   "fp": "b4feaa722ca4"
+  }
+ },
+ "review": [
+  {
+   "session": "chestpain-pack",
+   "model": "gemini-4-carbon-high",
+   "rounds": 4,
+   "verdict": "SATISFIED",
+   "accepted": [
+    "#1",
+    "#2",
+    "#3",
+    "#4",
+    "#5",
+    "#6 (סירוב)",
+    "#7",
+    "#8",
+    "סבב 3: #1–#4"
+   ],
+   "rejected": [
+    "#6 (אובדנות): rubricPrinciples; המבקר הסכים"
+   ],
+   "toUser": [],
+   "userDecisions": [],
+   "note": "אחרי סבב 4: שינוי ניסוח תווית הגיל ב-Marburg בלבד, ללא שינוי תוכן"
+  },
+  {
+   "session": "chestpain-narration",
+   "model": "gemini-4-carbon-high",
+   "rounds": 2,
+   "verdict": "SATISFIED",
+   "accepted": [
+    "#2",
+    "#3",
+    "#4",
+    "#5",
+    "#6",
+    "#7",
+    "#8"
+   ],
+   "rejected": [
+    "#1: Goroll 31 כותב 90 דקות; המבקר הסכים"
+   ],
+   "toUser": [],
+   "userDecisions": []
+  },
+  {
+   "session": "chestpain-podcast",
+   "model": "gemini-4-carbon-high",
+   "rounds": 2,
+   "verdict": "SATISFIED",
+   "accepted": [
+    "#1–#12"
+   ],
+   "rejected": [],
+   "toUser": [],
+   "userDecisions": [],
+   "note": "ניסיון ראשון נכשל בזמן (580 ש׳) ולא נרשם כסבב"
+  },
+  {
+   "session": "chestpain-podcast-v2",
+   "model": "gemini-4-carbon-high",
+   "rounds": 2,
+   "verdict": "SATISFIED",
+   "accepted": [
+    "#1–#16"
+   ],
+   "rejected": [],
+   "toUser": [],
+   "userDecisions": [
+    "שכתוב מלא עם כיסוי כל הטבלאות והתרשימים של AFP"
+   ]
+  }
+ ],
+ "afpVisuals": [
+  {
+   "source": "AFP 2024 ACS",
+   "kind": "figure",
+   "n": 1,
+   "usedIn": [
+    "pathway",
+    "podcast",
+    "reel:algo"
+   ]
+  },
+  {
+   "source": "AFP 2024 ACS",
+   "kind": "table",
+   "n": 1,
+   "usedIn": [
+    "podcast",
+    "reel:heart",
+    "reel:marburg"
+   ]
+  },
+  {
+   "source": "AFP 2024 ACS",
+   "kind": "table",
+   "n": 2,
+   "usedIn": [
+    "drills",
+    "podcast",
+    "reel:meds",
+    "summary"
+   ],
+   "reason": "אינטראקציות: העיקריות בלבד"
+  },
+  {
+   "source": "AFP 2024 ACS",
+   "kind": "table",
+   "n": 3,
+   "usedIn": [
+    "drills",
+    "podcast",
+    "reel:meds",
+    "summary"
+   ],
+   "reason": "תופעות לוואי וניטור: העיקריים בלבד"
+  },
+  {
+   "source": "AFP 2024 Noninvasive",
+   "kind": "figure",
+   "n": 1,
+   "usedIn": [
+    "drills",
+    "podcast",
+    "reel:acute"
+   ]
+  },
+  {
+   "source": "AFP 2024 Noninvasive",
+   "kind": "figure",
+   "n": 2,
+   "usedIn": [
+    "podcast",
+    "reel:stable"
+   ]
+  },
+  {
+   "source": "AFP 2024 Noninvasive",
+   "kind": "table",
+   "n": 1,
+   "usedIn": [
+    "podcast",
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2024 Noninvasive",
+   "kind": "table",
+   "n": 2,
+   "usedIn": [
+    "drills",
+    "podcast",
+    "reel:stable",
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2024 Noninvasive",
+   "kind": "table",
+   "n": 3,
+   "usedIn": [
+    "drills",
+    "podcast",
+    "reel:tests",
+    "summary"
+   ],
+   "reason": "העלות בדולרים הושמטה: אינה רלוונטית לישראל"
+  },
+  {
+   "source": "AFP 2024 Pericarditis",
+   "kind": "table",
+   "n": 1,
+   "usedIn": [
+    "podcast",
+    "reel:peri",
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2024 Pericarditis",
+   "kind": "figure",
+   "n": 1,
+   "usedIn": [
+    "drills",
+    "podcast",
+    "reel:peri",
+    "summary"
+   ]
+  },
+  {
+   "source": "AFP 2024 Pericarditis",
+   "kind": "figure",
+   "n": 2,
+   "usedIn": [
+    "podcast",
+    "reel:periflow"
+   ]
+  }
+ ]
+}

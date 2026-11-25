@@ -81,6 +81,38 @@
    "doc": "hf-sp-bca46fb3",
    "asset": "801ec87cfa3affd48c09c1515fb3dbba",
    "spotifyEpisode": null
+  },
+  {
+   "guid": "7cb6b6fa-8139-4eec-8239-55ce99f9b831",
+   "title": "היצרות קרוטיד, TIA ושבץ",
+   "topic": "carotid",
+   "doc": "carotid-sp-7cb6b6fa",
+   "asset": "9b185f139d142290d4b87f0cabdd3b2f",
+   "spotifyEpisode": null
+  },
+  {
+   "guid": "52cb29fc-7f04-405d-b88a-313570421473",
+   "title": "היצרות קרוטיד, TIA ושבץ (קצר)",
+   "topic": "carotid",
+   "doc": "carotid-sp-52cb29fc",
+   "asset": "87ccd4f3cd68015fa18ff07062bf690a",
+   "spotifyEpisode": null
+  },
+  {
+   "guid": "922e5139-f33c-4699-97b2-5a28ee609ec5",
+   "title": "כאב חזה ו-ACS (קצר)",
+   "topic": "chestpain",
+   "doc": "chestpain-sp-922e5139",
+   "asset": "e48c4bb2a95ed0fa858a71d50822ceea",
+   "spotifyEpisode": "https://open.spotify.com/episode/35chkt3ejVCnvr9uLfGZ0Q"
+  },
+  {
+   "guid": "1637e477-3960-474f-83b4-502f2dc5f1df",
+   "title": "כאב חזה ו-ACS",
+   "topic": "chestpain",
+   "doc": "chestpain-sp-1637e477",
+   "asset": "a2b57101d869c001bc67dfe42efaa7ce",
+   "spotifyEpisode": "https://open.spotify.com/episode/3BOvtrNpqEcq7NWhWdlS2C"
   }
  ]
 }

@@ -1,0 +1,40 @@
+<script>
+/* Topic-specific reel scenes: chest pain and ACS (AFP 2024 x3). */
+(()=>{
+const {S,set,lerp,span,C,R,M}=REEL.kit;
+const N=(x,y,text,o={},p)=>S('text',Object.assign({x,y,text,direction:'ltr','text-anchor':'middle'},o),p);
+const op=(e,v)=>{e.style.opacity=v;};
+REEL.custom('chestpain',{
+ lrscale(g,d){ // likelihood ratios on a log axis; 1 changes nothing
+  const X=v=>170+Math.log(v/.25)/Math.log(16)*380;M(300,40,d.title||'',{'font-size':'16px','font-weight':'700'},g);
+  S('line',{x1:X(1),y1:60,x2:X(1),y2:376,stroke:C('muted'),'stroke-dasharray':'4 4'},g);
+  [.25,.5,1,2,4].forEach(v=>N(X(v),396,String(v),{'font-size':'12px',class:'mut'},g));
+  const rows=(d.items||[]).map((it,i)=>{const y=96+i*62,tone=it.v>1?'rose':'teal',e=S('g',{},g);
+   R(590,y-14,it.l,{'font-size':'13px','font-weight':'700'},e);const b=S('rect',{y,height:20,rx:5,fill:C(tone)},e);N(60,y+16,String(it.v),{class:'disp','font-size':'24px',fill:C(tone)},e);return {it,b,e};});
+  return t=>rows.forEach(o=>{const p=span(t,o.it.at,o.it.at+.1),a=X(1),b=lerp(a,X(o.it.v),p);op(o.e,.12+.88*p);set(o.b,{x:Math.min(a,b),width:Math.abs(b-a)});});
+ },
+ marburg(g,d){ // five yes/no items add up
+  const rows=(d.items||[]).map((l,i)=>{const y=34+i*54;const b=S('rect',{x:220,y,width:360,height:42,rx:10,fill:C('bg'),stroke:C('line'),'stroke-width':'2px'},g);R(564,y+27,l,{'font-size':'14px','font-weight':'700'},g);return b;});
+  const sc=N(110,190,'0',{class:'disp','font-size':'90px',fill:C('amber')},g);
+  const bx=S('rect',{x:30,y:340,width:540,height:50,rx:25,fill:C('teal-soft')},g),tx=M(300,372,'',{'font-size':'16px','font-weight':'700'},g);
+  const on=d.on||[];
+  return t=>{let s=0;rows.forEach((b,i)=>{const hit=on.includes(i)&&t>=.06+i*.15;if(hit)s++;set(b,{fill:hit?C('amber-soft'):C('bg'),stroke:hit?C('amber'):C('line')});});set(sc,{text:String(s)});const hi=s>=3;set(tx,{text:hi?d.high:d.low});set(bx,{fill:C(hi?'rose-soft':'teal-soft')});tx.style.fill=C(hi?'rose':'teal');};
+ },
+ pciclock(g,d){ // minutes to PCI
+  const cx=180,cy=200,r=120;S('circle',{cx,cy,r,fill:'none',stroke:C('line'),'stroke-width':'16px'},g);
+  const L=2*Math.PI*r,arc=S('circle',{cx,cy,r,fill:'none',stroke:C('amber'),'stroke-width':'16px','stroke-dasharray':String(L),'stroke-dashoffset':String(L),transform:'rotate(-90 '+cx+' '+cy+')'},g);
+  const n=N(cx,cy+18,'0',{class:'disp','font-size':'56px'},g);M(cx,370,d.label||'',{'font-size':'13px',class:'mut'},g);
+  const a=S('g',{},g);S('rect',{x:350,y:90,width:230,height:70,rx:14,fill:C('teal-soft')},a);M(465,133,d.ok||'',{'font-size':'24px','font-weight':'700',fill:C('teal')},a);
+  const b=S('g',{},g);S('rect',{x:350,y:210,width:230,height:90,rx:14,fill:C('rose-soft')},b);M(465,248,d.late||'',{'font-size':'13px','font-weight':'700',fill:C('rose')},b);M(465,276,d.sub||'',{'font-size':'12px'},b);
+  return t=>{const p=span(t,.04,.5);set(arc,{'stroke-dashoffset':String(L*(1-p))});set(n,{text:String(Math.round(d.max*p))});op(a,span(t,.04,.12));op(b,span(t,.3,.4));};
+ },
+ ecgpair(g,d){ // one beat: convex ST (MI) vs concave ST with PR depression (pericarditis)
+  const panel=(x,label,tone,path)=>{S('rect',{x,y:60,width:270,height:270,rx:14,fill:C(tone+'-soft'),opacity:.5},g);M(x+135,44,label,{'font-size':'13.5px','font-weight':'700',fill:C(tone)},g);return S('path',{d:path,fill:'none',stroke:C(tone),'stroke-width':'3px',pathLength:1,'stroke-dasharray':'1','stroke-dashoffset':'1'},g);};
+  const a=panel(20,d.left,'rose','M30 240 H60 Q75 220 90 240 H115 L122 252 L132 110 L142 190 Q180 130 215 200 Q225 236 245 240 H280');
+  const b=panel(310,d.right,'teal','M320 240 H350 Q365 220 380 240 L386 250 H408 L412 256 L422 110 L432 206 Q458 224 478 190 Q500 160 518 220 Q526 240 540 240 H570');
+  const pr=S('g',{},g);M(390,300,d.pr||'',{'font-size':'13px','font-weight':'700',fill:C('teal')},pr);S('path',{d:'M396 286 V258',stroke:C('teal'),'stroke-width':'2px'},pr);
+  return t=>{set(a,{'stroke-dashoffset':1-span(t,.03,.3)});set(b,{'stroke-dashoffset':1-span(t,.1,.45)});op(pr,span(t,.42,.5));};
+ }
+});
+})();
+</script>
